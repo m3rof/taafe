@@ -485,13 +485,11 @@ Widget itemTherapists(context) {
             SizedBox(
                 height: SizeManager.s84,
                 width: SizeManager.s150,
-                child: Container(
-                  child: Text(
-                    StringManager.aboutContent,
-                    style: StylesManager.or,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 5,
-                  ),
+                child: Text(
+                  StringManager.aboutContent,
+                  style: StylesManager.or,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 5,
                 )),
             const SizedBox(
               height: SizeManager.s8,
@@ -1055,7 +1053,7 @@ Widget floatingButton(function,Widget widget,{double width=SizeManager.s40,doubl
 
 Widget quetsionDesigen(String content){
   return Container(
-    padding: EdgeInsets.all(SizeManager.s8),
+    padding: const EdgeInsets.all(SizeManager.s8),
     decoration:const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(SizeManager.s16)),
         color: ColorManager.backGrey
@@ -1072,7 +1070,7 @@ Widget quetsionDesigen(String content){
 
 Widget asnwerDesigen(String content){
   return Container(
-    padding: EdgeInsets.all(SizeManager.s8),
+    padding: const EdgeInsets.all(SizeManager.s8),
     decoration:const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(SizeManager.s16)),
         color: ColorManager.backGrey
@@ -1090,8 +1088,8 @@ Widget asnwerDesigen(String content){
 
 Widget qADesign(String quetion,String answer,String answerBy,String job){
   return Container(
-    padding: EdgeInsets.all(SizeManager.s8),
-    margin: EdgeInsets.all(SizeManager.s8),
+    padding: const EdgeInsets.all(SizeManager.s8),
+    margin:const EdgeInsets.all(SizeManager.s8),
     decoration: BoxDecoration(
       border: Border.all(color: ColorManager.headOrange,width: SizeManager.s_7),
       borderRadius:const BorderRadius.all(Radius.circular(SizeManager.s10))
@@ -1110,14 +1108,14 @@ Widget qADesign(String quetion,String answer,String answerBy,String job){
         quetsionDesigen(quetion),
         const SizedBox(height: SizeManager.s10,),
         asnwerDesigen(answer),
-        SizedBox(height: SizeManager.s4,),
+        const SizedBox(height: SizeManager.s4,),
         Row(
           children: [
-            Text(StringManager.answer,style: TextStyle(color: ColorManager.greenColor,fontSize: SizeManager.s10),),
-            SizedBox(width: SizeManager.s8,),
-            Icon(Icons.account_circle,size: SizeManager.s16,color: ColorManager.headOrange,),
-            SizedBox(width: SizeManager.s4,),
-            Text(answerBy,style: TextStyle(color: ColorManager.greenColor,fontSize: SizeManager.s14),),
+            const Text(StringManager.answer,style: TextStyle(color: ColorManager.greenColor,fontSize: SizeManager.s10),),
+            const SizedBox(width: SizeManager.s8,),
+            const Icon(Icons.account_circle,size: SizeManager.s16,color: ColorManager.headOrange,),
+            const SizedBox(width: SizeManager.s4,),
+            Text(answerBy,style:const TextStyle(color: ColorManager.greenColor,fontSize: SizeManager.s14),),
           ],
         ),
         Container(
@@ -1125,8 +1123,8 @@ Widget qADesign(String quetion,String answer,String answerBy,String job){
           color: ColorManager.primaryColor,
           height: SizeManager.s1,
         ),
-        SizedBox(height: SizeManager.s2,),
-        Text(job,style: TextStyle(fontSize: SizeManager.s10,color: ColorManager.primaryColor),)
+        const SizedBox(height: SizeManager.s2,),
+        Text(job,style:const TextStyle(fontSize: SizeManager.s10,color: ColorManager.primaryColor),)
 
       ],
     ),
@@ -1158,7 +1156,7 @@ Widget testLogoScreen(context,function){
   );
 }
 
-Widget itemDrawer(icon,title,function){
+Widget itemDrawer(context,icon,title,function){
   return InkWell(
     onTap: function,
     child: Column(
@@ -1174,7 +1172,7 @@ Widget itemDrawer(icon,title,function){
           ],
         ),
         const SizedBox(height:SizeManager.s4 ,),
-        dividerBlue(),
+        dividerBlue(width: widthMedia(context: context, x:SizeManager.s_51 )),
         const SizedBox(
           height: SizeManager.s28,
         )
@@ -1183,7 +1181,7 @@ Widget itemDrawer(icon,title,function){
   );
 }
 
-Widget dividerBlue({double width=SizeManager.s170,Color color=ColorManager.primaryColor}){
+Widget dividerBlue({required double width,Color color=ColorManager.primaryColor}){
   return SizedBox(
     width: width,
     child: Divider(
@@ -1194,7 +1192,7 @@ Widget dividerBlue({double width=SizeManager.s170,Color color=ColorManager.prima
   );
 }
 
-Widget medicalRecordItem({required IconData icon,required String title,required String value}){
+Widget medicalRecordItem({context,required IconData icon,required String title,required String value}){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -1230,10 +1228,38 @@ Widget medicalRecordItem({required IconData icon,required String title,required 
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          dividerBlue(color: ColorManager.greenColor),
+          dividerBlue(width: widthMedia(context: context, x: SizeManager.s_4),color: ColorManager.greenColor),
           const SizedBox(height: SizeManager.s20,),
         ],
       )
     ],
+  );
+}
+
+Widget itemSetting(context,icon,title,function){
+  return InkWell(
+    onTap: function,
+    child: Padding(
+      padding: const EdgeInsets.only(left: SizeManager.s8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon,color: ColorManager.headOrange,size: SizeManager.s20,),
+              const SizedBox(width: SizeManager.s16,),
+              Text(title,style: StylesManager.headPrimary3.copyWith(fontWeight: FontWeight.w500),),
+              const Spacer(),
+              const Icon(Icons.navigate_next,color: ColorManager.headOrange,size: SizeManager.s24,),
+            ],
+          ),
+          const SizedBox(height:SizeManager.s4 ,),
+          dividerBlue(width: widthMedia(context: context, x:SizeManager.s_7)),
+           SizedBox(
+            height: hightMedia(context: context, h: SizeManager.s_07),
+          )
+        ],
+      ),
+    ),
   );
 }

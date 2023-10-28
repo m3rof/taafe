@@ -5,6 +5,7 @@ import 'package:taafe/shared/resourses/assets_manager.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';
 import 'package:taafe/shared/resourses/value_app.dart';
 
+import '../../../modules/setting/setting_screen.dart';
 import '../../../shared/components/components.dart';
 
 class DrawerBody extends StatelessWidget {
@@ -29,14 +30,16 @@ class DrawerBody extends StatelessWidget {
             const SizedBox(height: SizeManager.s10,),
             const Text(StringManager.accountProfile),
             const SizedBox(height: SizeManager.s35,),
-            itemDrawer(FontAwesomeIcons.facebookMessenger,'chat',(){}),
-            itemDrawer(Icons.medical_information,'Medical Record',(){}),
-            itemDrawer(FontAwesomeIcons.bell,'Medicine Alarm',(){}),
-            itemDrawer(FontAwesomeIcons.heart,'Interests / Hobbies',(){}),
-            itemDrawer(FontAwesomeIcons.calendarTimes,'Appointments',(){}),
-            itemDrawer(FontAwesomeIcons.diagnoses,'Diagnosis',(){}),
-            itemDrawer(FontAwesomeIcons.fileMedical,'My therapist',(){}),
-            itemDrawer(Icons.settings,'Setting',(){}),
+            itemDrawer(context,FontAwesomeIcons.facebookMessenger,'chat',(){}),
+            itemDrawer(context,Icons.medical_information,'Medical Record',(){}),
+            itemDrawer(context,FontAwesomeIcons.bell,'Medicine Alarm',(){}),
+            itemDrawer(context,FontAwesomeIcons.heart,'Interests / Hobbies',(){}),
+            itemDrawer(context,FontAwesomeIcons.calendarTimes,'Appointments',(){}),
+            itemDrawer(context,FontAwesomeIcons.diagnoses,'Diagnosis',(){}),
+            itemDrawer(context,FontAwesomeIcons.fileMedical,'My therapist',(){}),
+            itemDrawer(context,Icons.settings,'Setting',(){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingScreen(),));
+            }),
 
 
           ],

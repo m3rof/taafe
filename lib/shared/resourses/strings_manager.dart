@@ -53,6 +53,7 @@ class StringManager{
   static const String a='A :';
   static const String answer='Answered by';
   static const String accountProfile='Account Profile';
+  static const String setting='Setting';
 
 
 

@@ -37,6 +37,7 @@ class SizeManager{
   static const double s_07=.06;
   static const double s_1=.1;
   static const double s_2=.2;
+  static const double s_4=.4;
   static const double s_51=.51;
   static const double s_7=.7;
   static const double s1=1;
