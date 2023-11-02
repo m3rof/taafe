@@ -40,7 +40,7 @@ class MedicalRecordScreen extends StatelessWidget {
                 medicalRecordItem(context: context,icon: FontAwesomeIcons.smile, title: 'Hobbies:', value: 'basketball     /      volly bal'),
                 medicalRecordItem(context: context,icon: FontAwesomeIcons.hardHat, title: 'Education:', value: 'computer engineering Alex University'),
                 medicalRecordItem(context: context,icon:  Icons.work, title: 'Experience:', value: 'Alaqsa factory Alula company'),
-                medicalRecordItem(context: context,icon: FontAwesomeIcons.fileMedical, title: 'Diagnosis:', value: 'Depression Didorders (dr.Omar) Phobia (dr.Fawzi)'),
+                medicalRecordItem(context: context,icon: FontAwesomeIcons.fileMedical, title: 'diagnosis:', value: 'Depression Didorders (dr.Omar) Phobia (dr.Fawzi)'),
                 medicalRecordItem(context: context,icon: FontAwesomeIcons.briefcaseMedical, title: 'Medicine:', value: 'Panadol extra Paxera'),
                 medicalRecordItem(context: context,icon: FontAwesomeIcons.handHoldingMedical, title: 'Therapist:', value: 'Dr. Ahmed Helal')
               ],

@@ -226,10 +226,10 @@ Widget titleKind(context, String kind) {
   );
 }
 
-Widget searchKind(context, function, String hint,{double left=SizeManager.s24,double right=SizeManager.s22}) {
+Widget searchKind(context, function, String hint,
+    {double left = SizeManager.s24, double right = SizeManager.s22}) {
   return Padding(
-    padding:
-         EdgeInsets.only(left:left , right:right ),
+    padding: EdgeInsets.only(left: left, right: right),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -389,11 +389,11 @@ Widget titleRow(context, String title, function, String sort) {
   );
 }
 
-Widget greenContainer(String text, function) {
+Widget greenContainer({required String text,required function,padding=SizeManager.s6}) {
   return InkWell(
     onTap: function,
     child: Container(
-      padding: const EdgeInsets.all(SizeManager.s6),
+      padding:  EdgeInsets.all(padding),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(SizeManager.s22)),
         color: Colors.green,
@@ -494,7 +494,7 @@ Widget itemTherapists(context) {
             const SizedBox(
               height: SizeManager.s8,
             ),
-            greenContainer(StringManager.appointment, null)
+            greenContainer(text: StringManager.appointment, function: null)
           ],
         )
       ],
@@ -723,7 +723,7 @@ Widget listViewTherapistsV(context) {
 
 Widget itemTherapistsV(context) {
   return Container(
-   padding: const EdgeInsets.all(SizeManager.s10),
+    padding: const EdgeInsets.all(SizeManager.s10),
     margin: const EdgeInsets.all(SizeManager.s14),
     height: SizeManager.s250,
     width: SizeManager.s84,
@@ -902,7 +902,7 @@ Widget itemTherapistsV(context) {
                 const SizedBox(
                   width: SizeManager.s55,
                 ),
-                greenContainer(StringManager.appointment, () {})
+                greenContainer(text: StringManager.appointment,function:  () {})
               ],
             )
           ],
@@ -913,15 +913,13 @@ Widget itemTherapistsV(context) {
 }
 
 Widget listViewBlogsV(context) {
-  return Expanded(
-    child: ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return itemBlogsV(context);
-      },
-    ),
+  return ListView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemCount: 10,
+    itemBuilder: (context, index) {
+      return itemBlogsV(context);
+    },
   );
 }
 
@@ -929,8 +927,6 @@ Widget itemBlogsV(context) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: SizeManager.s10),
     margin: const EdgeInsets.all(SizeManager.s14),
-    height: SizeManager.s260,
-    width: SizeManager.s84,
     decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
         color: Colors.white),
@@ -938,7 +934,7 @@ Widget itemBlogsV(context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: 150,
+          height: SizeManager.s170,
           decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(AssetsManager.session), fit: BoxFit.fill),
@@ -960,7 +956,9 @@ Widget itemBlogsV(context) {
           height: 25,
           child: Text(
               'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam Lorem ipsum dolor sit amet, consectetur adipisicing Lorem ipsum dolor sit amet,   ',
-              style: StylesManager.itemHome.copyWith(fontSize:SizeManager.s10),maxLines: 2,overflow: TextOverflow.ellipsis),
+              style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s10),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis),
         ),
         const SizedBox(height: SizeManager.s2),
         Row(
@@ -990,7 +988,9 @@ Widget itemBlogsV(context) {
                     maxLines: 2,
                   ),
                 ),
-              ],
+                const SizedBox(
+                  height: SizeManager.s10,
+                ),              ],
             ),
             const Spacer(),
             blueContainer(
@@ -1006,40 +1006,51 @@ Widget itemBlogsV(context) {
   );
 }
 
-Widget itemCommunity(function,IconData icon,String text){
+Widget itemCommunity(function, IconData icon, String text) {
   return InkWell(
     onTap: function,
     child: Container(
       height: SizeManager.s150,
       width: SizeManager.s135,
       decoration: BoxDecoration(
-        border: Border.all(color: ColorManager.primaryColor,width: SizeManager.s_7),
-        borderRadius:const BorderRadius.all(Radius.circular(SizeManager.s22)),
+        border: Border.all(
+            color: ColorManager.primaryColor, width: SizeManager.s_7),
+        borderRadius: const BorderRadius.all(Radius.circular(SizeManager.s22)),
       ),
       child: Column(
         children: [
-          const SizedBox(height: SizeManager.s20,),
-          Icon(icon ,color: ColorManager.greenColor,size: SizeManager.s40,),
-          const SizedBox(height: SizeManager.s18,),
-          Text(text,style: StylesManager.itemHome,maxLines: 3,textAlign: TextAlign.center,)
+          const SizedBox(
+            height: SizeManager.s20,
+          ),
+          Icon(
+            icon,
+            color: ColorManager.greenColor,
+            size: SizeManager.s40,
+          ),
+          const SizedBox(
+            height: SizeManager.s18,
+          ),
+          Text(
+            text,
+            style: StylesManager.itemHome,
+            maxLines: 3,
+            textAlign: TextAlign.center,
+          )
         ],
       ),
-
     ),
   );
 }
 
-Widget rowCommunity(item1,item2){
+Widget rowCommunity(item1, item2) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: [
-      item1,
-      item2
-    ],
+    children: [item1, item2],
   );
 }
 
-Widget floatingButton(function,Widget widget,{double width=SizeManager.s40,double height=SizeManager.s40}){
+Widget floatingButton(function, Widget widget,
+    {double width = SizeManager.s40, double height = SizeManager.s40}) {
   return SizedBox(
     width: width,
     height: height,
@@ -1051,71 +1062,107 @@ Widget floatingButton(function,Widget widget,{double width=SizeManager.s40,doubl
   );
 }
 
-Widget quetsionDesigen(String content){
+Widget quetsionDesigen(String content) {
   return Container(
     padding: const EdgeInsets.all(SizeManager.s8),
-    decoration:const BoxDecoration(
+    decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(SizeManager.s16)),
-        color: ColorManager.backGrey
-    ),
+        color: ColorManager.backGrey),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(StringManager.q,style: StylesManager.bodySmall.copyWith(fontSize: SizeManager.s20),),
-        Text(content,style: StylesManager.headPrimary3,),
+        Text(
+          StringManager.q,
+          style: StylesManager.bodySmall.copyWith(fontSize: SizeManager.s20),
+        ),
+        Text(
+          content,
+          style: StylesManager.headPrimary3,
+        ),
       ],
     ),
   );
 }
 
-Widget asnwerDesigen(String content){
+Widget asnwerDesigen(String content) {
   return Container(
     padding: const EdgeInsets.all(SizeManager.s8),
-    decoration:const BoxDecoration(
+    decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(SizeManager.s16)),
-        color: ColorManager.backGrey
-    ),
+        color: ColorManager.backGrey),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(StringManager.a,style:StylesManager.bodySmall.copyWith(fontSize: SizeManager.s20),),
-        Text(content,style: StylesManager.loginCreate),
+        Text(
+          StringManager.a,
+          style: StylesManager.bodySmall.copyWith(fontSize: SizeManager.s20),
+        ),
+        Text(content, style: StylesManager.loginCreate),
       ],
     ),
   );
 }
 
-
-Widget qADesign(String quetion,String answer,String answerBy,String job){
+Widget qADesign(String quetion, String answer, String answerBy, String job) {
   return Container(
     padding: const EdgeInsets.all(SizeManager.s8),
-    margin:const EdgeInsets.all(SizeManager.s8),
+    margin: const EdgeInsets.all(SizeManager.s8),
     decoration: BoxDecoration(
-      border: Border.all(color: ColorManager.headOrange,width: SizeManager.s_7),
-      borderRadius:const BorderRadius.all(Radius.circular(SizeManager.s10))
-    ),
+        border:
+            Border.all(color: ColorManager.headOrange, width: SizeManager.s_7),
+        borderRadius: const BorderRadius.all(Radius.circular(SizeManager.s10))),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Text(StringManager.category,style: StylesManager.category,),
-            const SizedBox(width: SizeManager.s2,),
-            Text('Depression Disorders',style: StylesManager.category,)
+            Text(
+              StringManager.category,
+              style: StylesManager.category,
+            ),
+            const SizedBox(
+              width: SizeManager.s2,
+            ),
+            Text(
+              'Depression Disorders',
+              style: StylesManager.category,
+            )
           ],
         ),
-        const SizedBox(height: SizeManager.s6,),
+        const SizedBox(
+          height: SizeManager.s6,
+        ),
         quetsionDesigen(quetion),
-        const SizedBox(height: SizeManager.s10,),
+        const SizedBox(
+          height: SizeManager.s10,
+        ),
         asnwerDesigen(answer),
-        const SizedBox(height: SizeManager.s4,),
+        const SizedBox(
+          height: SizeManager.s4,
+        ),
         Row(
           children: [
-            const Text(StringManager.answer,style: TextStyle(color: ColorManager.greenColor,fontSize: SizeManager.s10),),
-            const SizedBox(width: SizeManager.s8,),
-            const Icon(Icons.account_circle,size: SizeManager.s16,color: ColorManager.headOrange,),
-            const SizedBox(width: SizeManager.s4,),
-            Text(answerBy,style:const TextStyle(color: ColorManager.greenColor,fontSize: SizeManager.s14),),
+            const Text(
+              StringManager.answer,
+              style: TextStyle(
+                  color: ColorManager.greenColor, fontSize: SizeManager.s10),
+            ),
+            const SizedBox(
+              width: SizeManager.s8,
+            ),
+            const Icon(
+              Icons.account_circle,
+              size: SizeManager.s16,
+              color: ColorManager.headOrange,
+            ),
+            const SizedBox(
+              width: SizeManager.s4,
+            ),
+            Text(
+              answerBy,
+              style: const TextStyle(
+                  color: ColorManager.greenColor, fontSize: SizeManager.s14),
+            ),
           ],
         ),
         Container(
@@ -1123,40 +1170,53 @@ Widget qADesign(String quetion,String answer,String answerBy,String job){
           color: ColorManager.primaryColor,
           height: SizeManager.s1,
         ),
-        const SizedBox(height: SizeManager.s2,),
-        Text(job,style:const TextStyle(fontSize: SizeManager.s10,color: ColorManager.primaryColor),)
-
+        const SizedBox(
+          height: SizeManager.s2,
+        ),
+        Text(
+          job,
+          style: const TextStyle(
+              fontSize: SizeManager.s10, color: ColorManager.primaryColor),
+        )
       ],
     ),
   );
 }
 
-Widget listViewQAV(String quetion,String answer,String answerBy,String job) {
-  return Expanded(
-    child: ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return qADesign(quetion,answer,answerBy,job);
-      },
-    ),
+Widget listViewQAV(String quetion, String answer, String answerBy, String job) {
+  return ListView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemCount: 10,
+    itemBuilder: (context, index) {
+      return qADesign(quetion, answer, answerBy, job);
+    },
   );
 }
 
-Widget testLogoScreen(context,function){
+Widget testLogoScreen(context, function) {
   return Column(
     children: [
-
-      SizedBox(height: hightMedia(context: context, h: SizeManager.s_07),),
-      const AspectRatio(aspectRatio: 16/9,child: Image(image: AssetImage(AssetsManager.testLogo))),
-      SizedBox(height: hightMedia(context: context, h: SizeManager.s_1),),
-      InkWell(onTap: function,child:const SizedBox(height: SizeManager.s250,width:SizeManager.s250,child: Image(image: AssetImage(AssetsManager.testStart))))
+      SizedBox(
+        height: hightMedia(context: context, h: SizeManager.s_07),
+      ),
+      const AspectRatio(
+          aspectRatio: 16 / 9,
+          child: Image(image: AssetImage(AssetsManager.testLogo))),
+      SizedBox(
+        height: hightMedia(context: context, h: SizeManager.s_1),
+      ),
+      InkWell(
+          onTap: function,
+          child: const SizedBox(
+              height: SizeManager.s250,
+              width: SizeManager.s250,
+              child: Image(image: AssetImage(AssetsManager.testStart))))
     ],
   );
 }
 
-Widget itemDrawer(context,icon,title,function){
+Widget itemDrawer(context, icon, title, function) {
   return InkWell(
     onTap: function,
     child: Column(
@@ -1164,15 +1224,31 @@ Widget itemDrawer(context,icon,title,function){
       children: [
         Row(
           children: [
-            Icon(icon,color: ColorManager.headOrange,size: SizeManager.s20,),
-            const SizedBox(width: SizeManager.s16,),
-            Text(title,style: StylesManager.headPrimary3.copyWith(fontWeight: FontWeight.w500),),
+            Icon(
+              icon,
+              color: ColorManager.headOrange,
+              size: SizeManager.s20,
+            ),
+            const SizedBox(
+              width: SizeManager.s16,
+            ),
+            Text(
+              title,
+              style: StylesManager.headPrimary3
+                  .copyWith(fontWeight: FontWeight.w500),
+            ),
             const Spacer(),
-            const Icon(Icons.navigate_next,color: ColorManager.headOrange,size: SizeManager.s24,),
+            const Icon(
+              Icons.navigate_next,
+              color: ColorManager.headOrange,
+              size: SizeManager.s24,
+            ),
           ],
         ),
-        const SizedBox(height:SizeManager.s4 ,),
-        dividerBlue(width: widthMedia(context: context, x:SizeManager.s_51 )),
+        const SizedBox(
+          height: SizeManager.s4,
+        ),
+        dividerBlue(width: widthMedia(context: context, x: SizeManager.s_51)),
         const SizedBox(
           height: SizeManager.s28,
         )
@@ -1181,7 +1257,8 @@ Widget itemDrawer(context,icon,title,function){
   );
 }
 
-Widget dividerBlue({required double width,Color color=ColorManager.primaryColor}){
+Widget dividerBlue(
+    {required double width, Color color = ColorManager.primaryColor}) {
   return SizedBox(
     width: width,
     child: Divider(
@@ -1192,14 +1269,17 @@ Widget dividerBlue({required double width,Color color=ColorManager.primaryColor}
   );
 }
 
-Widget medicalRecordItem({context,required IconData icon,required String title,required String value}){
+Widget medicalRecordItem(
+    {context,
+    required IconData icon,
+    required String title,
+    required String value}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Row(
         children: [
-          Icon(icon,
-              color: ColorManager.headOrange),
+          Icon(icon, color: ColorManager.headOrange),
           const SizedBox(width: SizeManager.s14),
           Text(
             title,
@@ -1215,10 +1295,11 @@ Widget medicalRecordItem({context,required IconData icon,required String title,r
             width: SizeManager.s300,
             child: Column(
               children: [
-                Text(value,
-                    style: StylesManager.itemHome
-                        .copyWith(fontSize: SizeManager.s16),
-                    ),
+                Text(
+                  value,
+                  style: StylesManager.itemHome
+                      .copyWith(fontSize: SizeManager.s16),
+                ),
               ],
             ),
           ),
@@ -1228,15 +1309,19 @@ Widget medicalRecordItem({context,required IconData icon,required String title,r
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          dividerBlue(width: widthMedia(context: context, x: SizeManager.s_4),color: ColorManager.greenColor),
-          const SizedBox(height: SizeManager.s20,),
+          dividerBlue(
+              width: widthMedia(context: context, x: SizeManager.s_4),
+              color: ColorManager.greenColor),
+          const SizedBox(
+            height: SizeManager.s20,
+          ),
         ],
       )
     ],
   );
 }
 
-Widget itemSetting(context,icon,title,function){
+Widget itemSetting(context, icon, title, function) {
   return InkWell(
     onTap: function,
     child: Padding(
@@ -1246,16 +1331,32 @@ Widget itemSetting(context,icon,title,function){
         children: [
           Row(
             children: [
-              Icon(icon,color: ColorManager.headOrange,size: SizeManager.s20,),
-              const SizedBox(width: SizeManager.s16,),
-              Text(title,style: StylesManager.headPrimary3.copyWith(fontWeight: FontWeight.w500),),
+              Icon(
+                icon,
+                color: ColorManager.headOrange,
+                size: SizeManager.s20,
+              ),
+              const SizedBox(
+                width: SizeManager.s16,
+              ),
+              Text(
+                title,
+                style: StylesManager.headPrimary3
+                    .copyWith(fontWeight: FontWeight.w500),
+              ),
               const Spacer(),
-              const Icon(Icons.navigate_next,color: ColorManager.headOrange,size: SizeManager.s24,),
+              const Icon(
+                Icons.navigate_next,
+                color: ColorManager.headOrange,
+                size: SizeManager.s24,
+              ),
             ],
           ),
-          const SizedBox(height:SizeManager.s4 ,),
-          dividerBlue(width: widthMedia(context: context, x:SizeManager.s_7)),
-           SizedBox(
+          const SizedBox(
+            height: SizeManager.s4,
+          ),
+          dividerBlue(width: widthMedia(context: context, x: SizeManager.s_7)),
+          SizedBox(
             height: hightMedia(context: context, h: SizeManager.s_07),
           )
         ],
@@ -1264,22 +1365,83 @@ Widget itemSetting(context,icon,title,function){
   );
 }
 
-Widget onlineTherapists(){
+Widget onlineTherapists() {
   return Container(
-      margin: const EdgeInsets.symmetric(
-          horizontal: SizeManager.s12),
+      margin: const EdgeInsets.symmetric(horizontal: SizeManager.s12),
       child: Column(
         children: [
-          profileImage(SizeManager.s84, SizeManager.s84,
-              SizeManager.s50),
+          profileImage(SizeManager.s84, SizeManager.s84, SizeManager.s50),
           const SizedBox(height: SizeManager.s8),
           SizedBox(
               width: SizeManager.s65,
               height: SizeManager.s65,
               child: Text(
                 'Dr. Ahmed Marouf',
-                style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s14),
+                style:
+                    StylesManager.itemHome.copyWith(fontSize: SizeManager.s14),
               ))
         ],
       ));
+}
+
+Widget textFormGrey(
+    {required TextEditingController textEditingController,
+    required String validator,
+    required TextInputType textInputType,
+    required double left,
+    required double right,
+    required double top,
+    required double bottom,
+    Widget? icon}) {
+  return TextFormField(
+    controller: textEditingController,
+    validator: (value) => validator,
+    keyboardType: textInputType,
+    decoration: InputDecoration(
+        suffixIcon: icon,
+        isDense: true,
+        contentPadding: EdgeInsets.fromLTRB(left, top, right, bottom),
+        fillColor: const Color(0xffe6e3ee),
+        filled: true,
+        focusedBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(SizeManager.s16)),
+            borderSide: BorderSide(color: ColorManager.transparentColor)),
+        enabledBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(SizeManager.s16)),
+            borderSide: BorderSide(color: ColorManager.transparentColor)),
+        border: const OutlineInputBorder()),
+  );
+}
+
+Widget collectionTextFormGrey(
+    {required String title,
+    required TextEditingController textEditingController,
+    required String validator,
+    required TextInputType textInputType,
+    required double left,
+    required double right,
+    required double top,
+    required double bottom,
+    Widget? icon}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        title,
+        style: StylesManager.itemHome,
+      ),
+      const SizedBox(
+        height: SizeManager.s10,
+      ),
+      textFormGrey(
+          textEditingController: textEditingController,
+          validator: validator,
+          textInputType: textInputType,
+          left: left,
+          right: right,
+          top: top,
+          bottom: bottom),
+      const SizedBox(height: SizeManager.s18,),
+    ],
+  );
 }
