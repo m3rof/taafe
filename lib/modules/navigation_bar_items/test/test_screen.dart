@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../shared/components/components.dart';
+import '../../../shared/components/components.dart';
 
 class TestScreen extends StatelessWidget {
   const TestScreen({Key? key}) : super(key: key);

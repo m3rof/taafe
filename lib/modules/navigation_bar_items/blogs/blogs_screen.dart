@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../shared/components/components.dart';
-import '../../shared/resourses/strings_manager.dart';
-import '../../shared/resourses/value_app.dart';
+import '../../../shared/components/components.dart';
+import '../../../shared/resourses/strings_manager.dart';
+import '../../../shared/resourses/value_app.dart';
+
+
 
 class BlogsScreen extends StatelessWidget {
   const BlogsScreen({Key? key}) : super(key: key);

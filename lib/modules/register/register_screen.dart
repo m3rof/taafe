@@ -106,7 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       floatingButton(
                           (){
-                            cubit.checkValidation(key: key,
+                            cubit.checkValidation(context: context,key: key,
                                 emailController: email,
                                 passwordController: password,
                                 confirmController: confirmPassword,

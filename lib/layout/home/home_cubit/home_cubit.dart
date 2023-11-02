@@ -2,16 +2,13 @@ import 'package:awesome_icons/awesome_icons.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:taafe/modules/login/login_cubit/login_state.dart';
 import 'package:taafe/shared/resourses/assets_manager.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';
-import 'package:taafe/shared/resourses/value_app.dart';
-
-import '../../../modules/blogs/blogs_screen.dart';
-import '../../../modules/communities/communities_screen.dart';
-import '../../../modules/q_a/q_a_screen.dart';
-import '../../../modules/test/test_screen.dart';
-import '../../../modules/therapists/therapists_screen.dart';
+import '../../../modules/navigation_bar_items/blogs/blogs_screen.dart';
+import '../../../modules/navigation_bar_items/communities/communities_screen.dart';
+import '../../../modules/navigation_bar_items/q_a/q_a_screen.dart';
+import '../../../modules/navigation_bar_items/test/test_screen.dart';
+import '../../../modules/navigation_bar_items/therapists/therapists_screen.dart';
 import '../home_widget/home_body.dart';
 import 'home_state.dart';
 

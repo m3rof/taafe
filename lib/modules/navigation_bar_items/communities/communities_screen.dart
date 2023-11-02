@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:taafe/shared/components/components.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';
 
-import '../../shared/resourses/value_app.dart';
+import '../../../shared/resourses/value_app.dart';
 
 class CommunitiesScreen extends StatelessWidget {
   const CommunitiesScreen({Key? key}) : super(key: key);

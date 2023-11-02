@@ -1,11 +1,14 @@
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:taafe/layout/home/home_cubit/home_cubit.dart';
+import 'package:taafe/modules/drawer_items_screen/Diagnosis/diagnosis_screen.dart';
+import 'package:taafe/modules/drawer_items_screen/my_therapists/my_therapists_screen.dart';
 import 'package:taafe/shared/components/constants.dart';
 import 'package:taafe/shared/resourses/assets_manager.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';
 import 'package:taafe/shared/resourses/value_app.dart';
 
-import '../../../modules/setting/setting_screen.dart';
+import '../../../modules/drawer_items_screen/setting/setting_screen.dart';
 import '../../../shared/components/components.dart';
 
 class DrawerBody extends StatelessWidget {
@@ -35,8 +38,12 @@ class DrawerBody extends StatelessWidget {
             itemDrawer(context,FontAwesomeIcons.bell,'Medicine Alarm',(){}),
             itemDrawer(context,FontAwesomeIcons.heart,'Interests / Hobbies',(){}),
             itemDrawer(context,FontAwesomeIcons.calendarTimes,'Appointments',(){}),
-            itemDrawer(context,FontAwesomeIcons.diagnoses,'Diagnosis',(){}),
-            itemDrawer(context,FontAwesomeIcons.fileMedical,'My therapist',(){}),
+            itemDrawer(context,FontAwesomeIcons.diagnoses,'diagnosis',(){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const DiagnosisScreen(),));
+            }),
+            itemDrawer(context,FontAwesomeIcons.fileMedical,'My therapist',(){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const MyTherapistsScreen(),));
+            }),
             itemDrawer(context,Icons.settings,'Setting',(){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingScreen(),));
             }),

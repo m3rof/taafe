@@ -2,9 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:taafe/shared/components/components.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';
-import 'package:taafe/shared/resourses/styles.dart';
-
-import '../../shared/resourses/value_app.dart';
+import '../../../shared/resourses/value_app.dart';
 
 class TherapistsScreen extends StatelessWidget {
   const TherapistsScreen({Key? key}) : super(key: key);

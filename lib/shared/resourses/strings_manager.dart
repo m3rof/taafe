@@ -26,6 +26,8 @@ class StringManager{
   static const String services='Services';
   static const String blogs='blogs';
   static const String therapists='Therapists';
+  static const String onlineTherapists='Online therapists';
+  static const String myTherapists='My therapists';
   static const String medical='Medical profile';
   static const String medicalRecord='Medical Record';
   static const String community='community';

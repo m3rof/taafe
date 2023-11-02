@@ -41,7 +41,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {},
       builder: (context, state) => Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: SizeManager.s35),
           child: SingleChildScrollView(
@@ -82,6 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ElevatedButton(
                       onPressed: () {
                         cubit.checkValidation(
+                          context: context,
                             key: key,
                             emailController: emailController,
                             passwordController: passwordController);
@@ -110,7 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   textButton(
                       textStyle: StylesManager.loginCreate,
-                      function: () {},
+                      function: () {
+                        cubit.moveRegister(context);
+                      },
                       text: StringManager.newAccount)
                 ],
               ),

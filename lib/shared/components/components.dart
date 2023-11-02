@@ -723,7 +723,7 @@ Widget listViewTherapistsV(context) {
 
 Widget itemTherapistsV(context) {
   return Container(
-    padding: const EdgeInsets.all(SizeManager.s10),
+   padding: const EdgeInsets.all(SizeManager.s10),
     margin: const EdgeInsets.all(SizeManager.s14),
     height: SizeManager.s250,
     width: SizeManager.s84,
@@ -1262,4 +1262,24 @@ Widget itemSetting(context,icon,title,function){
       ),
     ),
   );
+}
+
+Widget onlineTherapists(){
+  return Container(
+      margin: const EdgeInsets.symmetric(
+          horizontal: SizeManager.s12),
+      child: Column(
+        children: [
+          profileImage(SizeManager.s84, SizeManager.s84,
+              SizeManager.s50),
+          const SizedBox(height: SizeManager.s8),
+          SizedBox(
+              width: SizeManager.s65,
+              height: SizeManager.s65,
+              child: Text(
+                'Dr. Ahmed Marouf',
+                style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s14),
+              ))
+        ],
+      ));
 }

@@ -2,10 +2,11 @@
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:flutter/material.dart';
 
-import '../../shared/components/components.dart';
-import '../../shared/components/constants.dart';
-import '../../shared/resourses/strings_manager.dart';
-import '../../shared/resourses/value_app.dart';
+import '../../../shared/components/components.dart';
+import '../../../shared/components/constants.dart';
+import '../../../shared/resourses/strings_manager.dart';
+import '../../../shared/resourses/value_app.dart';
+
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
