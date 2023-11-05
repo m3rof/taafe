@@ -1445,3 +1445,140 @@ Widget collectionTextFormGrey(
     ],
   );
 }
+
+Widget listViewAppointmentV(context) {
+  return ListView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemCount: 10,
+    itemBuilder: (context, index) {
+      return itemAppointmentV(context);
+    },
+  );
+}
+
+Widget itemAppointmentV(context) {
+  return Container(
+    padding: const EdgeInsets.all(SizeManager.s10),
+    margin: const EdgeInsets.all(SizeManager.s14),
+    width: SizeManager.s84,
+    decoration: BoxDecoration(
+      border:
+      Border.all(color: ColorManager.primaryColor, width: SizeManager.s_7),
+      borderRadius: const BorderRadius.all(
+        Radius.circular(SizeManager.s10),
+      ),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            profileImage(SizeManager.s75, SizeManager.s75, SizeManager.s55),
+            const SizedBox(width: SizeManager.s10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Dr. John Lemon',
+                      style: StylesManager.headPrimary3,
+                    ),
+                    const SizedBox(
+                      width: SizeManager.s4,
+                    ),
+                    greenDone()
+                  ],
+                ),
+                const SizedBox(
+                  height: SizeManager.s2,
+                ),
+                Text(
+                  'Pyschologist',
+                  style: StylesManager.itemHome
+                      .copyWith(fontSize: SizeManager.s16),
+                ),
+                const SizedBox(
+                  height: SizeManager.s2,
+                ),
+                const SizedBox(
+                  height: SizeManager.s2,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: SizeManager.s10,
+        ),
+        Text(
+          StringManager.interests,
+          style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s12),
+        ),
+        const SizedBox(
+          height: SizeManager.s4,
+        ),
+        Row(
+          children: [
+            blueContainer(
+                function: null,
+                radius: SizeManager.s4,
+                text: StringManager.depressionTherapists),
+            const SizedBox(
+              width: SizeManager.s4,
+            ),
+            blueContainer(
+                function: null,
+                radius: SizeManager.s4,
+                text: StringManager.anxietyTherapists),
+            const SizedBox(
+              width: SizeManager.s4,
+            ),
+            blueContainer(
+                function: null,
+                radius: SizeManager.s4,
+                text: StringManager.moodTherapists,
+                width: SizeManager.s76),
+          ],
+        ),
+        const SizedBox(
+          height: SizeManager.s4,
+        ),
+        Text(
+          StringManager.about,
+          style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s12),
+        ),
+        const SizedBox(
+          height: SizeManager.s4,
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: 200,
+              child: Text(
+                'Lorem ipsum dolor sit amet, consectetur adipisicing Lorem ipsum dolor sit amet,',
+                style: StylesManager.or.copyWith(fontSize: SizeManager.s11),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(
+              width: SizeManager.s14,
+            ),
+            InkWell(
+                onTap: () {},
+                child: Text(StringManager.view,
+                    style: StylesManager.drContent.copyWith(
+                      fontSize: 10,
+                    ))),
+          ],
+        ),
+        const SizedBox(
+          height: SizeManager.s10,
+        ),
+        Align(alignment: Alignment.bottomRight,child: greenContainer(text: 'Tue/30 Aug 4:00 pm',function:  () {}))
+      ],
+    ),
+  );
+}

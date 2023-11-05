@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taafe/modules/drawer_items/appointment/appointment_cubit/appointment_cubit.dart';
 import 'package:taafe/modules/login/login_cubit/login_cubit.dart';
 import 'package:taafe/modules/register/register_screen.dart';
 
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create:(context) => LoginCubit()),
         BlocProvider(create:(context) => RegisterCubit()),
         BlocProvider(create:(context) => HomeCubit()),
+        BlocProvider(create: (context) => AppointmentCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
