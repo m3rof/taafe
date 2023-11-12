@@ -88,7 +88,8 @@ flutter:
     - family: myriad
       fonts:
         - asset: fonts/FontsFree-Net-MYRIADPRO-REGULAR.ttf
-  #         weight: 700
+
+#          weight: 200
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

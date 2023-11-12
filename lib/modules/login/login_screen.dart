@@ -16,13 +16,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController emailController=TextEditingController();
-  TextEditingController passwordController= TextEditingController();
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
   GlobalKey<FormState> key = GlobalKey();
 
   @override
   void initState() {
-
+    emailController=TextEditingController();
+    passwordController=TextEditingController();
     // TODO: implement initState
     super.initState();
   }

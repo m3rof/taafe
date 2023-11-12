@@ -18,11 +18,21 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController username = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController confirmPassword = TextEditingController();
+  late TextEditingController username ;
+  late TextEditingController email;
+  late TextEditingController password;
+  late TextEditingController confirmPassword;
   GlobalKey<FormState>key = GlobalKey();
+
+  @override
+  void initState() {
+    username=TextEditingController();
+    email=TextEditingController();
+    password=TextEditingController();
+    confirmPassword=TextEditingController();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   void dispose() {

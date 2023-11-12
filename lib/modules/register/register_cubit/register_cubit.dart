@@ -34,4 +34,8 @@ class RegisterCubit extends Cubit<RegisterState> {
       emit(CheckValidatorRegisterState());
     }
   }
+
+  void signUp(String email,String password,String role){
+
+  }
 }

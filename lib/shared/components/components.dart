@@ -2,6 +2,7 @@ import 'package:awesome_icons/awesome_icons.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
+import 'package:taafe/shared/resourses/family_manager.dart';
 import '../../layout/home/home_cubit/home_cubit.dart';
 import '../resourses/assets_manager.dart';
 import '../resourses/color_manager.dart';
@@ -389,11 +390,12 @@ Widget titleRow(context, String title, function, String sort) {
   );
 }
 
-Widget greenContainer({required String text,required function,padding=SizeManager.s6}) {
+Widget greenContainer(
+    {required String text, required function, padding = SizeManager.s6}) {
   return InkWell(
     onTap: function,
     child: Container(
-      padding:  EdgeInsets.all(padding),
+      padding: EdgeInsets.all(padding),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(SizeManager.s22)),
         color: Colors.green,
@@ -902,7 +904,7 @@ Widget itemTherapistsV(context) {
                 const SizedBox(
                   width: SizeManager.s55,
                 ),
-                greenContainer(text: StringManager.appointment,function:  () {})
+                greenContainer(text: StringManager.appointment, function: () {})
               ],
             )
           ],
@@ -990,7 +992,8 @@ Widget itemBlogsV(context) {
                 ),
                 const SizedBox(
                   height: SizeManager.s10,
-                ),              ],
+                ),
+              ],
             ),
             const Spacer(),
             blueContainer(
@@ -1441,7 +1444,9 @@ Widget collectionTextFormGrey(
           right: right,
           top: top,
           bottom: bottom),
-      const SizedBox(height: SizeManager.s18,),
+      const SizedBox(
+        height: SizeManager.s18,
+      ),
     ],
   );
 }
@@ -1464,7 +1469,7 @@ Widget itemAppointmentV(context) {
     width: SizeManager.s84,
     decoration: BoxDecoration(
       border:
-      Border.all(color: ColorManager.primaryColor, width: SizeManager.s_7),
+          Border.all(color: ColorManager.primaryColor, width: SizeManager.s_7),
       borderRadius: const BorderRadius.all(
         Radius.circular(SizeManager.s10),
       ),
@@ -1577,8 +1582,139 @@ Widget itemAppointmentV(context) {
         const SizedBox(
           height: SizeManager.s10,
         ),
-        Align(alignment: Alignment.bottomRight,child: greenContainer(text: 'Tue/30 Aug 4:00 pm',function:  () {}))
+        Align(
+            alignment: Alignment.bottomRight,
+            child: greenContainer(text: 'Tue/30 Aug 4:00 pm', function: () {}))
       ],
+    ),
+  );
+}
+
+Widget aboutItemDoctor(iconData, String text) {
+  return Container(
+    width: SizeManager.s150,
+    padding: const EdgeInsets.all(SizeManager.s4),
+    decoration: const BoxDecoration(color: Colors.white),
+    child: Row(
+      children: [
+        iconData == null
+            ? const SizedBox(
+                width: SizeManager.s18,
+                height: SizeManager.s18,
+                child: Image(image: AssetImage(AssetsManager.dollar)))
+            : Icon(iconData, color: ColorManager.headOrange),
+        const SizedBox(
+          width: SizeManager.s8,
+        ),
+        Text(text,
+            style: StylesManager.itemHome.copyWith(
+                fontSize: SizeManager.s10, fontWeight: FontWeight.w500))
+      ],
+    ),
+  );
+}
+
+Widget nameDoctorAndJob() {
+  return Column(
+    children: [
+      Align(
+          alignment: Alignment.center,
+          child: Text(
+            'Dr. Vanadis Odindatter',
+            style:
+                StylesManager.headPrimary2.copyWith(fontSize: SizeManager.s28),
+          )),
+      const SizedBox(
+        height: SizeManager.s10,
+      ),
+      Align(
+          alignment: Alignment.center,
+          child: Text(
+            'Pyschologist',
+            style: StylesManager.itemHome,
+          )),
+      const SizedBox(
+        height: SizeManager.s22,
+      ),
+    ],
+  );
+}
+
+Widget aboutDoctor(context) {
+  return Padding(
+    padding:
+        EdgeInsets.only(top: hightMedia(context: context, h: SizeManager.s_15)),
+    child: Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        color: ColorManager.textWhite,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(SizeManager.s22),
+            topRight: Radius.circular(SizeManager.s22)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(
+            left: SizeManager.s22, right: SizeManager.s24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: hightMedia(context: context, h: SizeManager.s_1)),
+            nameDoctorAndJob(),
+            Text('About',
+                style: StylesManager.bodyMedium.copyWith(
+                    fontWeight: FontWeight.w500, fontSize: SizeManager.s22)),
+            const SizedBox(
+              height: SizeManager.s10,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: hightMedia(context: context, h: SizeManager.s_21),
+                  child: Text(
+                    'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euy.',
+                    style: StylesManager.or.copyWith(fontSize: SizeManager.s16),
+                  ),
+                ),
+                const Spacer(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    aboutItemDoctor(
+                        Icons.location_on_outlined, 'Umea, Sweden '),
+                    const SizedBox(
+                      height: SizeManager.s10,
+                    ),
+                    aboutItemDoctor(Icons.watch_later_outlined, '25 mins est.'),
+                    const SizedBox(
+                      height: SizeManager.s10,
+                    ),
+                    aboutItemDoctor(null, '25 USD / 232 SEK'),
+                    const SizedBox(
+                      height: SizeManager.s10,
+                    ),
+                  ],
+                )
+              ],
+            ),
+            const SizedBox(
+              height: SizeManager.s16,
+            ),
+            Align(
+                alignment: Alignment.center,
+                child: dividerBlue(
+                    width: hightMedia(context: context, h: SizeManager.s_21),
+                    color: ColorManager.greenColor)),
+            const SizedBox(height: 20,),
+            Text('Patient Reviews',
+                style: StylesManager.bodyMedium.copyWith(
+                    fontWeight: FontWeight.w500, fontSize: SizeManager.s22)),
+            const SizedBox(
+              height: SizeManager.s10,
+            ),
+          ],
+        ),
+      ),
     ),
   );
 }

@@ -1,5 +1,6 @@
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:taafe/modules/setting_items/follwing_user/follwing_user_screen.dart';
 import 'package:taafe/modules/setting_items/my_account/my_account_screen.dart';
 
 import '../../../shared/components/components.dart';
@@ -39,7 +40,10 @@ class SettingScreen extends StatelessWidget {
                 }),
                 itemSetting(context, Icons.qr_code, 'QR Code', () {}),
                 itemSetting(
-                    context, FontAwesomeIcons.user, 'Following User', () {}),
+                    context, FontAwesomeIcons.user, 'Following User', () {
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) =>const FollwingUser()));
+                }),
                 itemSetting(
                     context, FontAwesomeIcons.wallet, 'Payment Method', () {}),
                 itemSetting(

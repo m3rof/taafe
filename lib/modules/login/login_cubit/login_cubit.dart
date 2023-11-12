@@ -1,12 +1,12 @@
 import 'dart:ffi';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taafe/layout/home/home_screen.dart';
 import 'package:taafe/modules/login/login_cubit/login_state.dart';
 import 'package:taafe/modules/register/register_screen.dart';
-
+import 'package:taafe/shared/network/remote/dio_helper.dart';
+import 'package:taafe/shared/network/remote/end_points.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());
 
@@ -27,24 +27,43 @@ class LoginCubit extends Cubit<LoginState> {
     emit(ChangeIconVisibilityState());
   }
 
-  void moveRegister(context){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterScreen(),));
+  void moveRegister(context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const RegisterScreen(),
+        ));
     emit(NavigationRegisterState());
   }
 
   void checkValidation(
-      {
-        required context,
-        required GlobalKey<FormState> key,
+      {required context,
+      required GlobalKey<FormState> key,
       required TextEditingController emailController,
       required TextEditingController passwordController}) {
     if (key.currentState!.validate()) {
-      String email = emailController.text;
-      String password = passwordController.text;
-      print(email);
-      print(password);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen(),));
+      loginUser(context, emailController.text, passwordController.text);
       emit(CheckValidatorLoginState());
     }
   }
+
+  void loginUser(context, String email, String password) {
+    emit(LoadingLoginState());
+    DioHelper.postData(
+        url: login,
+        data: {'email': email, 'password': password}
+    ).then((value) {
+      print(value.data);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ));
+      emit(SuccessLoginState());
+    }).catchError((error) {
+      print('catch error: $error');
+      emit(ErrorLoginState());
+    });
+  }
+
 }
