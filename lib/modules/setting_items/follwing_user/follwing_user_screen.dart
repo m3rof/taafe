@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taafe/shared/components/components.dart';
 import 'package:taafe/shared/components/constants.dart';
-
 import '../../../shared/resourses/value_app.dart';
 
 class FollwingUser extends StatefulWidget {

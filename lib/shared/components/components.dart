@@ -2,8 +2,8 @@ import 'package:awesome_icons/awesome_icons.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
-import 'package:taafe/shared/resourses/family_manager.dart';
 import '../../layout/home/home_cubit/home_cubit.dart';
+import '../../modules/drawer_items/medicine_alarm/medicine_alarm_cubit/medicine_alarm_cubit.dart';
 import '../resourses/assets_manager.dart';
 import '../resourses/color_manager.dart';
 import '../resourses/strings_manager.dart';
@@ -50,7 +50,7 @@ Widget textFieldPrefix(
     Widget? icons}) {
   return TextFormField(
     controller: controller,
-    validator: (value) => value!.isEmpty ? validator : null,
+    validator: (value) => value!.trim().isEmpty ? validator : null,
     obscureText: obsurce,
     keyboardType: textInputType,
     decoration: InputDecoration(
@@ -71,7 +71,7 @@ Widget textFieldRegister(
     bool email = false}) {
   return TextFormField(
     validator: (value) {
-      if (value!.isEmpty) {
+      if (value!.trim().isEmpty) {
         return validator;
       }
       final bool emailValid = RegExp(
@@ -391,18 +391,25 @@ Widget titleRow(context, String title, function, String sort) {
 }
 
 Widget greenContainer(
-    {required String text, required function, padding = SizeManager.s6}) {
+    {required String text,
+    required function,
+    top = SizeManager.s6,
+      left = SizeManager.s6,
+      right = SizeManager.s6,
+      bottom = SizeManager.s6,
+    fontSize = SizeManager.s10}) {
   return InkWell(
     onTap: function,
     child: Container(
-      padding: EdgeInsets.all(padding),
+      padding:
+          EdgeInsets.only(top: top, left: left, right: right, bottom: bottom),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(SizeManager.s22)),
         color: Colors.green,
       ),
       child: Text(
         text,
-        style: StylesManager.greenContainer,
+        style: StylesManager.greenContainer.copyWith(fontSize: fontSize),
       ),
     ),
   );
@@ -1398,7 +1405,7 @@ Widget textFormGrey(
     Widget? icon}) {
   return TextFormField(
     controller: textEditingController,
-    validator: (value) => validator,
+    validator: (value) => value!.trim().isEmpty?validator:null,
     keyboardType: textInputType,
     decoration: InputDecoration(
         suffixIcon: icon,
@@ -1640,81 +1647,414 @@ Widget nameDoctorAndJob() {
   );
 }
 
-Widget aboutDoctor(context) {
-  return Padding(
-    padding:
-        EdgeInsets.only(top: hightMedia(context: context, h: SizeManager.s_15)),
-    child: Container(
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        color: ColorManager.textWhite,
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(SizeManager.s22),
-            topRight: Radius.circular(SizeManager.s22)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(
-            left: SizeManager.s22, right: SizeManager.s24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+Widget itemReview() {
+  return Container(
+    margin: const EdgeInsets.symmetric(vertical: SizeManager.s10),
+    padding: const EdgeInsets.all(SizeManager.s6),
+    decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(SizeManager.s10))),
+    child: Column(
+      children: [
+        Row(
           children: [
-            SizedBox(height: hightMedia(context: context, h: SizeManager.s_1)),
-            nameDoctorAndJob(),
-            Text('About',
-                style: StylesManager.bodyMedium.copyWith(
-                    fontWeight: FontWeight.w500, fontSize: SizeManager.s22)),
-            const SizedBox(
-              height: SizeManager.s10,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: hightMedia(context: context, h: SizeManager.s_21),
-                  child: Text(
-                    'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euy.',
-                    style: StylesManager.or.copyWith(fontSize: SizeManager.s16),
-                  ),
-                ),
-                const Spacer(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    aboutItemDoctor(
-                        Icons.location_on_outlined, 'Umea, Sweden '),
-                    const SizedBox(
-                      height: SizeManager.s10,
-                    ),
-                    aboutItemDoctor(Icons.watch_later_outlined, '25 mins est.'),
-                    const SizedBox(
-                      height: SizeManager.s10,
-                    ),
-                    aboutItemDoctor(null, '25 USD / 232 SEK'),
-                    const SizedBox(
-                      height: SizeManager.s10,
-                    ),
-                  ],
-                )
-              ],
+            Text(
+              'Jane Doe',
+              style: StylesManager.itemHome,
             ),
             const SizedBox(
-              height: SizeManager.s16,
+              width: SizeManager.s10,
             ),
-            Align(
-                alignment: Alignment.center,
-                child: dividerBlue(
-                    width: hightMedia(context: context, h: SizeManager.s_21),
-                    color: ColorManager.greenColor)),
-            const SizedBox(height: 20,),
-            Text('Patient Reviews',
-                style: StylesManager.bodyMedium.copyWith(
-                    fontWeight: FontWeight.w500, fontSize: SizeManager.s22)),
-            const SizedBox(
-              height: SizeManager.s10,
+            Text(
+              '21 / 03 / 2023',
+              style: StylesManager.or,
             ),
+            starsYellow()
+          ],
+        ),
+        const SizedBox(
+          height: SizeManager.s8,
+        ),
+        Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Lorem ipsum dolor sit amet. consectetuer elit.',
+              style: StylesManager.itemHome,
+            ))
+      ],
+    ),
+  );
+}
+
+Widget listReview() {
+  return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 2,
+      itemBuilder: (context, index) => itemReview());
+}
+
+Widget moreReviews(function) {
+  return InkWell(
+    onTap: function,
+    child: Align(
+      alignment: Alignment.center,
+      child: Container(
+        padding: const EdgeInsets.all(SizeManager.s10),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            Text(
+              'more reviews',
+              style: TextStyle(
+                  color: ColorManager.greenColor, fontSize: SizeManager.s16),
+            ),
+            SizedBox(
+              width: SizeManager.s10,
+            ),
+            Icon(Icons.arrow_right)
           ],
         ),
       ),
     ),
+  );
+}
+
+Widget achievement(String text) {
+  return Container(
+    margin: const EdgeInsets.symmetric(vertical: SizeManager.s10),
+    child: IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const VerticalDivider(
+            color: ColorManager.primaryColor,
+            thickness: SizeManager.s3,
+            width: 10,
+          ),
+          const SizedBox(
+            width: SizeManager.s16,
+          ),
+          SizedBox(
+              width: SizeManager.s200,
+              child: Text(
+                text,
+                style: StylesManager.itemHome,
+              ))
+        ],
+      ),
+    ),
+  );
+}
+
+Widget aboutDoctor(context) {
+  return Container(
+    width: double.infinity,
+    decoration: const BoxDecoration(
+      color: ColorManager.textWhite,
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(SizeManager.s22),
+          topRight: Radius.circular(SizeManager.s22)),
+    ),
+    child: Padding(
+      padding:
+          const EdgeInsets.only(left: SizeManager.s22, right: SizeManager.s24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: SizeManager.s20),
+          nameDoctorAndJob(),
+          Text('About',
+              style: StylesManager.bodyMedium.copyWith(
+                  fontWeight: FontWeight.w500, fontSize: SizeManager.s22)),
+          const SizedBox(
+            height: SizeManager.s10,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: hightMedia(context: context, h: SizeManager.s_21),
+                child: Text(
+                  'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euy.',
+                  style: StylesManager.or.copyWith(fontSize: SizeManager.s16),
+                ),
+              ),
+              const Spacer(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  aboutItemDoctor(Icons.location_on_outlined, 'Umea, Sweden '),
+                  const SizedBox(
+                    height: SizeManager.s10,
+                  ),
+                  aboutItemDoctor(Icons.watch_later_outlined, '25 mins est.'),
+                  const SizedBox(
+                    height: SizeManager.s10,
+                  ),
+                  aboutItemDoctor(null, '25 USD / 232 SEK'),
+                  const SizedBox(
+                    height: SizeManager.s10,
+                  ),
+                ],
+              )
+            ],
+          ),
+          const SizedBox(
+            height: SizeManager.s16,
+          ),
+          Align(
+              alignment: Alignment.center,
+              child: dividerBlue(
+                  width: hightMedia(context: context, h: SizeManager.s_21),
+                  color: ColorManager.greenColor)),
+          const SizedBox(
+            height: 20,
+          ),
+          Text('Patient Reviews',
+              style: StylesManager.bodyMedium.copyWith(
+                  fontWeight: FontWeight.w500, fontSize: SizeManager.s22)),
+          listReview(),
+          const SizedBox(
+            height: SizeManager.s10,
+          ),
+          moreReviews(null),
+          const SizedBox(
+            height: SizeManager.s16,
+          ),
+          Align(
+              alignment: Alignment.center,
+              child: dividerBlue(
+                  width: hightMedia(context: context, h: SizeManager.s_21),
+                  color: ColorManager.greenColor)),
+          const SizedBox(
+            height: 20,
+          ),
+          Text('Experince',
+              style: StylesManager.bodyMedium.copyWith(
+                  fontWeight: FontWeight.w500, fontSize: SizeManager.s22)),
+          const SizedBox(
+            height: SizeManager.s18,
+          ),
+          achievement(
+              'Clinical training Mental Meaith Secrets Mar 2017 - Sep 20 18'),
+          achievement(
+              'Clinical training Mental Meaith Secrets Mar 2017 - Sep 20 18'),
+          achievement(
+              'Clinical training Mental Meaith Secrets Mar 2017 - Sep 20 18'),
+          Align(
+              alignment: Alignment.center,
+              child: dividerBlue(
+                  width: hightMedia(context: context, h: SizeManager.s_21),
+                  color: ColorManager.greenColor)),
+          const SizedBox(
+            height: 20,
+          ),
+          Text('Certificate',
+              style: StylesManager.bodyMedium.copyWith(
+                  fontWeight: FontWeight.w500, fontSize: SizeManager.s22)),
+          const SizedBox(
+            height: SizeManager.s18,
+          ),
+          achievement(
+              'Clinical training Mental Meaith Secrets Mar 2017 - Sep 20 18'),
+          achievement(
+              'Clinical training Mental Meaith Secrets Mar 2017 - Sep 20 18'),
+          achievement(
+              'Clinical training Mental Meaith Secrets Mar 2017 - Sep 20 18'),
+          Align(
+              alignment: Alignment.center,
+              child: dividerBlue(
+                  width: hightMedia(context: context, h: SizeManager.s_21),
+                  color: ColorManager.greenColor)),
+          const SizedBox(
+            height: 20,
+          ),
+          Text('Education',
+              style: StylesManager.bodyMedium.copyWith(
+                  fontWeight: FontWeight.w500, fontSize: SizeManager.s22)),
+          const SizedBox(
+            height: SizeManager.s18,
+          ),
+          achievement(
+              'Clinical training Mental Meaith Secrets Mar 2017 - Sep 20 18'),
+          achievement(
+              'Clinical training Mental Meaith Secrets Mar 2017 - Sep 20 18'),
+          achievement(
+              'Clinical training Mental Meaith Secrets Mar 2017 - Sep 20 18'),
+          const SizedBox(
+            height: SizeManager.s35,
+          ),
+          Align(
+              alignment: Alignment.center,
+              child: greenContainer(
+                  text: 'Make an appointment',
+                  function: () {},
+                  top: SizeManager.s10,
+                  left:SizeManager.s10 ,
+                  right: SizeManager.s10,
+                  bottom: SizeManager.s10,
+                  fontSize: SizeManager.s18)),
+          const SizedBox(
+            height: SizeManager.s35,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget dropFormField({
+  required String? selectedItem,
+  required String validator,
+  required List list,
+  required void function(value),
+  required double left,
+  required double right,
+  required double top,
+  required double bottom,
+   GlobalKey<FormFieldState>? key
+}) {
+  return DropdownButtonFormField(
+    key: key,
+    validator: (value) =>  value==null?validator:null,
+    value: selectedItem,
+    items: list.map((e) {
+      return DropdownMenuItem(
+        value: e,
+        child: Text(e),
+      );
+    }).toList(),
+    onChanged: (value) {
+      function(value);
+    },
+    icon: const Icon(
+      Icons.arrow_drop_down_outlined,
+      color: ColorManager.headOrange,
+    ),
+    dropdownColor: const Color(0xffe6e3ee),
+    decoration: InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.fromLTRB(left, top, right, bottom),
+        fillColor: const Color(0xffe6e3ee),
+        filled: true,
+        focusedBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(SizeManager.s16)),
+            borderSide: BorderSide(color: ColorManager.transparentColor)),
+        enabledBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(SizeManager.s16)),
+            borderSide: BorderSide(color: ColorManager.transparentColor)),
+        border: const OutlineInputBorder()),
+  );
+}
+
+Widget collectionDropFormField({
+  required String text,
+  required String validator,
+  required String? selectedItem,
+  required List list,
+  required void function(value),
+  required double left,
+  required double right,
+  required double top,
+  required double bottom,
+}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        text,
+        style: StylesManager.itemHome,
+      ),
+      const SizedBox(
+        height: SizeManager.s10,
+      ),
+      dropFormField(
+          validator: validator,
+          selectedItem: selectedItem,
+          list: list,
+          function: function,
+          left: left,
+          right: right,
+          top: top,
+          bottom: bottom),
+      const SizedBox(
+        height: SizeManager.s18,
+      ),
+    ],
+  );
+}
+
+Widget itemAlarm(MedicineAlarmCubit cubit){
+  return  Container(
+    margin:const EdgeInsets.symmetric(horizontal: SizeManager.s10,vertical: SizeManager.s14),
+    padding: const EdgeInsets.symmetric(
+        vertical: SizeManager.s4,
+        horizontal: SizeManager.s10),
+    decoration: const BoxDecoration(
+        color: ColorManager.primaryColor,
+        borderRadius: BorderRadius.all(
+            Radius.circular(SizeManager.s20))),
+    child: Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              MedicineAlarmCubit.medicineAlarm[0].name,
+              style: StylesManager.greenContainer
+                  .copyWith(fontSize: SizeManager.s24),
+            ),
+            const Spacer(),
+            Switch(
+              value:
+              MedicineAlarmCubit.medicineAlarm[0].turn,
+              onChanged: (value) => cubit.changeTurn(),
+              activeColor: ColorManager.headOrange,
+              activeTrackColor: Colors.white,
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Text(
+              MedicineAlarmCubit.medicineAlarm[0].clock,
+              style: StylesManager.greenContainer
+                  .copyWith(fontSize: SizeManager.s18),
+            ),
+            const SizedBox(
+              width: SizeManager.s4,
+            ),
+            Text(
+              '(${MedicineAlarmCubit.medicineAlarm[0].day})',
+              style: StylesManager.greenContainer
+                  .copyWith(fontSize: SizeManager.s18),
+            ),
+            const SizedBox(width: SizeManager.s130,),
+            Text(MedicineAlarmCubit.medicineAlarm[0].turn==true?
+              'ON':'OFF',
+              style: StylesManager.greenContainer
+                  .copyWith(fontSize: SizeManager.s18),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: SizeManager.s4,
+        )
+      ],
+    ),
+  );
+}
+
+Widget listAlarm(MedicineAlarmCubit cubit){
+  return ListView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemCount: 10,
+    itemBuilder: (context, index) {
+      return itemAlarm(cubit);
+    },
   );
 }

@@ -119,17 +119,24 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
               Align(
                   alignment: Alignment.center,
                   child: greenContainer(
-                    text: 'Add outsourse diagnosis',
-                    function: () {},
-                      padding: SizeManager.s12
-                  )),
+                      fontSize: SizeManager.s14,
+                      text: 'Add outsourse diagnosis',
+                      function: () {},
+                      bottom: SizeManager.s12,
+                      left: SizeManager.s12,
+                      right: SizeManager.s12,
+                      top: SizeManager.s12)),
               const SizedBox(height: SizeManager.s14),
               Align(
                   alignment: Alignment.center,
                   child: greenContainer(
+                      fontSize: SizeManager.s14,
                       text: 'Add test results',
                       function: () {},
-                      padding: SizeManager.s12))
+                      bottom: SizeManager.s12,
+                      left: SizeManager.s12,
+                      right: SizeManager.s12,
+                      top: SizeManager.s12))
             ],
           ),
         ),

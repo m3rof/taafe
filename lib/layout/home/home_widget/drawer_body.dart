@@ -9,6 +9,7 @@ import 'package:taafe/shared/resourses/assets_manager.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';
 import 'package:taafe/shared/resourses/value_app.dart';
 
+import '../../../modules/drawer_items/medicine_alarm/medicine_alarm_screen.dart';
 import '../../../modules/drawer_items/setting/setting_screen.dart';
 import '../../../shared/components/components.dart';
 
@@ -38,7 +39,9 @@ class DrawerBody extends StatelessWidget {
             itemDrawer(context,Icons.medical_information,'Medical Record',(){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const MedicalRecordScreen(),));
             }),
-            itemDrawer(context,FontAwesomeIcons.bell,'Medicine Alarm',(){}),
+            itemDrawer(context,FontAwesomeIcons.bell,'Medicine Alarm',(){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const MedicineAlarmScreen(),));
+            }),
             itemDrawer(context,FontAwesomeIcons.heart,'Interests / Hobbies',(){}),
             itemDrawer(context,FontAwesomeIcons.calendarTimes,'Appointments',(){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const AppointmentScreen(),));

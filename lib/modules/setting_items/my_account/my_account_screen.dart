@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taafe/modules/setting_items/my_account/my_account_cubit/my_account_cubit.dart';
+import 'package:taafe/modules/setting_items/my_account/my_account_cubit/my_account_state.dart';
 import 'package:taafe/shared/components/components.dart';
-
 import '../../../shared/resourses/value_app.dart';
 
 class MyAccountScreen extends StatefulWidget {
@@ -13,12 +15,13 @@ class MyAccountScreen extends StatefulWidget {
 class _MyAccountScreenState extends State<MyAccountScreen> {
   late TextEditingController height;
   late TextEditingController weigth;
-
+  late GlobalKey<FormState> key;
 
   @override
   void initState() {
     height = TextEditingController();
-    weigth=TextEditingController();
+    weigth = TextEditingController();
+    key = GlobalKey();
     // TODO: implement initState
     super.initState();
   }
@@ -33,42 +36,149 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(
-              left: SizeManager.s24, right: SizeManager.s22),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('My Account'),
-              const SizedBox(
-                height: SizeManager.s20,
+    var cubit = MyAccountCubit.get(context);
+    return BlocConsumer<MyAccountCubit, MyAccountState>(
+      listener: (context, state) {},
+      builder: (context, state) => Scaffold(
+        appBar: AppBar(),
+        body: SingleChildScrollView(
+          child: Form(
+            key: key,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: SizeManager.s24, right: SizeManager.s22),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('My Account'),
+                  const SizedBox(
+                    height: SizeManager.s20,
+                  ),
+                  collectionTextFormGrey(
+                      title: 'Height (cm):',
+                      textEditingController: height,
+                      validator: 'Enter your height',
+                      textInputType: TextInputType.number,
+                      left: SizeManager.s10,
+                      right: SizeManager.s10,
+                      top: SizeManager.s10,
+                      bottom: SizeManager.s10),
+                  collectionTextFormGrey(
+                      title: 'Weight (kg):',
+                      textEditingController: weigth,
+                      validator: 'Enter your weight',
+                      textInputType: TextInputType.number,
+                      left: SizeManager.s10,
+                      right: SizeManager.s10,
+                      top: SizeManager.s10,
+                      bottom: SizeManager.s10),
+                  collectionDropFormField(
+                      text: 'Blood type:',
+                      validator: 'Enter your Blood type',
+                      selectedItem: cubit.selectedItemBload,
+                      list: MyAccountCubit.bload,
+                      function: (value) {
+                        cubit.showResult(value, cubit.selectedItemBload);
+                      },
+                      left: SizeManager.s10,
+                      right: SizeManager.s10,
+                      top: SizeManager.s10,
+                      bottom: SizeManager.s10),
+                  collectionDropFormField(
+                      text: 'Martial status:',
+                      validator: 'Enter your Martial status',
+                      selectedItem: cubit.selectedItemMartial,
+                      list: MyAccountCubit.martialStatus,
+                      function: (value) {
+                        if (value != null) {
+                          cubit.showResult(value, cubit.selectedItemMartial);
+                        }
+                      },
+                      left: SizeManager.s10,
+                      right: SizeManager.s10,
+                      top: SizeManager.s10,
+                      bottom: SizeManager.s10),
+                  collectionDropFormField(
+                      text: 'Alcohol:',
+                      validator: 'Enter your Alcohol',
+                      selectedItem: cubit.selectedItemAlcohol,
+                      list: MyAccountCubit.alcohol,
+                      function: (value) {
+                        if (value != null) {
+                          cubit.showResult(value, cubit.selectedItemAlcohol);
+                        }
+                      },
+                      left: SizeManager.s10,
+                      right: SizeManager.s10,
+                      top: SizeManager.s10,
+                      bottom: SizeManager.s10),
+                  collectionDropFormField(
+                      text: 'Drugs:',
+                      validator: 'Enter your Drugs',
+                      selectedItem: cubit.selectedItemDrugs,
+                      list: MyAccountCubit.drugs,
+                      function: (value) {
+                        if (value != null) {
+                          cubit.showResult(value, cubit.selectedItemDrugs);
+                        }
+                      },
+                      left: SizeManager.s10,
+                      right: SizeManager.s10,
+                      top: SizeManager.s10,
+                      bottom: SizeManager.s10),
+                  collectionDropFormField(
+                      text: 'Are you religious ?:',
+                      validator: 'choice option',
+                      selectedItem: cubit.selectedItemReligious,
+                      list: MyAccountCubit.religious,
+                      function: (value) {
+                        if (value != null) {
+                          cubit.showResult(value, cubit.selectedItemReligious);
+                        }
+                      },
+                      left: SizeManager.s10,
+                      right: SizeManager.s10,
+                      top: SizeManager.s10,
+                      bottom: SizeManager.s10),
+                  collectionDropFormField(
+                      text: 'Religion:',
+                      validator: 'Enter your Religion',
+                      selectedItem: cubit.selectedItemReligious,
+                      list: MyAccountCubit.religious,
+                      function: (value) {
+                        if (value != null) {
+                          cubit.showResult(value, cubit.selectedItemReligious);
+                        }
+                      },
+                      left: SizeManager.s10,
+                      right: SizeManager.s10,
+                      top: SizeManager.s10,
+                      bottom: SizeManager.s10),
+                  const SizedBox(
+                    height: SizeManager.s16,
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: greenContainer(
+                          text: 'Save information',
+                          function: () {
+                            cubit.checkValidation(
+                                context: context,
+                                key: key,
+                                heightController: height,
+                                weightController: weigth);
+                          },
+                          fontSize: SizeManager.s16,
+                          bottom: SizeManager.s8,
+                          top: SizeManager.s8,
+                          right: SizeManager.s16,
+                          left: SizeManager.s16)),
+                  const SizedBox(
+                    height: SizeManager.s16,
+                  ),
+                ],
               ),
-
-              collectionTextFormGrey(
-                  title: 'Height (cm):',
-                  textEditingController: height,
-                  validator: 'Enter your height',
-                  textInputType: TextInputType.number,
-                  left: SizeManager.s10,
-                  right: SizeManager.s10,
-                  top: SizeManager.s10,
-                  bottom: SizeManager.s10),
-
-              collectionTextFormGrey(
-                  title: 'Weight (kg):',
-                  textEditingController: weigth,
-                  validator: 'Enter your weight',
-                  textInputType: TextInputType.number,
-                  left: SizeManager.s10,
-                  right: SizeManager.s10,
-                  top: SizeManager.s10,
-                  bottom: SizeManager.s10),
-
-
-            ],
+            ),
           ),
         ),
       ),
