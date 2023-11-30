@@ -18,18 +18,19 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  late TextEditingController username ;
+  late TextEditingController username;
+
   late TextEditingController email;
   late TextEditingController password;
   late TextEditingController confirmPassword;
-  GlobalKey<FormState>key = GlobalKey();
+  GlobalKey<FormState> key = GlobalKey();
 
   @override
   void initState() {
-    username=TextEditingController();
-    email=TextEditingController();
-    password=TextEditingController();
-    confirmPassword=TextEditingController();
+    username = TextEditingController();
+    email = TextEditingController();
+    password = TextEditingController();
+    confirmPassword = TextEditingController();
     // TODO: implement initState
     super.initState();
   }
@@ -49,92 +50,108 @@ class _RegisterScreenState extends State<RegisterScreen> {
     var cubit = RegisterCubit.get(context);
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {},
-      builder: (context, state) =>
-          Scaffold(
-            backgroundColor: ColorManager.primaryColor,
-            body: Padding(
-              padding: const EdgeInsets.all(SizeManager.s35),
-              child: SingleChildScrollView(
-                child: Form(
-                  key: key,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: hightMedia(
-                            context: context, h: SizeManager.s_03),
-                      ),
-                      userPhoto(null),
-                      SizedBox(
-                        height: hightMedia(
-                            context: context, h: SizeManager.s_03),
-                      ),
-                      createAccountText(),
-                      const SizedBox(
-                        height: SizeManager.s28,
-                      ),
-                      line(),
-                      const SizedBox(
-                        height: SizeManager.s30,
-                      ),
-                      textFieldRegister(
-                        textInputType: TextInputType.text,
-                        controller: username,
-                        hint: StringManager.userRegister,
-                        validator: StringManager.userValidatorRegister,
-                      ),
-                      const SizedBox(
-                        height: SizeManager.s20,
-                      ),
-                      textFieldRegister(
-                        textInputType: TextInputType.emailAddress,
-                        email: true,
-                        controller: email,
-                        hint: StringManager.emailRegister,
-                        validator: StringManager.emailValidatorRegister,
-                      ),
-                      const SizedBox(
-                        height: SizeManager.s20,
-                      ),
-                      textFieldRegister(
-                        textInputType: TextInputType.visiblePassword,
-                        controller: password,
-                        hint: StringManager.passwordRegister,
-                        validator: StringManager.passwordValidatorRegister,
-                      ),
-                      const SizedBox(
-                        height: SizeManager.s20,
-                      ),
-                      textFieldRegister(
-                        textInputType: TextInputType.visiblePassword,
-                        controller: confirmPassword,
-                        hint: StringManager.confirmRegister,
-                        validator: StringManager.confirmValidatorRegister,
-                      ),
-                      const SizedBox(
-                        height: SizeManager.s28,
-                      ),
-                      floatingButton(
-                          (){
-                            cubit.checkValidation(context: context,key: key,
-                                emailController: email,
-                                passwordController: password,
-                                confirmController: confirmPassword,
-                                userController: username);
-                          },
-                          const Image(
-                            image: AssetImage(AssetsManager.right),
-                            width: SizeManager.s24,
-                            height: SizeManager.s24,),
-                        width: SizeManager.s50,
-                        height: SizeManager.s50
-                      )
-                    ],
+      builder: (context, state) => Scaffold(
+        backgroundColor: ColorManager.primaryColor,
+        body: Padding(
+          padding: const EdgeInsets.all(SizeManager.s35),
+          child: SingleChildScrollView(
+            child: Form(
+              key: key,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: hightMedia(context: context, h: SizeManager.s_03),
                   ),
-                ),
+                  userPhoto(null),
+                  SizedBox(
+                    height: hightMedia(context: context, h: SizeManager.s_03),
+                  ),
+                  createAccountText(),
+                  const SizedBox(
+                    height: SizeManager.s28,
+                  ),
+                  line(),
+                  const SizedBox(
+                    height: SizeManager.s30,
+                  ),
+                  textFieldRegister(
+                    textInputType: TextInputType.text,
+                    controller: username,
+                    hint: StringManager.userRegister,
+                    validator: StringManager.userValidatorRegister,
+                  ),
+                  const SizedBox(
+                    height: SizeManager.s20,
+                  ),
+                  textFieldRegister(
+                    textInputType: TextInputType.emailAddress,
+                    email: true,
+                    controller: email,
+                    hint: StringManager.emailRegister,
+                    validator: StringManager.emailValidatorRegister,
+                  ),
+                  const SizedBox(
+                    height: SizeManager.s20,
+                  ),
+                  textFieldRegister(
+                    obsurce:cubit.visibility,
+                    prefixIcon:IconButton(
+                        onPressed: () {
+                          cubit.changeVisibility();
+                          cubit.changeIconVisibility();
+                        },
+                        icon: cubit.iconVisibility,
+                        color: Colors.white,
+                    ),
+                    textInputType: TextInputType.visiblePassword,
+                    controller: password,
+                    hint: StringManager.passwordRegister,
+                    validator: StringManager.passwordValidatorRegister,
+                  ),
+                  const SizedBox(
+                    height: SizeManager.s20,
+                  ),
+                  textFieldRegister(
+                    suffixIcon: confirmPassword.text == password.text &&
+                            password.text != '' &&
+                            confirmPassword != ''
+                        ? const Icon(
+                            Icons.done,
+                            color: Colors.white,
+                            size: SizeManager.s28
+                          )
+                        : null,
+                    textInputType: TextInputType.visiblePassword,
+                    controller: confirmPassword,
+                    hint: StringManager.confirmRegister,
+                    validator: StringManager.confirmValidatorRegister,
+                  ),
+                  const SizedBox(
+                    height: SizeManager.s28,
+                  ),
+                  floatingButton(() {
+                    cubit.checkValidation(
+                        context: context,
+                        key: key,
+                        emailController: email,
+                        passwordController: password,
+                        confirmController: confirmPassword,
+                        userController: username);
+                  },
+                      const Image(
+                        image: AssetImage(AssetsManager.right),
+                        width: SizeManager.s24,
+                        height: SizeManager.s24,
+                      ),
+                      width: SizeManager.s50,
+                      height: SizeManager.s50)
+                ],
               ),
             ),
           ),
+        ),
+      ),
     );
   }
 }

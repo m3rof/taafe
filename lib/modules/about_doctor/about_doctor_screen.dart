@@ -31,10 +31,15 @@ class AboutDoctorScreen extends StatelessWidget {
                         const SizedBox(height: SizeManager.s200,child: Image(image: AssetImage(AssetsManager.bubble))),
                         Positioned(
                           top: hightMedia(context: context, h: SizeManager.s_1),
-                          child: CircleAvatar(
-                            radius: hightMedia(context: context, h: SizeManager.s_1),
-                            backgroundColor: Colors.grey.shade700,
-                            backgroundImage:const AssetImage(AssetsManager.me),
+                          child: GestureDetector(
+                            onTap: (){
+                              showImage(context,AssetsManager.me);
+                            },
+                            child: CircleAvatar(
+                              radius: hightMedia(context: context, h: SizeManager.s_1),
+                              backgroundColor: Colors.grey.shade700,
+                              backgroundImage:const AssetImage(AssetsManager.me),
+                            ),
                           ),
                         )
                         // Container(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taafe/modules/login/login_cubit/login_cubit.dart';
 import 'package:taafe/modules/login/login_cubit/login_state.dart';
+import 'package:taafe/modules/register/register_screen.dart';
+import 'package:taafe/shared/components/constants.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';
 import 'package:taafe/shared/resourses/styles.dart';
 import 'package:taafe/shared/resourses/value_app.dart';
@@ -113,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   textButton(
                       textStyle: StylesManager.loginCreate,
                       function: () {
-                        cubit.moveRegister(context);
+                        moveScreen(context: context, screen:const RegisterScreen());
                       },
                       text: StringManager.newAccount)
                 ],

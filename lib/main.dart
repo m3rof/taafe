@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taafe/modules/about_doctor/about_doctor_screen.dart';
 import 'package:taafe/modules/drawer_items/appointment/appointment_cubit/appointment_cubit.dart';
 import 'package:taafe/modules/login/login_cubit/login_cubit.dart';
+import 'package:taafe/modules/login/login_screen.dart';
+import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 import 'package:taafe/modules/setting_items/my_account/my_account_cubit/my_account_cubit.dart';
 import 'package:taafe/shared/network/local/notification/notification.dart';
 import 'package:taafe/shared/network/remote/dio_helper.dart';
@@ -34,12 +37,13 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => AppointmentCubit()),
         BlocProvider(create: (context) => MyAccountCubit()),
         BlocProvider(create: (context) => MedicineAlarmCubit()),
+        BlocProvider(create: (context) => PostsCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'taafe',
         theme: ThemeManager.themeApp,
-        home:const HomeScreen()
+        home:const HomeScreen(),
       ),
     );
   }

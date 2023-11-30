@@ -1,6 +1,8 @@
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:taafe/modules/posts/posts_screen.dart';
 import 'package:taafe/shared/components/components.dart';
+import 'package:taafe/shared/components/constants.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';
 
 import '../../../shared/resourses/value_app.dart';
@@ -23,7 +25,9 @@ class CommunitiesScreen extends StatelessWidget {
               height: SizeManager.s22,
             ),
             rowCommunity(
-                itemCommunity(() {}, FontAwesomeIcons.angry,
+                itemCommunity(() {
+                  moveScreen(context: context, screen:const PostsScreen());
+                }, FontAwesomeIcons.angry,
                     'Anxiety Disorders'),
                 itemCommunity(() {},FontAwesomeIcons.userMinus,
                     'Depression')),
