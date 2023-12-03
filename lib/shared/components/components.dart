@@ -43,12 +43,13 @@ Widget welcome() {
   );
 }
 
-Widget textFieldPrefix({required TextInputType textInputType,
-  required TextEditingController controller,
-  required String label,
-  required String validator,
-  bool obsurce = false,
-  Widget? icons}) {
+Widget textFieldPrefix(
+    {required TextInputType textInputType,
+    required TextEditingController controller,
+    required String label,
+    required String validator,
+    bool obsurce = false,
+    Widget? icons}) {
   return TextFormField(
     controller: controller,
     validator: (value) => value!.trim().isEmpty ? validator : null,
@@ -61,22 +62,23 @@ Widget textFieldPrefix({required TextInputType textInputType,
   );
 }
 
-Widget textFieldRegister({required TextEditingController controller,
-  required String validator,
-  required String hint,
-  bool obsurce = false,
-  bool confirm = false,
-  required TextInputType textInputType,
-  Widget? suffixIcon,
-  Widget? prefixIcon,
-  bool email = false}) {
+Widget textFieldRegister(
+    {required TextEditingController controller,
+    required String validator,
+    required String hint,
+    bool obsurce = false,
+    bool confirm = false,
+    required TextInputType textInputType,
+    Widget? suffixIcon,
+    Widget? prefixIcon,
+    bool email = false}) {
   return TextFormField(
     validator: (value) {
       if (value!.trim().isEmpty) {
         return validator;
       }
       final bool emailValid = RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
           .hasMatch(controller.text);
       if (email && !emailValid) {
         return StringManager.emailFormat;
@@ -89,19 +91,19 @@ Widget textFieldRegister({required TextEditingController controller,
     keyboardType: textInputType,
     cursorColor: ColorManager.textWhite,
     decoration: InputDecoration(
-        suffixIcon: suffixIcon,
-        hintText: hint,
-        hintStyle: StylesManager.hint,
-        focusedErrorBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
-            borderSide: BorderSide(color: ColorManager.textWhite)),
-        focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
-            borderSide: BorderSide(color: ColorManager.textWhite)),
-        enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
-            borderSide: BorderSide(color: ColorManager.textWhite)),
-        prefixIcon:prefixIcon,
+      suffixIcon: suffixIcon,
+      hintText: hint,
+      hintStyle: StylesManager.hint,
+      focusedErrorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
+          borderSide: BorderSide(color: ColorManager.textWhite)),
+      focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
+          borderSide: BorderSide(color: ColorManager.textWhite)),
+      enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
+          borderSide: BorderSide(color: ColorManager.textWhite)),
+      prefixIcon: prefixIcon,
     ),
   );
 }
@@ -179,16 +181,13 @@ Widget line() {
 Widget titleHome(context) {
   return Padding(
     padding:
-    const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
+        const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           StringManager.find,
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodySmall,
+          style: Theme.of(context).textTheme.bodySmall,
         ),
         const SizedBox(
           height: SizeManager.s4,
@@ -208,16 +207,13 @@ Widget titleHome(context) {
 Widget titleKind(context, String kind) {
   return Padding(
     padding:
-    const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
+        const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           kind,
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodyMedium,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         const SizedBox(
           height: SizeManager.s12,
@@ -255,11 +251,11 @@ Widget searchKind(context, function, String hint,
               hintStyle: const TextStyle(color: ColorManager.primaryColor),
               focusedBorder: const OutlineInputBorder(
                   borderRadius:
-                  BorderRadius.all(Radius.circular(SizeManager.s30)),
+                      BorderRadius.all(Radius.circular(SizeManager.s30)),
                   borderSide: BorderSide(color: ColorManager.search)),
               enabledBorder: const OutlineInputBorder(
                   borderRadius:
-                  BorderRadius.all(Radius.circular(SizeManager.s30)),
+                      BorderRadius.all(Radius.circular(SizeManager.s30)),
                   borderSide: BorderSide(color: ColorManager.search)),
             ),
           ),
@@ -337,16 +333,13 @@ Widget itemServices(String assets, String name) {
 Widget listViewServices(context, List<ItemServices> list) {
   return Padding(
     padding:
-    const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
+        const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           StringManager.services,
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodyMedium,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         SizedBox(
           height: SizeManager.s135,
@@ -369,10 +362,7 @@ Widget titleRow(context, String title, function, String sort) {
     children: [
       Text(
         title,
-        style: Theme
-            .of(context)
-            .textTheme
-            .bodyMedium,
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
       const Spacer(),
       InkWell(
@@ -382,7 +372,7 @@ Widget titleRow(context, String title, function, String sort) {
           padding: const EdgeInsets.all(SizeManager.s6),
           decoration: BoxDecoration(
             borderRadius:
-            const BorderRadius.all(Radius.circular(SizeManager.s14)),
+                const BorderRadius.all(Radius.circular(SizeManager.s14)),
             border: Border.all(color: ColorManager.primaryColor, width: 1),
           ),
           child: Row(
@@ -404,18 +394,19 @@ Widget titleRow(context, String title, function, String sort) {
   );
 }
 
-Widget greenContainer({required String text,
-  required function,
-  top = SizeManager.s6,
-  left = SizeManager.s6,
-  right = SizeManager.s6,
-  bottom = SizeManager.s6,
-  fontSize = SizeManager.s10}) {
+Widget greenContainer(
+    {required String text,
+    required function,
+    top = SizeManager.s6,
+    left = SizeManager.s6,
+    right = SizeManager.s6,
+    bottom = SizeManager.s6,
+    fontSize = SizeManager.s10}) {
   return InkWell(
     onTap: function,
     child: Container(
       padding:
-      EdgeInsets.only(top: top, left: left, right: right, bottom: bottom),
+          EdgeInsets.only(top: top, left: left, right: right, bottom: bottom),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(SizeManager.s22)),
         color: Colors.green,
@@ -499,8 +490,7 @@ Widget itemTherapists(context) {
             ),
             Text(
               StringManager.about,
-              style: Theme
-                  .of(context)
+              style: Theme.of(context)
                   .textTheme
                   .subtitle1
                   ?.copyWith(fontWeight: FontWeight.w600),
@@ -528,7 +518,7 @@ Widget itemTherapists(context) {
 Widget listViewTherapists(context) {
   return Padding(
     padding:
-    const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
+        const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -549,12 +539,13 @@ Widget listViewTherapists(context) {
   );
 }
 
-Widget blueContainer({function,
-  double left = SizeManager.s0,
-  double top = SizeManager.s0,
-  double width = SizeManager.s58,
-  required double radius,
-  required String text}) {
+Widget blueContainer(
+    {function,
+    double left = SizeManager.s0,
+    double top = SizeManager.s0,
+    double width = SizeManager.s58,
+    required double radius,
+    required String text}) {
   return InkWell(
     onTap: function,
     child: Container(
@@ -609,11 +600,7 @@ Widget itemBlogs(context) {
         const SizedBox(height: SizeManager.s3),
         Text(
           StringManager.depression,
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodyMedium
-              ?.copyWith(
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: Colors.orange,
               fontWeight: FontWeight.w600,
               fontSize: SizeManager.s18),
@@ -664,7 +651,7 @@ Widget itemBlogs(context) {
 Widget listViewBlogs(context) {
   return Padding(
     padding:
-    const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
+        const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -693,7 +680,7 @@ Widget itemTests(String assets, function) {
       width: 100,
       margin: const EdgeInsets.all(SizeManager.s6),
       decoration:
-      BoxDecoration(image: DecorationImage(image: AssetImage(assets))),
+          BoxDecoration(image: DecorationImage(image: AssetImage(assets))),
     ),
   );
 }
@@ -701,16 +688,13 @@ Widget itemTests(String assets, function) {
 Widget listViewTest(context, List<ItemTest> list) {
   return Padding(
     padding:
-    const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
+        const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           StringManager.tests,
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodyMedium,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         const SizedBox(height: SizeManager.s18),
         SizedBox(
@@ -758,7 +742,7 @@ Widget itemTherapistsV(context) {
     width: SizeManager.s84,
     decoration: BoxDecoration(
       border:
-      Border.all(color: ColorManager.primaryColor, width: SizeManager.s_7),
+          Border.all(color: ColorManager.primaryColor, width: SizeManager.s_7),
       borderRadius: const BorderRadius.all(
         Radius.circular(SizeManager.s10),
       ),
@@ -815,11 +799,7 @@ Widget itemTherapistsV(context) {
                 ),
                 Text(
                   '+1000 sessions',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       fontSize: SizeManager.s10, fontWeight: FontWeight.w600),
                 )
               ],
@@ -979,11 +959,7 @@ Widget itemBlogsV(context) {
         const SizedBox(height: SizeManager.s3),
         Text(
           'Depression solutions',
-          style: Theme
-              .of(context)
-              .textTheme
-              .bodyMedium
-              ?.copyWith(
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: Colors.orange,
               fontWeight: FontWeight.w600,
               fontSize: SizeManager.s18),
@@ -1147,7 +1123,7 @@ Widget qADesign(String quetion, String answer, String answerBy, String job) {
     margin: const EdgeInsets.all(SizeManager.s8),
     decoration: BoxDecoration(
         border:
-        Border.all(color: ColorManager.headOrange, width: SizeManager.s_7),
+            Border.all(color: ColorManager.headOrange, width: SizeManager.s_7),
         borderRadius: const BorderRadius.all(Radius.circular(SizeManager.s10))),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1307,10 +1283,11 @@ Widget dividerBlue(
   );
 }
 
-Widget medicalRecordItem({context,
-  required IconData icon,
-  required String title,
-  required String value}) {
+Widget medicalRecordItem(
+    {context,
+    required IconData icon,
+    required String title,
+    required String value}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -1415,20 +1392,21 @@ Widget onlineTherapists() {
               child: Text(
                 'Dr. Ahmed Marouf',
                 style:
-                StylesManager.itemHome.copyWith(fontSize: SizeManager.s14),
+                    StylesManager.itemHome.copyWith(fontSize: SizeManager.s14),
               ))
         ],
       ));
 }
 
-Widget textFormGrey({required TextEditingController textEditingController,
-  required String validator,
-  required TextInputType textInputType,
-  required double left,
-  required double right,
-  required double top,
-  required double bottom,
-  Widget? icon}) {
+Widget textFormGrey(
+    {required TextEditingController textEditingController,
+    required String validator,
+    required TextInputType textInputType,
+    required double left,
+    required double right,
+    required double top,
+    required double bottom,
+    Widget? icon}) {
   return TextFormField(
     controller: textEditingController,
     validator: (value) => value!.trim().isEmpty ? validator : null,
@@ -1449,15 +1427,16 @@ Widget textFormGrey({required TextEditingController textEditingController,
   );
 }
 
-Widget collectionTextFormGrey({required String title,
-  required TextEditingController textEditingController,
-  required String validator,
-  required TextInputType textInputType,
-  required double left,
-  required double right,
-  required double top,
-  required double bottom,
-  Widget? icon}) {
+Widget collectionTextFormGrey(
+    {required String title,
+    required TextEditingController textEditingController,
+    required String validator,
+    required TextInputType textInputType,
+    required double left,
+    required double right,
+    required double top,
+    required double bottom,
+    Widget? icon}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -1501,7 +1480,7 @@ Widget itemAppointmentV(context) {
     width: SizeManager.s84,
     decoration: BoxDecoration(
       border:
-      Border.all(color: ColorManager.primaryColor, width: SizeManager.s_7),
+          Border.all(color: ColorManager.primaryColor, width: SizeManager.s_7),
       borderRadius: const BorderRadius.all(
         Radius.circular(SizeManager.s10),
       ),
@@ -1631,9 +1610,9 @@ Widget aboutItemDoctor(iconData, String text) {
       children: [
         iconData == null
             ? const SizedBox(
-            width: SizeManager.s18,
-            height: SizeManager.s18,
-            child: Image(image: AssetImage(AssetsManager.dollar)))
+                width: SizeManager.s18,
+                height: SizeManager.s18,
+                child: Image(image: AssetImage(AssetsManager.dollar)))
             : Icon(iconData, color: ColorManager.headOrange),
         const SizedBox(
           width: SizeManager.s8,
@@ -1654,7 +1633,7 @@ Widget nameDoctorAndJob() {
           child: Text(
             'Dr. Vanadis Odindatter',
             style:
-            StylesManager.headPrimary2.copyWith(fontSize: SizeManager.s28),
+                StylesManager.headPrimary2.copyWith(fontSize: SizeManager.s28),
           )),
       const SizedBox(
         height: SizeManager.s10,
@@ -1786,7 +1765,7 @@ Widget aboutDoctor(context) {
     ),
     child: Padding(
       padding:
-      const EdgeInsets.only(left: SizeManager.s22, right: SizeManager.s24),
+          const EdgeInsets.only(left: SizeManager.s22, right: SizeManager.s24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1932,17 +1911,16 @@ Widget aboutDoctor(context) {
   );
 }
 
-Widget dropFormField({
-  required String? selectedItem,
-  required String validator,
-  required List list,
-  required void function(value),
-  required double left,
-  required double right,
-  required double top,
-  required double bottom,
-  GlobalKey<FormFieldState>? key
-}) {
+Widget dropFormField(
+    {required String? selectedItem,
+    required String validator,
+    required List list,
+    required void function(value),
+    required double left,
+    required double right,
+    required double top,
+    required double bottom,
+    GlobalKey<FormFieldState>? key}) {
   return DropdownButtonFormField(
     key: key,
     validator: (value) => value == null ? validator : null,
@@ -2018,12 +1996,10 @@ Widget itemAlarm(MedicineAlarmCubit cubit) {
     margin: const EdgeInsets.symmetric(
         horizontal: SizeManager.s10, vertical: SizeManager.s14),
     padding: const EdgeInsets.symmetric(
-        vertical: SizeManager.s4,
-        horizontal: SizeManager.s10),
+        vertical: SizeManager.s4, horizontal: SizeManager.s10),
     decoration: const BoxDecoration(
         color: ColorManager.primaryColor,
-        borderRadius: BorderRadius.all(
-            Radius.circular(SizeManager.s20))),
+        borderRadius: BorderRadius.all(Radius.circular(SizeManager.s20))),
     child: Column(
       children: [
         Row(
@@ -2035,8 +2011,7 @@ Widget itemAlarm(MedicineAlarmCubit cubit) {
             ),
             const Spacer(),
             Switch(
-              value:
-              MedicineAlarmCubit.medicineAlarm[0].turn,
+              value: MedicineAlarmCubit.medicineAlarm[0].turn,
               onChanged: (value) => cubit.changeTurn(),
               activeColor: ColorManager.headOrange,
               activeTrackColor: Colors.white,
@@ -2058,9 +2033,11 @@ Widget itemAlarm(MedicineAlarmCubit cubit) {
               style: StylesManager.greenContainer
                   .copyWith(fontSize: SizeManager.s18),
             ),
-            const SizedBox(width: SizeManager.s130,),
-            Text(MedicineAlarmCubit.medicineAlarm[0].turn == true ?
-            'ON' : 'OFF',
+            const SizedBox(
+              width: SizeManager.s130,
+            ),
+            Text(
+              MedicineAlarmCubit.medicineAlarm[0].turn == true ? 'ON' : 'OFF',
               style: StylesManager.greenContainer
                   .copyWith(fontSize: SizeManager.s18),
             ),
@@ -2085,9 +2062,10 @@ Widget listAlarm(MedicineAlarmCubit cubit) {
   );
 }
 
-Widget itemPosts({required context,required PostsCubit cubit}){
+Widget itemPosts({required context, required PostsCubit cubit}) {
   return Container(
-    margin:const EdgeInsets.symmetric(horizontal:SizeManager.s16,vertical: SizeManager.s20),
+    margin: const EdgeInsets.symmetric(
+        horizontal: SizeManager.s16, vertical: SizeManager.s20),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -2134,16 +2112,14 @@ Widget itemPosts({required context,required PostsCubit cubit}){
         ),
         Text(
           'The title of post:',
-          style: StylesManager.itemHome
-              .copyWith(fontSize: SizeManager.s20),
+          style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s20),
         ),
         const SizedBox(
           height: SizeManager.s10,
         ),
         ReadMoreText(
           'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
-          style: StylesManager.itemHome
-              .copyWith(fontSize: SizeManager.s16),
+          style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s16),
           trimLines: 2,
           colorClickableText: ColorManager.primaryColor,
           trimMode: TrimMode.Line,
@@ -2160,10 +2136,9 @@ Widget itemPosts({required context,required PostsCubit cubit}){
         Container(
           height: SizeManager.s230,
           width: double.infinity,
-          decoration:const BoxDecoration(
+          decoration: const BoxDecoration(
             color: ColorManager.primaryColor,
-            borderRadius:
-            BorderRadius.all(Radius.circular(SizeManager.s24)),
+            borderRadius: BorderRadius.all(Radius.circular(SizeManager.s24)),
           ),
           child: Image.asset(AssetsManager.session, fit: BoxFit.fill),
         ),
@@ -2177,46 +2152,56 @@ Widget itemPosts({required context,required PostsCubit cubit}){
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
-                onTap: (){
+                onTap: () {
                   cubit.makeLike();
                 },
                 child: Row(
                   children: [
                     Icon(FontAwesomeIcons.thumbsUp,
-                        size: SizeManager.s24, color: cubit.like==true?ColorManager.headOrange:ColorManager.greyColor),
+                        size: SizeManager.s24,
+                        color: cubit.like == true
+                            ? ColorManager.headOrange
+                            : ColorManager.greyColor),
                     const SizedBox(
                       width: SizeManager.s4,
                     ),
                     Container(
                         margin: const EdgeInsets.only(top: 5),
                         child: Text('like',
-                            style: StylesManager.or
-                                .copyWith(color: cubit.like==true?ColorManager.headOrange:ColorManager.greyColor,fontSize: SizeManager.s16))),
+                            style: StylesManager.or.copyWith(
+                                color: cubit.like == true
+                                    ? ColorManager.headOrange
+                                    : ColorManager.greyColor,
+                                fontSize: SizeManager.s16))),
                   ],
                 ),
               ),
               const Spacer(),
               InkWell(
-                onTap: (){
+                onTap: () {
                   cubit.makeCommsent();
-
                 },
                 child: Row(
                   children: [
                     Icon(FontAwesomeIcons.comment,
-                        size: SizeManager.s24, color: cubit.comment==true?ColorManager.headOrange:ColorManager.greyColor),
+                        size: SizeManager.s24,
+                        color: cubit.comment == true
+                            ? ColorManager.headOrange
+                            : ColorManager.greyColor),
                     const SizedBox(
                       width: SizeManager.s4,
                     ),
                     Container(
                         margin: const EdgeInsets.only(top: 5),
                         child: Text('comment',
-                            style: StylesManager.or
-                                .copyWith(color:cubit.comment==true?ColorManager.headOrange:ColorManager.greyColor,fontSize: SizeManager.s16))),
+                            style: StylesManager.or.copyWith(
+                                color: cubit.comment == true
+                                    ? ColorManager.headOrange
+                                    : ColorManager.greyColor,
+                                fontSize: SizeManager.s16))),
                   ],
                 ),
               )
-
             ],
           ),
         )
@@ -2225,7 +2210,7 @@ Widget itemPosts({required context,required PostsCubit cubit}){
   );
 }
 
-Widget listPosts(context,PostsCubit cubit) {
+Widget listPosts(context, PostsCubit cubit) {
   return ListView.builder(
     shrinkWrap: true,
     physics: const NeverScrollableScrollPhysics(),
@@ -2233,5 +2218,71 @@ Widget listPosts(context,PostsCubit cubit) {
     itemBuilder: (context, index) {
       return itemPosts(context: context, cubit: cubit);
     },
+  );
+}
+
+Widget textFieldAdd(
+    {required String hint,
+    required TextEditingController textEditingController,
+    required String validator,
+    }) {
+  return TextFormField(
+    controller: textEditingController,
+    validator: (value) => value!.trim().isEmpty?validator : null,
+    decoration: InputDecoration(
+      hintText: hint,
+      hintStyle: const TextStyle(color: Colors.black38),
+      border: const UnderlineInputBorder(),
+      focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(width: SizeManager.s1, color: Colors.black54)),
+      enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(width: SizeManager.s1, color: Colors.black54)),
+      focusedErrorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorManager.primaryColor)),
+      errorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorManager.headOrange)),
+    ),
+  );
+}
+
+Widget dropFormAdd(
+    {required String? selectedItem,
+      required String validator,
+      required List list,
+      required void function(value),
+      required double left,
+      required double right,
+      required double top,
+      required double bottom,
+      GlobalKey<FormFieldState>? key}) {
+  return DropdownButtonFormField(
+    key: key,
+    validator: (value) => value == null ? validator : null,
+    value: selectedItem,
+    items: list.map((e) {
+      return DropdownMenuItem(
+        value: e,
+        child: Text(e),
+      );
+    }).toList(),
+    onChanged: (value) {
+      function(value);
+    },
+    icon: const Icon(
+      Icons.arrow_drop_down_outlined,
+      color: ColorManager.headOrange,
+    ),
+    dropdownColor: const Color(0xffe6e3ee),
+    decoration:const InputDecoration(
+      hintText: 'category',
+      focusedBorder:  UnderlineInputBorder(
+          borderSide: BorderSide(width: SizeManager.s1, color: Colors.black54)),
+      enabledBorder:  UnderlineInputBorder(
+          borderSide: BorderSide(width: SizeManager.s1, color: Colors.black54)),
+      focusedErrorBorder:  UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorManager.primaryColor)),
+      errorBorder:  UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorManager.headOrange)),
+    ),
   );
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taafe/modules/posts/add_post_screen.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_state.dart';
 
@@ -13,10 +14,10 @@ class PostsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cubit=PostsCubit.get(context);
+    var cubit = PostsCubit.get(context);
     return Scaffold(
       appBar: AppBar(),
-      body: BlocConsumer<PostsCubit,PostsState>(
+      body: BlocConsumer<PostsCubit, PostsState>(
         listener: (context, state) {},
         builder: (context, state) => CustomScrollView(
           slivers: [
@@ -33,13 +34,19 @@ class PostsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Expanded(
-                            child: searchKind(context, () {}, StringManager.search,
+                            child: searchKind(
+                                context, () {}, StringManager.search,
                                 right: SizeManager.s0, left: SizeManager.s0)),
                         const SizedBox(
                           width: SizeManager.s16,
                         ),
-                        floatingButton(
-                                () {},
+                        floatingButton(() {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AddPostScreen(),
+                              ));
+                        },
                             const Icon(
                               Icons.add,
                               color: ColorManager.headOrange,
@@ -53,7 +60,6 @@ class PostsScreen extends StatelessWidget {
                     const SizedBox(
                       height: SizeManager.s20,
                     ),
-
                   ],
                 ),
               ),

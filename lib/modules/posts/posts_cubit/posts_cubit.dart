@@ -20,5 +20,32 @@ class PostsCubit extends Cubit<PostsState> {
     comment=!comment;
     emit(PostsCommentState());
   }
+  static final List<String> list = ['Depression', 'Anxiety Disorders'];
+  var category;
 
+  void showResult(value, String selectedItem) {
+    selectedItem = value as String;
+    emit(PostsDropState());
+  }
+
+  static final List<String> type = ['Your name ', 'Anonymous member'];
+  String currentType=type[0];
+
+  void radioFunction(value){
+    currentType=value;
+    emit(PostsTypeState());
+  }
+
+  void checkValidation({required context,
+    required GlobalKey<FormState> key,
+    required TextEditingController title,
+    required TextEditingController desvription,
+    required TextEditingController tags
+  }) {
+    if (key.currentState!.validate()) {
+      emit(PostsValidationState());
+
+    }
+
+}
 }
