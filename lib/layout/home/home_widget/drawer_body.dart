@@ -42,7 +42,7 @@ class DrawerBody extends StatelessWidget {
             itemDrawer(context,FontAwesomeIcons.bell,'Medicine Alarm',(){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const MedicineAlarmScreen(),));
             }),
-            itemDrawer(context,FontAwesomeIcons.heart,'Interests / Hobbies',(){}),
+            itemDrawer(context,FontAwesomeIcons.heart,'Interests',(){}),
             itemDrawer(context,FontAwesomeIcons.calendarTimes,'Appointments',(){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const AppointmentScreen(),));
             }),

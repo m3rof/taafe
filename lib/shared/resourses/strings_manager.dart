@@ -36,7 +36,7 @@ class StringManager{
   static const String sort='sort by category';
   static const String about='About the doctor';
   static const String aboutContent='  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-  static const String appointment='Make an appointment';
+  static const String appointment='Make an appointment_doctor';
   static const String depression='Depression solutions';
   static const String read='Read More';
   static const String edit='Edit info';

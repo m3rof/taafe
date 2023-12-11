@@ -1,5 +1,6 @@
 import 'dart:ffi';
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taafe/layout/home/home_screen.dart';
@@ -47,23 +48,29 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  void loginUser(context, String email, String password) {
+  void loginUser(context, String email, String password)async {
     emit(LoadingLoginState());
-    DioHelper.postData(
-        url: login,
-        data: {'email': email, 'password': password}
-    ).then((value) {
-      print(value.data);
+    try {
+      Response response = await DioHelper.postData(
+          url: login,
+          data: {'email': email, 'password': password}
+      );
       Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const HomeScreen(),
           ));
       emit(SuccessLoginState());
-    }).catchError((error) {
-      print('catch error: $error');
-      emit(ErrorLoginState());
-    });
+    }on DioException catch (e) {
+      if (e.response!.statusCode == 406 || e.response!.statusCode == 404) {
+        print(e.response!.data);
+      } else {
+        print('Error: ${e.response!.statusCode} - ${e.response!.statusMessage}');
+        // Handle other HTTP errors if needed
+      }
+    }
+    emit(ErrorLoginState());
+
   }
 
 }

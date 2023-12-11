@@ -1,10 +1,14 @@
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
+import 'package:taafe/modules/about_doctor/about_doctor_screen.dart';
+import 'package:taafe/modules/drawer_items/appointment/appointment_screen.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 import '../../layout/home/home_cubit/home_cubit.dart';
+import '../../modules/appointment_doctor/appointment_doctor_screen.dart';
 import '../../modules/drawer_items/medicine_alarm/medicine_alarm_cubit/medicine_alarm_cubit.dart';
 import '../resourses/assets_manager.dart';
 import '../resourses/color_manager.dart';
@@ -86,23 +90,20 @@ Widget textFieldRegister(
       return null;
     },
     controller: controller,
-    style: StylesManager.hint,
+    style: StylesManager.headPrimary3.copyWith(fontWeight: FontWeight.w500),
     obscureText: obsurce,
     keyboardType: textInputType,
-    cursorColor: ColorManager.textWhite,
+    cursorColor: ColorManager.primaryColor,
     decoration: InputDecoration(
       suffixIcon: suffixIcon,
       hintText: hint,
-      hintStyle: StylesManager.hint,
-      focusedErrorBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
-          borderSide: BorderSide(color: ColorManager.textWhite)),
+      hintStyle: TextStyle(color: ColorManager.primaryColor.withOpacity(.7)),
       focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
-          borderSide: BorderSide(color: ColorManager.textWhite)),
+          borderSide: BorderSide(color: ColorManager.primaryColor)),
       enabledBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
-          borderSide: BorderSide(color: ColorManager.textWhite)),
+          borderSide: BorderSide(color: ColorManager.primaryColor)),
       prefixIcon: prefixIcon,
     ),
   );
@@ -456,61 +457,66 @@ Widget starsYellow() {
 }
 
 Widget itemTherapists(context) {
-  return Container(
-    margin: const EdgeInsets.all(SizeManager.s14),
-    child: Column(
-      children: [
-        profileImage(SizeManager.s135, SizeManager.s135, SizeManager.s84),
-        const SizedBox(
-          height: SizeManager.s12,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                    width: SizeManager.s150,
-                    child: Text(
-                      "Dr. John Lemon",
-                      style: StylesManager.loginCreate,
-                      overflow: TextOverflow.ellipsis,
-                    )),
-                greenDone()
-              ],
-            ),
-            SizedBox(
-                width: SizeManager.s150,
-                child: Text("Heart Sergeon",
-                    style: StylesManager.or, overflow: TextOverflow.ellipsis)),
-            starsYellow(),
-            const SizedBox(
-              height: SizeManager.s12,
-            ),
-            Text(
-              StringManager.about,
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1
-                  ?.copyWith(fontWeight: FontWeight.w600),
-            ),
-            SizedBox(
-                height: SizeManager.s84,
-                width: SizeManager.s150,
-                child: Text(
-                  StringManager.aboutContent,
-                  style: StylesManager.or,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 5,
-                )),
-            const SizedBox(
-              height: SizeManager.s8,
-            ),
-            greenContainer(text: StringManager.appointment, function: null)
-          ],
-        )
-      ],
+  return InkWell(
+    onTap: (){
+      moveScreen(context: context, screen:const AboutDoctorScreen());
+    },
+    child: Container(
+      margin: const EdgeInsets.all(SizeManager.s14),
+      child: Column(
+        children: [
+          profileImage(SizeManager.s135, SizeManager.s135, SizeManager.s84),
+          const SizedBox(
+            height: SizeManager.s12,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                      width: SizeManager.s150,
+                      child: Text(
+                        "Dr. John Lemon",
+                        style: StylesManager.loginCreate,
+                        overflow: TextOverflow.ellipsis,
+                      )),
+                  greenDone()
+                ],
+              ),
+              SizedBox(
+                  width: SizeManager.s150,
+                  child: Text("Heart Sergeon",
+                      style: StylesManager.or, overflow: TextOverflow.ellipsis)),
+              starsYellow(),
+              const SizedBox(
+                height: SizeManager.s12,
+              ),
+              Text(
+                StringManager.about,
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    ?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              SizedBox(
+                  height: SizeManager.s84,
+                  width: SizeManager.s150,
+                  child: Text(
+                    StringManager.aboutContent,
+                    style: StylesManager.or,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 5,
+                  )),
+              const SizedBox(
+                height: SizeManager.s8,
+              ),
+              greenContainer(text: StringManager.appointment, function: null)
+            ],
+          )
+        ],
+      ),
     ),
   );
 }
@@ -739,7 +745,6 @@ Widget itemTherapistsV(context) {
     padding: const EdgeInsets.all(SizeManager.s10),
     margin: const EdgeInsets.all(SizeManager.s14),
     height: SizeManager.s250,
-    width: SizeManager.s84,
     decoration: BoxDecoration(
       border:
           Border.all(color: ColorManager.primaryColor, width: SizeManager.s_7),
@@ -754,56 +759,64 @@ Widget itemTherapistsV(context) {
           children: [
             profileImage(SizeManager.s75, SizeManager.s75, SizeManager.s55),
             const SizedBox(width: SizeManager.s10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Dr. John Lemon',
-                      style: StylesManager.headPrimary3,
-                    ),
-                    const SizedBox(
-                      width: SizeManager.s4,
-                    ),
-                    greenDone()
-                  ],
-                ),
-                const SizedBox(
-                  height: SizeManager.s2,
-                ),
-                Text(
-                  'Pyschologist',
-                  style: StylesManager.itemHome
-                      .copyWith(fontSize: SizeManager.s16),
-                ),
-                const SizedBox(
-                  height: SizeManager.s2,
-                ),
-                starsYellow(),
-                const SizedBox(
-                  height: SizeManager.s2,
-                ),
-                Text(
-                  '4.78 (1,354 reviews)',
-                  style: StylesManager.or.copyWith(fontSize: SizeManager.s11),
-                )
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Dr. John Lemon',
+                        style: StylesManager.headPrimary3,
+                      ),
+                      const SizedBox(
+                        width: SizeManager.s4,
+                      ),
+                      greenDone()
+                    ],
+                  ),
+                  const SizedBox(
+                    height: SizeManager.s2,
+                  ),
+                  
+                  Row(
+                    children: [
+                      Text(
+                        'Pyschologist',
+                        style: StylesManager.itemHome
+                            .copyWith(fontSize: SizeManager.s16),
+                      ),
+                      const Spacer(),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            FontAwesomeIcons.user,
+                            size: SizeManager.s14,
+                          ),
+                          Text(
+                            '+1000 sessions',
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                fontSize: SizeManager.s10, fontWeight: FontWeight.w600),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: SizeManager.s2,
+                  ),
+                  starsYellow(),
+                  const SizedBox(
+                    height: SizeManager.s2,
+                  ),
+                  Text(
+                    '4.78 (1,354 reviews)',
+                    style: StylesManager.or.copyWith(fontSize: SizeManager.s11),
+                  )
+                ],
+              ),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Icon(
-                  FontAwesomeIcons.user,
-                  size: SizeManager.s14,
-                ),
-                Text(
-                  '+1000 sessions',
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      fontSize: SizeManager.s10, fontWeight: FontWeight.w600),
-                )
-              ],
-            )
           ],
         ),
         Text(
@@ -912,9 +925,7 @@ Widget itemTherapistsV(context) {
                   style: StylesManager.itemHome
                       .copyWith(fontSize: SizeManager.s10),
                 ),
-                const SizedBox(
-                  width: SizeManager.s55,
-                ),
+                const Spacer(),
                 greenContainer(text: StringManager.appointment, function: () {})
               ],
             )
@@ -1765,7 +1776,7 @@ Widget aboutDoctor(context) {
     ),
     child: Padding(
       padding:
-          const EdgeInsets.only(left: SizeManager.s22, right: SizeManager.s24),
+          const EdgeInsets.only(left: SizeManager.s14, right: SizeManager.s14),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1895,8 +1906,8 @@ Widget aboutDoctor(context) {
           Align(
               alignment: Alignment.center,
               child: greenContainer(
-                  text: 'Make an appointment',
-                  function: () {},
+                  text: 'Make an appointment_doctor',
+                  function: () {moveScreen(context: context, screen:const AppointmentDoctorScreen());},
                   top: SizeManager.s10,
                   left: SizeManager.s10,
                   right: SizeManager.s10,
@@ -2000,41 +2011,46 @@ Widget itemAlarm(MedicineAlarmCubit cubit) {
     decoration: const BoxDecoration(
         color: ColorManager.primaryColor,
         borderRadius: BorderRadius.all(Radius.circular(SizeManager.s20))),
-    child: Column(
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(
+        Column(
           children: [
             Text(
               MedicineAlarmCubit.medicineAlarm[0].name,
               style: StylesManager.greenContainer
                   .copyWith(fontSize: SizeManager.s24),
             ),
-            const Spacer(),
+            Row(
+              children: [
+                Text(
+                  MedicineAlarmCubit.medicineAlarm[0].clock,
+                  style: StylesManager.greenContainer
+                      .copyWith(fontSize: SizeManager.s18),
+                ),
+                const SizedBox(
+                  width: SizeManager.s4,
+                ),
+                Text(
+                  '(${MedicineAlarmCubit.medicineAlarm[0].day})',
+                  style: StylesManager.greenContainer
+                      .copyWith(fontSize: SizeManager.s18),
+                ),
+                const SizedBox(
+                  height: SizeManager.s4,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const Spacer(),
+        Column(
+          children: [
             Switch(
               value: MedicineAlarmCubit.medicineAlarm[0].turn,
               onChanged: (value) => cubit.changeTurn(),
               activeColor: ColorManager.headOrange,
               activeTrackColor: Colors.white,
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Text(
-              MedicineAlarmCubit.medicineAlarm[0].clock,
-              style: StylesManager.greenContainer
-                  .copyWith(fontSize: SizeManager.s18),
-            ),
-            const SizedBox(
-              width: SizeManager.s4,
-            ),
-            Text(
-              '(${MedicineAlarmCubit.medicineAlarm[0].day})',
-              style: StylesManager.greenContainer
-                  .copyWith(fontSize: SizeManager.s18),
-            ),
-            const SizedBox(
-              width: SizeManager.s130,
             ),
             Text(
               MedicineAlarmCubit.medicineAlarm[0].turn == true ? 'ON' : 'OFF',
@@ -2043,9 +2059,6 @@ Widget itemAlarm(MedicineAlarmCubit cubit) {
             ),
           ],
         ),
-        const SizedBox(
-          height: SizeManager.s4,
-        )
       ],
     ),
   );
@@ -2285,4 +2298,24 @@ Widget dropFormAdd(
           borderSide: BorderSide(color: ColorManager.headOrange)),
     ),
   );
+}
+
+Widget buildDatePicker(dateTime,function(value)) => SizedBox(
+  height: 180,
+  child: CupertinoDatePicker(
+    initialDateTime: dateTime,
+    maximumYear: DateTime.now().year,
+    onDateTimeChanged: (value) =>function(value),
+    mode: CupertinoDatePickerMode.date,
+  ),
+);
+
+Future showSheet(context, Widget child, onClicked) {
+  return showCupertinoModalPopup(
+      context: context,
+      builder: (context) => CupertinoActionSheet(
+        actions: [child],
+        cancelButton: CupertinoActionSheetAction(
+            child: Text('done'), onPressed: onClicked),
+      ));
 }

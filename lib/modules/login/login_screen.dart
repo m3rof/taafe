@@ -117,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       function: () {
                         moveScreen(context: context, screen:const RegisterScreen());
                       },
-                      text: StringManager.newAccount)
+                      text: StringManager.newAccount),
                 ],
               ),
             ),

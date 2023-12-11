@@ -5,7 +5,9 @@ import 'package:taafe/modules/drawer_items/appointment/appointment_cubit/appoint
 import 'package:taafe/modules/login/login_cubit/login_cubit.dart';
 import 'package:taafe/modules/login/login_screen.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
+import 'package:taafe/modules/register/register_screen.dart';
 import 'package:taafe/modules/setting_items/my_account/my_account_cubit/my_account_cubit.dart';
+import 'package:taafe/modules/test.dart';
 import 'package:taafe/shared/network/local/notification/notification.dart';
 import 'package:taafe/shared/network/remote/dio_helper.dart';
 import 'layout/home/home_cubit/home_cubit.dart';
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'taafe',
         theme: ThemeManager.themeApp,
-        home:const HomeScreen(),
+        home:const LoginScreen(),
       ),
     );
   }

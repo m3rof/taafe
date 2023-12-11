@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:taafe/modules/register/register_cubit/register_state.dart';
 import 'package:taafe/shared/resourses/assets_manager.dart';
 import 'package:taafe/shared/resourses/color_manager.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';
+import 'package:taafe/shared/resourses/styles.dart';
 import 'package:taafe/shared/resourses/value_app.dart';
 
 import '../../shared/components/components.dart';
@@ -51,103 +53,175 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {},
       builder: (context, state) => Scaffold(
-        backgroundColor: ColorManager.primaryColor,
-        body: Padding(
-          padding: const EdgeInsets.all(SizeManager.s35),
-          child: SingleChildScrollView(
-            child: Form(
-              key: key,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: hightMedia(context: context, h: SizeManager.s_03),
+        body: SingleChildScrollView(
+          child: Form(
+            key: key,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(top: SizeManager.s20),
+                  width: double.infinity,
+                  height: SizeManager.s170,
+                  decoration: const BoxDecoration(
+                      color: ColorManager.primaryColor,
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(SizeManager.s40))),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      createAccountText(),
+                      const SizedBox(
+                        height: SizeManager.s28,
+                      ),
+                      line(),
+                    ],
                   ),
-                  userPhoto(null),
-                  SizedBox(
-                    height: hightMedia(context: context, h: SizeManager.s_03),
-                  ),
-                  createAccountText(),
-                  const SizedBox(
-                    height: SizeManager.s28,
-                  ),
-                  line(),
-                  const SizedBox(
-                    height: SizeManager.s30,
-                  ),
-                  textFieldRegister(
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(SizeManager.s30),
+                  child: textFieldRegister(
                     textInputType: TextInputType.text,
                     controller: username,
                     hint: StringManager.userRegister,
                     validator: StringManager.userValidatorRegister,
                   ),
-                  const SizedBox(
-                    height: SizeManager.s20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(SizeManager.s30),
+                  child: InkWell(
+                    onTap: () {
+                      cubit.showCalender(context: context);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(SizeManager.s16),
+                      decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(SizeManager.s30),
+                          ),
+                          border: Border.all(color: ColorManager.primaryColor)),
+                      child: Row(
+                        children: [
+                          Text(
+                              DateFormat('MM/dd/yyyy').format(cubit.dateTime),
+                              style: StylesManager.headPrimary3.copyWith(
+                                  fontSize: SizeManager.s18,
+                                  fontWeight: FontWeight.w400)),
+                          const Spacer(),
+                          const Icon(
+                            Icons.calendar_today_outlined,
+                            color: ColorManager.primaryColor,
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                  textFieldRegister(
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(SizeManager.s30),
+                  child: textFieldRegister(
                     textInputType: TextInputType.emailAddress,
                     email: true,
                     controller: email,
                     hint: StringManager.emailRegister,
                     validator: StringManager.emailValidatorRegister,
                   ),
-                  const SizedBox(
-                    height: SizeManager.s20,
-                  ),
-                  textFieldRegister(
-                    obsurce:cubit.visibility,
-                    prefixIcon:IconButton(
-                        onPressed: () {
-                          cubit.changeVisibility();
-                          cubit.changeIconVisibility();
-                        },
-                        icon: cubit.iconVisibility,
-                        color: Colors.white,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(SizeManager.s30),
+                  child: textFieldRegister(
+                    obsurce: cubit.visibility1,
+                    prefixIcon: IconButton(
+                      onPressed: () {
+                        cubit.changeVisibility();
+                        cubit.changeIconVisibility();
+                      },
+                      icon: cubit.iconVisibility,
+                      color: ColorManager.primaryColor,
                     ),
                     textInputType: TextInputType.visiblePassword,
                     controller: password,
                     hint: StringManager.passwordRegister,
                     validator: StringManager.passwordValidatorRegister,
                   ),
-                  const SizedBox(
-                    height: SizeManager.s20,
-                  ),
-                  textFieldRegister(
-                    suffixIcon: confirmPassword.text == password.text &&
-                            password.text != '' &&
-                            confirmPassword != ''
-                        ? const Icon(
-                            Icons.done,
-                            color: Colors.white,
-                            size: SizeManager.s28
-                          )
-                        : null,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(SizeManager.s30),
+                  child: textFieldRegister(
+                    suffixIcon:
+                        confirmPassword.text.trim() == password.text.trim() &&
+                                password.text != '' &&
+                                confirmPassword != ''
+                            ? const Icon(Icons.done,
+                                color: ColorManager.primaryColor,
+                                size: SizeManager.s28)
+                            : null,
                     textInputType: TextInputType.visiblePassword,
                     controller: confirmPassword,
                     hint: StringManager.confirmRegister,
                     validator: StringManager.confirmValidatorRegister,
+                    obsurce: cubit.visibility2,
+                    prefixIcon: IconButton(
+                      onPressed: () {
+                        cubit.changeVisibility2();
+                        cubit.changeIconVisibility2();
+                      },
+                      icon: cubit.iconVisibility2,
+                      color: ColorManager.primaryColor,
+                    ),
                   ),
-                  const SizedBox(
-                    height: SizeManager.s28,
-                  ),
-                  floatingButton(() {
-                    cubit.checkValidation(
-                        context: context,
-                        key: key,
-                        emailController: email,
-                        passwordController: password,
-                        confirmController: confirmPassword,
-                        userController: username);
-                  },
-                      const Image(
-                        image: AssetImage(AssetsManager.right),
-                        width: SizeManager.s24,
-                        height: SizeManager.s24,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(SizeManager.s30),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: RadioListTile(
+                          title: Text(
+                            'male',
+                            style: StylesManager.or.copyWith(
+                                fontSize: 18, fontWeight: FontWeight.w500),
+                          ),
+                          activeColor: ColorManager.primaryColor,
+                          value: RegisterCubit.gender[0],
+                          groupValue: cubit.currentType,
+                          onChanged: (value) => cubit.radioFunction(value),
+                        ),
                       ),
-                      width: SizeManager.s50,
-                      height: SizeManager.s50)
-                ],
-              ),
+                      Expanded(
+                        child: RadioListTile(
+                          activeColor: ColorManager.primaryColor,
+                          title: Text(
+                            'female',
+                            style: StylesManager.or.copyWith(
+                                fontSize: 18, fontWeight: FontWeight.w500),
+                          ),
+                          value: RegisterCubit.gender[1],
+                          groupValue: cubit.currentType,
+                          onChanged: (value) => cubit.radioFunction(value),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: SizeManager.s28,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      cubit.checkValidation(
+                          context: context,
+                          key: key,
+                          emailController: email,
+                          passwordController: password,
+                          confirmController: confirmPassword,
+                          userController: username);
+                    },
+                    child: const Text('Register')),
+                const SizedBox(
+                  height: SizeManager.s28,
+                ),
+              ],
             ),
           ),
         ),

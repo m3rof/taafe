@@ -125,17 +125,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                 width: SizeManager.s4,
                               ),
                               InkWell(onTap: () {},
-                                  child: Icon(Icons.video_call_outlined)),
+                                  child: const Icon(Icons.video_call_outlined)),
                               const SizedBox(
                                 width: SizeManager.s4,
                               ),
-                              InkWell(onTap: () {}, child: Icon(Icons.upload)),
+                              InkWell(onTap: () {}, child:const Icon(Icons.upload)),
                               const SizedBox(
                                 width: SizeManager.s4,
                               ),
 
                               InkWell(onTap: () {},
-                                  child: Icon(Icons.camera_alt_outlined)),
+                                  child:const Icon(Icons.camera_alt_outlined)),
 
                             ],
                           ),
@@ -152,7 +152,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     Row(
                       children: [
                         Expanded(
-                          child: RadioListTile(title: Text('Your name'),
+                          child: RadioListTile(title:const Text('Your name'),
                             activeColor: ColorManager.headOrange,
                             value: PostsCubit.type[0],
                             groupValue: cubit.currentType,
@@ -162,7 +162,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         Expanded(
                           child: RadioListTile(
                             activeColor: ColorManager.headOrange,
-                            title: Text('Anonymous member'),
+                            title:const Text('Anonymous member'),
                             value: PostsCubit.type[1],
                             groupValue: cubit.currentType,
                             onChanged: (value) => cubit.radioFunction(value),),

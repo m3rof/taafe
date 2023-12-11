@@ -9,6 +9,7 @@ class DioHelper {
         BaseOptions(
             baseUrl: baseUrl,
             receiveDataWhenStatusError: true,
+            headers: {'Accept': 'application/json'},
         )
     );
   }
