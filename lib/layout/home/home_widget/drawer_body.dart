@@ -32,9 +32,8 @@ class DrawerBody extends StatelessWidget {
                     width: SizeManager.s150,
                     height: SizeManager.s150,
                     child: Image(image: AssetImage(AssetsManager.logo)))),
-            const SizedBox(height: SizeManager.s10,),
             const Text(StringManager.accountProfile),
-            const SizedBox(height: SizeManager.s35,),
+            const SizedBox(height: SizeManager.s30,),
             itemDrawer(context,FontAwesomeIcons.facebookMessenger,'chat',(){}),
             itemDrawer(context,Icons.medical_information,'Medical Record',(){
               Navigator.push(context, MaterialPageRoute(builder: (context) => const MedicalRecordScreen(),));

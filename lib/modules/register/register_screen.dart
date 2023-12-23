@@ -180,7 +180,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           title: Text(
                             'male',
                             style: StylesManager.or.copyWith(
-                                fontSize: 18, fontWeight: FontWeight.w500),
+                                fontSize: 16, fontWeight: FontWeight.w500),
                           ),
                           activeColor: ColorManager.primaryColor,
                           value: RegisterCubit.gender[0],
@@ -194,7 +194,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           title: Text(
                             'female',
                             style: StylesManager.or.copyWith(
-                                fontSize: 18, fontWeight: FontWeight.w500),
+                                fontSize: 16, fontWeight: FontWeight.w500),
                           ),
                           value: RegisterCubit.gender[1],
                           groupValue: cubit.currentType,
@@ -217,7 +217,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           confirmController: confirmPassword,
                           userController: username);
                     },
-                    child: const Text('Register')),
+                    child: const Text('Register',style: TextStyle(color: ColorManager.textWhite))),
                 const SizedBox(
                   height: SizeManager.s28,
                 ),

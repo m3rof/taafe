@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:taafe/layout/home/home_screen.dart';
 import 'package:taafe/shared/network/remote/end_points.dart';
 import 'package:taafe/shared/resourses/color_manager.dart';
-
 import '../../../shared/components/components.dart';
 import '../../../shared/network/remote/dio_helper.dart';
 import 'register_state.dart';
@@ -47,13 +46,15 @@ class RegisterCubit extends Cubit<RegisterState> {
         // The server responded with an error status code (4xx or 5xx)
         if (e.response!.statusCode == 406 || e.response!.statusCode == 404) {
           print(e.response!.data);
-          // Handle the 406 error here
-        } else {
+          showDialogAwsome(context,'${e.response!.data}',DialogType.info);
+
+        }
+        else {
           print('Error: ${e.response!.statusCode} - ${e.response!.statusMessage}');
           // Handle other HTTP errors if needed
         }
+        emit(RegisterErrorState());
       }
-      emit(RegisterErrorState());
 
   }
 

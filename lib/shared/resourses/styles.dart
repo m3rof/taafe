@@ -10,7 +10,7 @@ class StylesManager {
       fontWeight: FontWeight.w700,
       fontStyle: FontStyle.italic,
       color: ColorManager.headBlack);
-  static TextStyle label = const TextStyle(color: ColorManager.primaryColor);
+  static TextStyle label = const TextStyle(color: ColorManager.primaryColor,fontSize: SizeManager.s16);
   static TextStyle hint = const TextStyle(color: ColorManager.textWhite);
   static TextStyle or = const TextStyle(color: Colors.grey, fontSize: SizeManager.s14);
   static TextStyle loginCreate = const TextStyle(

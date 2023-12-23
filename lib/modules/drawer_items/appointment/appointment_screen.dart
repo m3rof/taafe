@@ -22,12 +22,12 @@ class AppointmentScreen extends StatelessWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.only(
-                    left: SizeManager.s16, right: SizeManager.s16),
+                    left: SizeManager.s14, right: SizeManager.s14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'appointment_doctor',
+                      'appointment doctor',
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     SizedBox(

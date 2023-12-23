@@ -22,7 +22,7 @@ class MedicineAlarmScreen extends StatelessWidget {
                   children: [
                     Container(
                       width: double.infinity,
-                      height: SizeManager.s200,
+                      height: SizeManager.s250,
                       decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
@@ -31,6 +31,7 @@ class MedicineAlarmScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const SizedBox(height: SizeManager.s8,),
                           AppBar(),
                           Padding(
                             padding: const EdgeInsets.symmetric(

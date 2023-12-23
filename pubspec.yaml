@@ -42,7 +42,7 @@ dependencies:
   flutter_local_notifications: ^16.2.0
   readmore: ^2.2.0
   intl:
-
+  awesome_dialog: ^3.1.0
 #  flutter_rating_bar: ^4.0.1
   smooth_star_rating_null_safety: ^1.0.4+2
 

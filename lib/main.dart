@@ -8,13 +8,16 @@ import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 import 'package:taafe/modules/register/register_screen.dart';
 import 'package:taafe/modules/setting_items/my_account/my_account_cubit/my_account_cubit.dart';
 import 'package:taafe/modules/test.dart';
+import 'package:taafe/shared/components/constants.dart';
 import 'package:taafe/shared/network/local/notification/notification.dart';
 import 'package:taafe/shared/network/remote/dio_helper.dart';
 import 'layout/home/home_cubit/home_cubit.dart';
 import 'layout/home/home_screen.dart';
 import 'modules/drawer_items/medicine_alarm/medicine_alarm_cubit/medicine_alarm_cubit.dart';
+import 'modules/navigation_bar_items/communities/communites_cubit/community_cubit.dart';
 import 'modules/register/register_cubit/register_cubit.dart';
 import 'shared/bloc_observer/bloc_observer.dart';
+import 'shared/network/remote/end_points.dart';
 import 'shared/resourses/themes.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -23,6 +26,15 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
+  List post=[];
+  DioHelper.getData(url: postFeed,query: {
+    'loadBlock':1
+  }).then((value) {
+    print(value.data);
+    post = value.data;
+  }).catchError((Error) {
+    print(Error);
+  });
   runApp(const MyApp());
 }
 
@@ -40,12 +52,13 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => MyAccountCubit()),
         BlocProvider(create: (context) => MedicineAlarmCubit()),
         BlocProvider(create: (context) => PostsCubit()),
+        BlocProvider(create: (context) => CommunityCubit()..getList()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'taafe',
         theme: ThemeManager.themeApp,
-        home:const LoginScreen(),
+        home:const HomeScreen(),
       ),
     );
   }

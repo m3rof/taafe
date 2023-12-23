@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taafe/shared/components/components.dart';
 import 'package:taafe/shared/components/constants.dart';
+import 'package:taafe/shared/resourses/color_manager.dart';
 import '../../../shared/resourses/value_app.dart';
 
 class FollwingUser extends StatefulWidget {
@@ -65,11 +66,11 @@ class _FollwingUserState extends State<FollwingUser> {
               SizedBox(
                 height: hightMedia(context: context, h: SizeManager.s_05),
               ),
-              Align(alignment: Alignment.center,child: ElevatedButton(onPressed: (){}, child:const Text('Scan QR',style: TextStyle(fontSize: SizeManager.s18),))),
+              Align(alignment: Alignment.center,child: ElevatedButton(onPressed: (){}, child:const Text('Scan QR',style: TextStyle(fontSize: SizeManager.s18,color: ColorManager.textWhite),))),
               SizedBox(
                 height: hightMedia(context: context, h: SizeManager.s_07),
               ),
-              Align(alignment: Alignment.center,child: ElevatedButton(onPressed: (){}, child:const Text('Send Code',style: TextStyle(fontSize: SizeManager.s18),))),
+              Align(alignment: Alignment.center,child: ElevatedButton(onPressed: (){}, child:const Text('Send Code',style: TextStyle(fontSize: SizeManager.s18,color: ColorManager.textWhite)),)),
 
             ],
           ),

@@ -28,6 +28,7 @@ class AssetsManager{
   static const testStart='assets/images/test_start.png';
   static const rest='assets/images/rest.png';
   static const bubble='assets/images/bubble.png';
+  static const sad='assets/images/sad.png';
 
 
 

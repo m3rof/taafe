@@ -4,6 +4,7 @@ import 'package:taafe/modules/login/login_cubit/login_cubit.dart';
 import 'package:taafe/modules/login/login_cubit/login_state.dart';
 import 'package:taafe/modules/register/register_screen.dart';
 import 'package:taafe/shared/components/constants.dart';
+import 'package:taafe/shared/resourses/color_manager.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';
 import 'package:taafe/shared/resourses/styles.dart';
 import 'package:taafe/shared/resourses/value_app.dart';
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             emailController: emailController,
                             passwordController: passwordController);
                       },
-                      child: const Text(StringManager.signin)),
+                      child: const Text(StringManager.signin,style: TextStyle(color: ColorManager.textWhite),)),
                   const SizedBox(
                     height: SizeManager.s24,
                   ),
