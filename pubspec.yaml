@@ -43,8 +43,17 @@ dependencies:
   readmore: ^2.2.0
   intl:
   awesome_dialog: ^3.1.0
+  conditional_builder_null_safety: ^0.0.6
+  cached_network_image: ^3.3.1
 #  flutter_rating_bar: ^4.0.1
   smooth_star_rating_null_safety: ^1.0.4+2
+  shimmer: ^3.0.0
+  smooth_page_indicator: ^1.1.0
+  flutter_speed_dial: ^7.0.0
+  fluttertoast: ^8.2.4
+  font_awesome_flutter: ^10.6.0
+  flutter_staggered_animations: ^1.1.1
+  page_transition: ^2.1.0
 
 dev_dependencies:
   flutter_test:

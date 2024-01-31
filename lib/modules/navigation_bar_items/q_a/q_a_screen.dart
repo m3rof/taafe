@@ -27,9 +27,9 @@ class QAScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Expanded(
-                      child: searchKind(context, () {}, StringManager.search,
-                          right: SizeManager.s0, left: SizeManager.s0)),
+                  // Expanded(
+                  //     child: searchKind(context, () {}, StringManager.search,
+                  //         right: SizeManager.s0, left: SizeManager.s0)),
                   const SizedBox(
                     width: SizeManager.s16,
                   ),

@@ -16,7 +16,7 @@ class TherapistsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                 titleKind(context, StringManager.therapists),
-                searchKind(context, (){}, '${StringManager.therapists} ${StringManager.searchHint}'),
+                // searchKind(context, (){}, '${StringManager.therapists} ${StringManager.searchHint}'),
                 const SizedBox(height: SizeManager.s14,),
                 Padding(
                 padding: const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),

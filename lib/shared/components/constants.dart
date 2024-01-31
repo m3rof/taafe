@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:taafe/layout/home/home_screen.dart';
 
 import '../../modules/show_picture/show_picture_screen.dart';
@@ -13,15 +14,14 @@ double hightMedia({required context,required double h}){
 }
 
 void moveScreen({required context,required dynamic screen}) {
-  Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => screen,
-      ));
+  Navigator.of(context).push(PageTransition(
+      duration: const Duration(milliseconds: 600),
+      type: PageTransitionType.rightToLeft,
+      child:screen));
 }
 
 void showImage(context,image){
-  Navigator.push(context, MaterialPageRoute(builder:(context) => ShowPicture(image:image),));
+  Navigator.push(context, MaterialPageRoute(builder:(context) => ShowPicture(image:image)));
 }
 
 

@@ -9,6 +9,19 @@ const String communityList='/community/community-list';
 
 const String postFeed='/community/post-feed';
 
+const String searchPost='/community/post-by-text';
+
+const String postPatient='/community/patient-posts';
+
+const String blogList='/blog/article-list';
+
+const String startPhoto='http://34.72.8.253/profilepic/';
+
+
+
+
+
+
 
 
 

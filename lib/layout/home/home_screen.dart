@@ -19,11 +19,8 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         leading: appBarLeading(),
         actions: [
-          appBarAction(StringManager.hi, AssetsManager.me
-              , () {
-            Navigator.push(context,MaterialPageRoute(
-                builder: (context) => const MedicalRecordScreen()));
-          })
+          popMenu(cubit.popMenueItems(context), appBarAction(StringManager.hi, AssetsManager.me)),
+
         ],
       ),
       body: BlocConsumer<HomeCubit, HomeState>(

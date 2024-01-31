@@ -1,14 +1,20 @@
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:awesome_icons/awesome_icons.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:taafe/modules/about_doctor/about_doctor_screen.dart';
 import 'package:taafe/modules/drawer_items/appointment/appointment_screen.dart';
+import 'package:taafe/modules/navigation_bar_items/blogs/blogs_cubit/blog_cubit.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
+import 'package:taafe/modules/search/search_cubit/search_cubit.dart';
+import 'package:taafe/shared/network/remote/end_points.dart';
 import '../../layout/home/home_cubit/home_cubit.dart';
 import '../../modules/appointment_doctor/appointment_doctor_screen.dart';
 import '../../modules/drawer_items/medicine_alarm/medicine_alarm_cubit/medicine_alarm_cubit.dart';
@@ -237,34 +243,34 @@ Widget titleKind(context, String kind) {
   );
 }
 
-Widget searchKind(context, function, String hint,
-    {double left = SizeManager.s24, double right = SizeManager.s22}) {
+Widget searchKind(context, function, String hint,SearchCubit cubit,
+    {double left = SizeManager.s24, double right = SizeManager.s22,}) {
   return Padding(
     padding: EdgeInsets.only(left: left, right: right),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: SizeManager.s50,
-          child: TextFormField(
-            style: StylesManager.label,
-            cursorColor: ColorManager.primaryColor,
-            decoration: InputDecoration(
-              suffixIcon: InkWell(
-                  onTap: function, child: const Icon(Icons.search_outlined)),
-              fillColor: ColorManager.search,
-              filled: true,
-              hintText: hint,
-              hintStyle: const TextStyle(color: ColorManager.primaryColor),
-              focusedBorder: const OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(SizeManager.s30)),
-                  borderSide: BorderSide(color: ColorManager.search)),
-              enabledBorder: const OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(SizeManager.s30)),
-                  borderSide: BorderSide(color: ColorManager.search)),
-            ),
+        TextFormField(
+          onChanged: (value) {
+            cubit.getSearchResult(value);
+
+          },
+          style: StylesManager.label,
+          cursorColor: ColorManager.primaryColor,
+          decoration: InputDecoration(
+            suffixIcon: const Icon(Icons.search_outlined),
+            fillColor: ColorManager.search,
+            filled: true,
+            hintText: hint,
+            hintStyle: const TextStyle(color: ColorManager.primaryColor),
+            focusedBorder: const OutlineInputBorder(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(SizeManager.s24)),
+                borderSide: BorderSide(color: ColorManager.search)),
+            enabledBorder: const OutlineInputBorder(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(SizeManager.s24)),
+                borderSide: BorderSide(color: ColorManager.search)),
           ),
         )
       ],
@@ -287,7 +293,7 @@ Widget appBarLeading() {
   );
 }
 
-Widget appBarAction(String name, String assets, function) {
+Widget appBarAction(String name, String assets, ) {
   return Row(
     children: [
       Text(name, style: StylesManager.hi),
@@ -297,12 +303,9 @@ Widget appBarAction(String name, String assets, function) {
       SizedBox(
         height: SizeManager.s24,
         width: SizeManager.s24,
-        child: InkWell(
-          onTap: function,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(25)),
-            child: Image(fit: BoxFit.cover, image: AssetImage(assets)),
-          ),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(25)),
+          child: Image(fit: BoxFit.cover, image: AssetImage(assets)),
         ),
       ),
       const SizedBox(
@@ -426,15 +429,20 @@ Widget greenContainer(
   );
 }
 
-Widget profileImage(double height, double width, double radius) {
+Widget profileImage(
+    {image,
+    required double height,
+    required double width,
+    required double radius}) {
   return Container(
     height: height,
     width: width,
     decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(radius)),
         border: Border.all(color: ColorManager.primaryColor, width: 1),
-        image: const DecorationImage(
-            image: AssetImage(AssetsManager.me), fit: BoxFit.cover)),
+        image: DecorationImage(
+            image: image == null ? AssetImage(AssetsManager.me) : image,
+            fit: BoxFit.cover)),
   );
 }
 
@@ -471,7 +479,10 @@ Widget itemTherapists(context) {
       margin: const EdgeInsets.all(SizeManager.s14),
       child: Column(
         children: [
-          profileImage(SizeManager.s135, SizeManager.s135, SizeManager.s84),
+          profileImage(
+              height: SizeManager.s135,
+              width: SizeManager.s135,
+              radius: SizeManager.s84),
           const SizedBox(
             height: SizeManager.s12,
           ),
@@ -764,7 +775,10 @@ Widget itemTherapistsV(context) {
       children: [
         Row(
           children: [
-            profileImage(SizeManager.s75, SizeManager.s75, SizeManager.s55),
+            profileImage(
+                height: SizeManager.s75,
+                width: SizeManager.s75,
+                radius: SizeManager.s55),
             const SizedBox(width: SizeManager.s10),
             Expanded(
               child: Column(
@@ -939,7 +953,14 @@ Widget itemTherapistsV(context) {
                       .copyWith(fontSize: SizeManager.s10),
                 ),
                 const Spacer(),
-                greenContainer(text: StringManager.appointment, function: () {},bottom: SizeManager.s4,top: SizeManager.s4,left: SizeManager.s4,right: SizeManager.s4,fontSize: SizeManager.s8)
+                greenContainer(
+                    text: StringManager.appointment,
+                    function: () {},
+                    bottom: SizeManager.s4,
+                    top: SizeManager.s4,
+                    left: SizeManager.s4,
+                    right: SizeManager.s4,
+                    fontSize: SizeManager.s8)
               ],
             )
           ],
@@ -949,18 +970,26 @@ Widget itemTherapistsV(context) {
   );
 }
 
-Widget listViewBlogsV(context) {
+Widget listViewBlogsV(context, BlogCubit cubit) {
   return ListView.builder(
     shrinkWrap: true,
     physics: const NeverScrollableScrollPhysics(),
-    itemCount: 10,
+    itemCount: cubit.blog.length,
     itemBuilder: (context, index) {
-      return itemBlogsV(context);
+      return itemBlogsV(
+          context: context,
+          image: cubit.blog[index]['covorImage'],
+          title: cubit.blog[index]['title'],
+          doctorName: cubit.blog[index]['doctorName']);
     },
   );
 }
 
-Widget itemBlogsV(context) {
+Widget itemBlogsV(
+    {context,
+    required String image,
+    required String title,
+    required String doctorName}) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: SizeManager.s10),
     margin: const EdgeInsets.all(SizeManager.s14),
@@ -972,17 +1001,16 @@ Widget itemBlogsV(context) {
       children: [
         Container(
           height: SizeManager.s170,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(AssetsManager.session), fit: BoxFit.fill),
-            borderRadius: BorderRadius.all(
+          decoration: BoxDecoration(
+            image: DecorationImage(image: CachedNetworkImageProvider(image)),
+            borderRadius: const BorderRadius.all(
               Radius.circular(SizeManager.s30),
             ),
           ),
         ),
         const SizedBox(height: SizeManager.s3),
         Text(
-          'Depression solutions',
+          title,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: Colors.orange,
               fontWeight: FontWeight.w600,
@@ -1003,7 +1031,7 @@ Widget itemBlogsV(context) {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Dr. mahmouh hanafi', style: StylesManager.drContent),
+                Text(doctorName, style: StylesManager.drContent),
                 const SizedBox(
                   height: SizeManager.s3,
                 ),
@@ -1044,11 +1072,11 @@ Widget itemBlogsV(context) {
   );
 }
 
-Widget itemCommunity(function, IconData icon, String text) {
+Widget itemCommunity(function, String icon, String text) {
   return InkWell(
     onTap: function,
     child: Container(
-      padding:const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       height: SizeManager.s150,
       width: SizeManager.s135,
       decoration: BoxDecoration(
@@ -1061,11 +1089,11 @@ Widget itemCommunity(function, IconData icon, String text) {
           const SizedBox(
             height: SizeManager.s20,
           ),
-          Icon(
-            icon,
-            color: ColorManager.greenColor,
-            size: SizeManager.s40,
-          ),
+          CachedNetworkImage(
+              imageUrl: icon,
+              width: SizeManager.s50,
+              height: SizeManager.s50,
+              errorWidget: (context, url, error) => const Icon(Icons.error)),
           const SizedBox(
             height: SizeManager.s18,
           ),
@@ -1409,7 +1437,10 @@ Widget onlineTherapists() {
       margin: const EdgeInsets.symmetric(horizontal: SizeManager.s12),
       child: Column(
         children: [
-          profileImage(SizeManager.s84, SizeManager.s84, SizeManager.s50),
+          profileImage(
+              height: SizeManager.s84,
+              width: SizeManager.s84,
+              radius: SizeManager.s50),
           const SizedBox(height: SizeManager.s8),
           SizedBox(
               width: SizeManager.s65,
@@ -1517,7 +1548,10 @@ Widget itemAppointmentV(context) {
       children: [
         Row(
           children: [
-            profileImage(SizeManager.s75, SizeManager.s75, SizeManager.s55),
+            profileImage(
+                height: SizeManager.s75,
+                width: SizeManager.s75,
+                radius: SizeManager.s55),
             const SizedBox(width: SizeManager.s10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -2096,7 +2130,8 @@ Widget listAlarm(MedicineAlarmCubit cubit) {
   );
 }
 
-Widget itemPosts({required context, required PostsCubit cubit}) {
+Widget itemPosts(
+    {required context, required int index, required PostsCubit cubit}) {
   return Container(
     margin: const EdgeInsets.symmetric(
         horizontal: SizeManager.s16, vertical: SizeManager.s20),
@@ -2110,7 +2145,10 @@ Widget itemPosts({required context, required PostsCubit cubit}) {
                   showImage(context, AssetsManager.me);
                 },
                 child: profileImage(
-                    SizeManager.s65, SizeManager.s65, SizeManager.s35)),
+                    image: CachedNetworkImageProvider('$startPhoto${cubit.post[index]['userProfileImage']}'),
+                    height: SizeManager.s65,
+                    width: SizeManager.s65,
+                    radius: SizeManager.s35)),
             const SizedBox(
               width: SizeManager.s12,
             ),
@@ -2122,7 +2160,7 @@ Widget itemPosts({required context, required PostsCubit cubit}) {
                     SizedBox(
                         width: SizeManager.s150,
                         child: Text(
-                          "Dr. John Lemon",
+                          cubit.post[index]['userName'],
                           style: StylesManager.loginCreate,
                           overflow: TextOverflow.ellipsis,
                         )),
@@ -2152,7 +2190,7 @@ Widget itemPosts({required context, required PostsCubit cubit}) {
           height: SizeManager.s10,
         ),
         ReadMoreText(
-          'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.',
+          cubit.post[index]['mainText'],
           style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s16),
           trimLines: 2,
           colorClickableText: ColorManager.primaryColor,
@@ -2245,13 +2283,22 @@ Widget itemPosts({required context, required PostsCubit cubit}) {
 }
 
 Widget listPosts(context, PostsCubit cubit) {
-  return ListView.builder(
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    itemCount: 10,
-    itemBuilder: (context, index) {
-      return itemPosts(context: context, cubit: cubit);
-    },
+  return AnimationLimiter(
+    child: ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: cubit.post.length,
+      itemBuilder: (context, index) {
+        return AnimationConfiguration.staggeredList(
+            position: 0,
+            duration: const Duration(seconds: 1),
+            child: SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                    child: itemPosts(
+                        context: context, index: index, cubit: cubit))));
+      },
+    ),
   );
 }
 
@@ -2341,21 +2388,207 @@ Future showSheet(context, Widget child, onClicked) {
           ));
 }
 
-AwesomeDialog showDialogAwsome(context,desc,DialogType dialogType){
+AwesomeDialog showDialogAwsome(context, desc, DialogType dialogType) {
   return AwesomeDialog(
     context: context,
     animType: AnimType.scale,
     dialogType: dialogType,
-    body: Center(child: Text(
-      desc,
-      style: StylesManager.headPrimary3.copyWith(fontStyle: FontStyle.italic,fontSize: SizeManager.s16),
-    ),),
+    body: Center(
+      child: Text(
+        desc,
+        style: StylesManager.headPrimary3
+            .copyWith(fontStyle: FontStyle.italic, fontSize: SizeManager.s16),
+      ),
+    ),
     title: 'This is Ignored',
-    desc:   'This is also Ignored',
+    desc: 'This is also Ignored',
     btnOkOnPress: () {},
   )..show();
 }
 
+void showToast(String msg) async {
+  await Fluttertoast.cancel();
+  Fluttertoast.showToast(
+      msg: msg,
+      backgroundColor: ColorManager.primaryColor,
+      fontSize: SizeManager.s18,
+      textColor: Colors.white);
+}
+
+Widget listPatientPosts(context, PostsCubit cubit) {
+  return AnimationLimiter(
+    child: ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: cubit.patientPost.length,
+      itemBuilder: (context, index) {
+        return AnimationConfiguration.staggeredList(
+            position: 0,
+            duration: const Duration(milliseconds: 500),
+            child: SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                    child: itemPatientPosts(
+                        context: context, index: index, cubit: cubit))));
+      },
+    ),
+  );
+}
 
 
+Widget itemPatientPosts(
+    {required context, required int index, required PostsCubit cubit}) {
+  String date=cubit.patientPost[index]['date'];
+  DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(date);
+  return Container(
+    margin: const EdgeInsets.symmetric(
+        horizontal: SizeManager.s16, vertical: SizeManager.s20),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            GestureDetector(
+                onTap: () {
+                  showImage(context, AssetsManager.me);
+                },
+                child: profileImage(
+                    image: NetworkImage(cubit.patientPost[index]['userProfileImage']),
+                    height: SizeManager.s65,
+                    width: SizeManager.s65,
+                    radius: SizeManager.s35)),
+            const SizedBox(
+              width: SizeManager.s12,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                          width: SizeManager.s150,
+                          child: Text(
+                            cubit.patientPost[index]['userName'],
+                            style: StylesManager.loginCreate,
+                            overflow: TextOverflow.ellipsis,
+                          )),
+                      Spacer(),
+                      popMenu(cubit.menueItems,const Icon(FontAwesomeIcons.ellipsisH) )
+                    ],
+                  ),
+                  Text(DateFormat('MM/dd/yyyy   hh:mm a').format(parseDate),
+                      style: StylesManager.or,),
+                ],
+              ),
+            )
+          ],
+        ),
+        const SizedBox(
+          height: SizeManager.s20,
+        ),
+        Text(
+          'The title of post:',
+          style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s20),
+        ),
+        const SizedBox(
+          height: SizeManager.s10,
+        ),
+        ReadMoreText(
+          cubit.patientPost[index]['mainText'],
+          style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s16),
+          trimLines: 2,
+          colorClickableText: ColorManager.primaryColor,
+          trimMode: TrimMode.Line,
+          trimCollapsedText: 'Show more',
+          trimExpandedText: 'Show less',
+          moreStyle: const TextStyle(
+              color: ColorManager.primaryColor,
+              fontSize: 14,
+              fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: SizeManager.s10,
+        ),
+        Container(
+          height: SizeManager.s230,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: ColorManager.primaryColor,
+            borderRadius: BorderRadius.all(Radius.circular(SizeManager.s24)),
+          ),
+          child: Image.asset(AssetsManager.session, fit: BoxFit.fill),
+        ),
+        const SizedBox(
+          height: SizeManager.s16,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+              left: SizeManager.s12, right: SizeManager.s12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  cubit.makeLike();
+                },
+                child: Row(
+                  children: [
+                    Icon(FontAwesomeIcons.thumbsUp,
+                        size: SizeManager.s24,
+                        color: cubit.like == true
+                            ? ColorManager.headOrange
+                            : ColorManager.greyColor),
+                    const SizedBox(
+                      width: SizeManager.s4,
+                    ),
+                    Container(
+                        margin: const EdgeInsets.only(top: 5),
+                        child: Text('like',
+                            style: StylesManager.or.copyWith(
+                                color: cubit.like == true
+                                    ? ColorManager.headOrange
+                                    : ColorManager.greyColor,
+                                fontSize: SizeManager.s16))),
+                  ],
+                ),
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: () {
+                  cubit.makeCommsent();
+                },
+                child: Row(
+                  children: [
+                    Icon(FontAwesomeIcons.comment,
+                        size: SizeManager.s24,
+                        color: cubit.comment == true
+                            ? ColorManager.headOrange
+                            : ColorManager.greyColor),
+                    const SizedBox(
+                      width: SizeManager.s4,
+                    ),
+                    Container(
+                        margin: const EdgeInsets.only(top: 5),
+                        child: Text('comment',
+                            style: StylesManager.or.copyWith(
+                                color: cubit.comment == true
+                                    ? ColorManager.headOrange
+                                    : ColorManager.greyColor,
+                                fontSize: SizeManager.s16))),
+                  ],
+                ),
+              )
+            ],
+          ),
+        )
+      ],
+    ),
+  );
+}
 
+Widget popMenu(List<PopupMenuEntry> list,widget){
+  return PopupMenuButton(color: Colors.white,itemBuilder: (context) =>list ,
+    icon:widget ,
+  );
+}

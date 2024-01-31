@@ -2,6 +2,8 @@ import 'package:awesome_icons/awesome_icons.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taafe/modules/posts/patient_posts_screen.dart';
+import 'package:taafe/shared/components/constants.dart';
 import 'package:taafe/shared/resourses/assets_manager.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';
 import '../../../modules/navigation_bar_items/blogs/blogs_screen.dart';
@@ -27,16 +29,15 @@ class HomeCubit extends Cubit<HomeState> {
   ];
 
   List<ItemTest> listTest = [
-    ItemTest(AssetsManager.worry, (){}),
-    ItemTest(AssetsManager.anxiety, (){}),
-    ItemTest(AssetsManager.deperession, (){}),
-    ItemTest(AssetsManager.adiction, (){}),
-    ItemTest(AssetsManager.parent, (){}),
-    ItemTest(AssetsManager.arizona, (){}),
-
+    ItemTest(AssetsManager.worry, () {}),
+    ItemTest(AssetsManager.anxiety, () {}),
+    ItemTest(AssetsManager.deperession, () {}),
+    ItemTest(AssetsManager.adiction, () {}),
+    ItemTest(AssetsManager.parent, () {}),
+    ItemTest(AssetsManager.arizona, () {}),
   ];
-  
-  List<Widget>listPage=[
+
+  List<Widget> listPage = [
     const HomeBody(),
     const TherapistsScreen(),
     const BlogsScreen(),
@@ -45,22 +46,52 @@ class HomeCubit extends Cubit<HomeState> {
     const TestScreen()
   ];
 
-  List<Widget>listIcons=[
+  List<Widget> listIcons = [
     const Icon(Icons.home),
     const Icon(FontAwesomeIcons.user),
     const Icon(Icons.message_outlined),
     const Icon(FontAwesomeIcons.users),
     const Icon(FontAwesomeIcons.comments),
     const Icon(FontAwesomeIcons.solidFile),
-
   ];
 
-  int numPage=0;
+  int numPage = 0;
 
-  void changePage (int index){
-    numPage=index;
+  void changePage(int index) {
+    numPage = index;
     emit(ChangePagesState());
   }
+
+  List<PopupMenuEntry> popMenueItems(context) {
+    return [
+      PopupMenuItem(
+          child: ListTile(
+        onTap: () {
+          moveScreen(context: context, screen: PatientPosts());
+        },
+        leading: Icon(FontAwesomeIcons.edit),
+        title: Text('My posts'),
+      )),
+      PopupMenuItem(
+          child: ListTile(
+        onTap: () {},
+        leading: Icon(FontAwesomeIcons.trash),
+        title: Text('delete post'),
+      )),
+      const PopupMenuDivider(),
+      PopupMenuItem(
+          child: ListTile(
+        onTap: () {},
+        title: Text('About Us'),
+      )),
+      PopupMenuItem(
+          child: ListTile(
+        onTap: () {},
+        title: Text('Logout'),
+      )),
+    ];
+  }
+
 }
 
 class ItemServices {

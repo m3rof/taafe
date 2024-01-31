@@ -29,6 +29,10 @@ class AssetsManager{
   static const rest='assets/images/rest.png';
   static const bubble='assets/images/bubble.png';
   static const sad='assets/images/sad.png';
+  static const onboardingLogo1='assets/images/onboarding_image1.gif';
+  static const onboardingLogo2='assets/images/onboarding_image2.gif';
+  static const onboardingLogo3='assets/images/onboarding_image3.gif';
+
 
 
 

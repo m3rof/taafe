@@ -18,7 +18,7 @@ class CommunityCubit extends Cubit<CommunityState> {
       emit(CommunitySuccessState());
     }).catchError((Error) {
       print(Error);
-      emit(CommunitySuccessState());
+      emit(CommunityErrorState());
     });
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_cubit.dart';
 import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_state.dart';
+import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 import 'package:taafe/modules/posts/posts_screen.dart';
 import 'package:taafe/shared/components/components.dart';
 import 'package:taafe/shared/components/constants.dart';
@@ -23,13 +24,14 @@ class CommunitiesScreen extends StatelessWidget {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        } else if (state is CommunitySuccessState) {
+        }
+        else if (state is CommunitySuccessState) {
           var cubit = CommunityCubit.get(context);
           return CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.only(right:22,left: 22),
+                  padding: const EdgeInsets.only(right: 22, left: 22),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -44,27 +46,36 @@ class CommunitiesScreen extends StatelessWidget {
               ),
               SliverFillRemaining(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 22,right: 22),
+                  padding: const EdgeInsets.only(left: 22, right: 22),
                   child: GridView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     itemCount: cubit.community.length,
-                    gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 8,
                       mainAxisSpacing: 8,
                     ),
                     itemBuilder: (context, index) => GridTile(
                       child: itemCommunity(() {
-                        moveScreen(context: context, screen:const PostsScreen());
-                      }, FontAwesomeIcons.userMinus, '${cubit.community[index]['name']}'),
+                        moveScreen(
+                            context: context,
+                            screen: PostsScreen(cubit.community[index]['id'],cubit.community[index]['name']));
+                      },
+                          cubit.community[index]['iconLink'] != null
+                              ? '${cubit.community[index]['iconLink']}'
+                              : AssetsManager.sad,
+
+                          '${cubit.community[index]['name']}'),
                     ),
                   ),
                 ),
               )
             ],
           );
-        } else {
+        }
+        else {
           return Center(
             child: Image.asset(AssetsManager.me),
           );

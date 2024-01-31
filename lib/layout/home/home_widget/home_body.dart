@@ -21,7 +21,7 @@ class HomeBody extends StatelessWidget {
             height: SizeManager.s20,
           ),
           titleHome(context),
-          searchKind(context, null,StringManager.search),
+          // searchKind(context, null,StringManager.search),
           const SizedBox(
             height: SizeManager.s20,
           ),

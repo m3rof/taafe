@@ -30,7 +30,7 @@ class AppointmentDoctorScreen extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                profileImage(SizeManager.s120,SizeManager.s120, SizeManager.s12),
+                profileImage(height: SizeManager.s120,width:  SizeManager.s120,radius:  SizeManager.s12),
                 const SizedBox(width: SizeManager.s20,),
                 Padding(
                   padding: const EdgeInsets.only(top: SizeManager.s16),
