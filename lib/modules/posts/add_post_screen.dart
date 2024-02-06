@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_cubit.dart';
+import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_state.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_state.dart';
 import 'package:taafe/shared/components/components.dart';
@@ -33,6 +35,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   @override
   Widget build(BuildContext context) {
     var cubit = PostsCubit.get(context);
+    var cubitCommunity = CommunityCubit.get(context);
     return Scaffold(
       body: SafeArea(
         child: BlocConsumer<PostsCubit, PostsState>(
@@ -46,13 +49,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       Container(
                         width: double.infinity,
                         height: hightMedia(context: context, h: SizeManager.s_1),
+                        padding:EdgeInsets.symmetric(horizontal: SizeManager.s16) ,
                         decoration: const BoxDecoration(
                             color: ColorManager.primaryColor,
                             borderRadius: BorderRadius.only(
                                 bottomRight: Radius.circular(SizeManager.s22),
                                 bottomLeft: Radius.circular(SizeManager.s22))),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text('Add New Post',
@@ -88,34 +92,37 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                 textEditingController: title,
                                 validator: 'enter the title'),
                             const SizedBox(
-                              height: SizeManager.s12,
+                              height: SizeManager.s14,
                             ),
                             textFieldAdd(
-                                hint: 'Add desvription',
+                                hint: 'Add description',
                                 textEditingController: desvription,
-                                validator: 'enter the desvription'),
+                                validator: 'enter the description'),
                             const SizedBox(
-                              height: SizeManager.s12,
+                              height: SizeManager.s14,
                             ),
-                            dropFormAdd(
-                                validator: 'enter the category',
-                                selectedItem: cubit.category,
-                                list: PostsCubit.list,
-                                function: (value) =>
-                                    cubit.showResult(value, cubit.category),
-                                left: SizeManager.s10,
-                                right: SizeManager.s10,
-                                top: SizeManager.s10,
-                                bottom: SizeManager.s10),
+                            BlocConsumer<CommunityCubit,CommunityState>(
+                              listener: (context, state) {},
+                              builder:(context, state) => dropFormAdd(
+                                  validator: 'enter the category',
+                                  selectedItem: cubit.category,
+                                  list:cubitCommunity.name,
+                                  function: (value) =>
+                                      cubit.showResult(value, cubit.category,cubitCommunity.community),
+                                  left: SizeManager.s10,
+                                  right: SizeManager.s10,
+                                  top: SizeManager.s10,
+                                  bottom: SizeManager.s10),
+                            ),
                             const SizedBox(
-                              height: SizeManager.s12,
+                              height: SizeManager.s14,
                             ),
                             textFieldAdd(
                                 hint: 'Tags',
                                 textEditingController: tags,
                                 validator: 'enter the Tags'),
                             const SizedBox(
-                              height: SizeManager.s22,
+                              height: SizeManager.s24,
                             ),
                   
                             Row(
@@ -141,7 +148,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                               ],
                             ),
                             const SizedBox(
-                              height: SizeManager.s22,
+                              height: SizeManager.s28,
                             ),
                           ],
                         ),

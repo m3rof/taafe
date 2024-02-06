@@ -18,7 +18,7 @@ class ShowPicture extends StatelessWidget {
           SizedBox(height: hightMedia(context: context, h: SizeManager.s_1),),
           Hero(
             tag: 'image2',
-            child: Image.asset(image),
+            child: Image.network(image),
           ),
         ],
       ),

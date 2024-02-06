@@ -23,40 +23,42 @@ class DrawerBody extends StatelessWidget {
       child:
       Padding(
         padding: const EdgeInsets.only(left:SizeManager.s18,right:SizeManager.s18 ,top: SizeManager.s20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children:  [
-            const Align(
-                alignment: Alignment.center,
-                child: SizedBox(
-                    width: SizeManager.s150,
-                    height: SizeManager.s150,
-                    child: Image(image: AssetImage(AssetsManager.logo)))),
-            const Text(StringManager.accountProfile),
-            const SizedBox(height: SizeManager.s30,),
-            itemDrawer(context,FontAwesomeIcons.facebookMessenger,'chat',(){}),
-            itemDrawer(context,Icons.medical_information,'Medical Record',(){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const MedicalRecordScreen(),));
-            }),
-            itemDrawer(context,FontAwesomeIcons.bell,'Medicine Alarm',(){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const MedicineAlarmScreen(),));
-            }),
-            itemDrawer(context,FontAwesomeIcons.heart,'Interests',(){}),
-            itemDrawer(context,FontAwesomeIcons.calendarTimes,'Appointments',(){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const AppointmentScreen(),));
-            }),
-            itemDrawer(context,FontAwesomeIcons.diagnoses,'diagnosis',(){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const DiagnosisScreen(),));
-            }),
-            itemDrawer(context,FontAwesomeIcons.fileMedical,'My therapist',(){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const MyTherapistsScreen(),));
-            }),
-            itemDrawer(context,Icons.settings,'Setting',(){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingScreen(),));
-            }),
-
-
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children:  [
+              const Align(
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                      width: SizeManager.s150,
+                      height: SizeManager.s150,
+                      child: Image(image: AssetImage(AssetsManager.logo)))),
+              const Text(StringManager.accountProfile),
+              const SizedBox(height: SizeManager.s30,),
+              itemDrawer(context,FontAwesomeIcons.facebookMessenger,'chat',(){}),
+              itemDrawer(context,Icons.medical_information,'Medical Record',(){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const MedicalRecordScreen(),));
+              }),
+              itemDrawer(context,FontAwesomeIcons.bell,'Medicine Alarm',(){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const MedicineAlarmScreen(),));
+              }),
+              itemDrawer(context,FontAwesomeIcons.heart,'Interests',(){}),
+              itemDrawer(context,FontAwesomeIcons.calendarTimes,'Appointments',(){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const AppointmentScreen(),));
+              }),
+              itemDrawer(context,FontAwesomeIcons.diagnoses,'diagnosis',(){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const DiagnosisScreen(),));
+              }),
+              itemDrawer(context,FontAwesomeIcons.fileMedical,'My therapist',(){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const MyTherapistsScreen(),));
+              }),
+              itemDrawer(context,Icons.settings,'Setting',(){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingScreen(),));
+              }),
+          
+          
+            ],
+          ),
         ),
       ),
     );

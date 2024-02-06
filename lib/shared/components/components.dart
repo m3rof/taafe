@@ -243,8 +243,14 @@ Widget titleKind(context, String kind) {
   );
 }
 
-Widget searchKind(context, function, String hint,SearchCubit cubit,
-    {double left = SizeManager.s24, double right = SizeManager.s22,}) {
+Widget searchKind(
+  context,
+  function,
+  String hint,
+  SearchCubit cubit, {
+  double left = SizeManager.s24,
+  double right = SizeManager.s22,
+}) {
   return Padding(
     padding: EdgeInsets.only(left: left, right: right),
     child: Column(
@@ -253,7 +259,6 @@ Widget searchKind(context, function, String hint,SearchCubit cubit,
         TextFormField(
           onChanged: (value) {
             cubit.getSearchResult(value);
-
           },
           style: StylesManager.label,
           cursorColor: ColorManager.primaryColor,
@@ -293,7 +298,10 @@ Widget appBarLeading() {
   );
 }
 
-Widget appBarAction(String name, String assets, ) {
+Widget appBarAction(
+  String name,
+  String assets,
+) {
   return Row(
     children: [
       Text(name, style: StylesManager.hi),
@@ -1077,7 +1085,6 @@ Widget itemCommunity(function, String icon, String text) {
     onTap: function,
     child: Container(
       padding: const EdgeInsets.all(10),
-      height: SizeManager.s150,
       width: SizeManager.s135,
       decoration: BoxDecoration(
         border: Border.all(
@@ -1095,13 +1102,15 @@ Widget itemCommunity(function, String icon, String text) {
               height: SizeManager.s50,
               errorWidget: (context, url, error) => const Icon(Icons.error)),
           const SizedBox(
-            height: SizeManager.s18,
+            height: SizeManager.s10,
           ),
-          Text(
-            text,
-            style: StylesManager.itemHome,
-            maxLines: 3,
-            textAlign: TextAlign.center,
+          Expanded(
+            child: Text(
+              text,
+              style: StylesManager.itemHome,
+              maxLines: 3,
+              textAlign: TextAlign.center,
+            ),
           )
         ],
       ),
@@ -1271,7 +1280,7 @@ Widget testLogoScreen(context, function) {
           aspectRatio: 16 / 9,
           child: Image(image: AssetImage(AssetsManager.testLogo))),
       SizedBox(
-        height: hightMedia(context: context, h: SizeManager.s_1),
+        height: hightMedia(context: context, h: SizeManager.s_01),
       ),
       InkWell(
           onTap: function,
@@ -2145,7 +2154,8 @@ Widget itemPosts(
                   showImage(context, AssetsManager.me);
                 },
                 child: profileImage(
-                    image: CachedNetworkImageProvider('$startPhoto${cubit.post[index]['userProfileImage']}'),
+                    image: CachedNetworkImageProvider(
+                        '$startPhoto${cubit.post[index]['userProfileImage']}'),
                     height: SizeManager.s65,
                     width: SizeManager.s65,
                     radius: SizeManager.s35)),
@@ -2310,6 +2320,7 @@ Widget textFieldAdd({
   return TextFormField(
     controller: textEditingController,
     validator: (value) => value!.trim().isEmpty ? validator : null,
+    style: StylesManager.itemHome.copyWith(fontSize: 20),
     decoration: InputDecoration(
       hintText: hint,
       hintStyle: const TextStyle(color: Colors.black38),
@@ -2435,11 +2446,10 @@ Widget listPatientPosts(context, PostsCubit cubit) {
   );
 }
 
-
 Widget itemPatientPosts(
     {required context, required int index, required PostsCubit cubit}) {
-  String date=cubit.patientPost[index]['date'];
-  DateTime parseDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(date);
+  String date = cubit.patientPost[index]['date'];
+  DateTime parseDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(date);
   return Container(
     margin: const EdgeInsets.symmetric(
         horizontal: SizeManager.s16, vertical: SizeManager.s20),
@@ -2450,10 +2460,18 @@ Widget itemPatientPosts(
           children: [
             GestureDetector(
                 onTap: () {
-                  showImage(context, AssetsManager.me);
+                  showImage(
+                      context,
+                      cubit.patientPost[index]['userProfileImage'] != null
+                          ? '$startPhoto${cubit.patientPost[index]['userProfileImage']}'
+                          : 'https://scontent-hbe1-1.xx.fbcdn.net/v/t39.30808-6/298097482_1446954539154955_1988367110792247724_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=FFReHi-nagsAX87ZcvY&_nc_ht=scontent-hbe1-1.xx&oh=00_AfBR4tLjkA3jow-9csULLoXjLqFlsmUxRCSXjSLiwluoKA&oe=65C08341');
                 },
                 child: profileImage(
-                    image: NetworkImage(cubit.patientPost[index]['userProfileImage']),
+                    image: NetworkImage(cubit.patientPost[index]
+                                ['userProfileImage'] !=
+                            null
+                        ? '$startPhoto${cubit.patientPost[index]['userProfileImage']}'
+                        : 'https://scontent-hbe1-1.xx.fbcdn.net/v/t39.30808-6/298097482_1446954539154955_1988367110792247724_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=FFReHi-nagsAX87ZcvY&_nc_ht=scontent-hbe1-1.xx&oh=00_AfBR4tLjkA3jow-9csULLoXjLqFlsmUxRCSXjSLiwluoKA&oe=65C08341'),
                     height: SizeManager.s65,
                     width: SizeManager.s65,
                     radius: SizeManager.s35)),
@@ -2469,16 +2487,21 @@ Widget itemPatientPosts(
                       SizedBox(
                           width: SizeManager.s150,
                           child: Text(
-                            cubit.patientPost[index]['userName'],
+                            cubit.patientPost[index]['userName'] != null
+                                ? cubit.patientPost[index]['userName']
+                                : '',
                             style: StylesManager.loginCreate,
                             overflow: TextOverflow.ellipsis,
                           )),
                       Spacer(),
-                      popMenu(cubit.menueItems,const Icon(FontAwesomeIcons.ellipsisH) )
+                      popMenu(cubit.menueItems,
+                          const Icon(FontAwesomeIcons.ellipsisH))
                     ],
                   ),
-                  Text(DateFormat('MM/dd/yyyy   hh:mm a').format(parseDate),
-                      style: StylesManager.or,),
+                  Text(
+                    DateFormat('MM/dd/yyyy   hh:mm a').format(parseDate),
+                    style: StylesManager.or,
+                  ),
                 ],
               ),
             )
@@ -2587,8 +2610,10 @@ Widget itemPatientPosts(
   );
 }
 
-Widget popMenu(List<PopupMenuEntry> list,widget){
-  return PopupMenuButton(color: Colors.white,itemBuilder: (context) =>list ,
-    icon:widget ,
+Widget popMenu(List<PopupMenuEntry> list, widget) {
+  return PopupMenuButton(
+    color: Colors.white,
+    itemBuilder: (context) => list,
+    icon: widget,
   );
 }

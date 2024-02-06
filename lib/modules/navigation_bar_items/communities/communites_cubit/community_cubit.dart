@@ -11,10 +11,19 @@ class CommunityCubit extends Cubit<CommunityState> {
 
   List community = [];
 
+  List name=[];
+
+  void addName(){
+    for(var e in community){
+      name.add(e['name']);
+    }
+  }
+
   void getList() {
     DioHelper.getData(url: communityList).then((value) {
       print(value.data);
       community = value.data;
+      addName();
       emit(CommunitySuccessState());
     }).catchError((Error) {
       print(Error);

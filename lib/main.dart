@@ -9,7 +9,6 @@ import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 import 'package:taafe/modules/register/register_screen.dart';
 import 'package:taafe/modules/search/search_cubit/search_cubit.dart';
 import 'package:taafe/modules/setting_items/my_account/my_account_cubit/my_account_cubit.dart';
-import 'package:taafe/modules/test.dart';
 import 'package:taafe/shared/components/constants.dart';
 import 'package:taafe/shared/network/local/notification/notification.dart';
 import 'package:taafe/shared/network/remote/dio_helper.dart';
@@ -19,6 +18,7 @@ import 'modules/drawer_items/medicine_alarm/medicine_alarm_cubit/medicine_alarm_
 import 'modules/navigation_bar_items/communities/communites_cubit/community_cubit.dart';
 import 'modules/onboarding/onboarding_screen.dart';
 import 'modules/register/register_cubit/register_cubit.dart';
+import 'modules/test.dart';
 import 'shared/bloc_observer/bloc_observer.dart';
 import 'shared/network/remote/end_points.dart';
 import 'shared/resourses/themes.dart';
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'taafe',
         theme: ThemeManager.themeApp,
-        home:const HomeScreen(),
+        home: MyHomePage(),
       ),
     );
   }

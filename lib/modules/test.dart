@@ -1,105 +1,105 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class MyTest extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+class TestScreen extends StatefulWidget {
+  const TestScreen({Key? key}) : super(key: key);
+
+  @override
+  State<TestScreen> createState() => _TestScreenState();
+}
+
+class _TestScreenState extends State<TestScreen> {
+  List<String> images = [
+    'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Image List Example'),
-        ),
-        body: Container(
-          // Set the container's padding or decoration as needed
-          padding: EdgeInsets.all(16.0),
-          child: ImageList(),
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: GridView.builder(
+              itemCount: 4,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // Number of columns in the grid
+                crossAxisSpacing: 2, // Spacing between columns
+                mainAxisSpacing: 2, // Spacing between rows
+              ),
+              itemBuilder: (context, index) {
+                if(images.length<4){
+                  return Image.network(images[index], fit: BoxFit.cover);
+                }
+                else{
+                    if(index==3){
+                      return Stack(
+                        fit: StackFit.passthrough,
+                        children: [
+                          Image.network(images[index], fit: BoxFit.cover),
+                          Container(color: Colors.black12,),
+                          Align(alignment: Alignment.center,child: Text('${images.length-4} +',style: TextStyle(color: Colors.white),))
+                        ],
+                      );
+                    }
+                    else{
+                      return Image.network(images[index], fit: BoxFit.cover);
+                    }
+                  }
+                }
+              ),
         ),
       ),
     );
   }
 }
 
-class ImageList extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
   @override
-  State<ImageList> createState() => _ImageListState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _ImageListState extends State<ImageList> {
-  // List of image URLs
-  final List<List<String>> items = [
-    [
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D',
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D',
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D',
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D',
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D',
+class _MyHomePageState extends State<MyHomePage> {
+   XFile? _pickedImage;
 
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D',
-    ],
-    [
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D',
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D',
-    ]
-  ];
+  Future<void> _pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
-  @override
-  bool showRemainingImages = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            return GridItem(
-              imageUrls: items[index],
-              onTap: () {
-                setState(() {
-                  showRemainingImages = !showRemainingImages;
-                });
-              },
-            );
-          },
-        ),
-        if (showRemainingImages)
-          Padding(
-            padding: EdgeInsets.only(top: 8.0),
-            child: Text(
-              'Show remaining images',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-      ],
-    );
+    setState(() {
+      _pickedImage = pickedFile;
+    });
   }
-}
-
-class GridItem extends StatelessWidget {
-  final List<String> imageUrls;
-  final VoidCallback onTap;
-
-  GridItem({required this.imageUrls, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 8.0),
-        child: Row(
-          children: imageUrls
-              .map((url) => Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(4.0),
-              child: Image.network(
-                url,
-                fit: BoxFit.cover,
-              ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Image Picker Example'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _pickedImage == null
+                ? Text('No image selected.')
+                : Image.file(File(_pickedImage!.path)),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _pickImage,
+              child: Text('Pick Image'),
             ),
-          ))
-              .toList(),
+          ],
         ),
       ),
     );

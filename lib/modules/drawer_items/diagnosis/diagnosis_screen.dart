@@ -136,7 +136,8 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                       bottom: SizeManager.s12,
                       left: SizeManager.s12,
                       right: SizeManager.s12,
-                      top: SizeManager.s12))
+                      top: SizeManager.s12)),
+              const SizedBox(height: SizeManager.s14),
             ],
           ),
         ),
