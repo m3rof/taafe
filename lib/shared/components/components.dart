@@ -2154,8 +2154,11 @@ Widget itemPosts(
                   showImage(context, AssetsManager.me);
                 },
                 child: profileImage(
-                    image: CachedNetworkImageProvider(
-                        '$startPhoto${cubit.post[index]['userProfileImage']}'),
+                    image: CachedNetworkImageProvider(cubit.post[index]
+                                ['userProfileImage'] !=
+                            null
+                        ? '$startPhoto${cubit.post[index]['userProfileImage']}'
+                        : 'https://scontent-hbe1-1.xx.fbcdn.net/v/t39.30808-6/298097482_1446954539154955_1988367110792247724_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=geNfUqd8UeYAX_sWifO&_nc_ht=scontent-hbe1-1.xx&oh=00_AfCUgC7CITcSMmI2-qw4dFBS-jkDMScXIq3WgGdmFJocvg&oe=65D05541'),
                     height: SizeManager.s65,
                     width: SizeManager.s65,
                     radius: SizeManager.s35)),
@@ -2170,7 +2173,9 @@ Widget itemPosts(
                     SizedBox(
                         width: SizeManager.s150,
                         child: Text(
-                          cubit.post[index]['userName'],
+                          cubit.post[index]['userName'] != null
+                              ? cubit.post[index]['userName']
+                              : '',
                           style: StylesManager.loginCreate,
                           overflow: TextOverflow.ellipsis,
                         )),
@@ -2399,7 +2404,8 @@ Future showSheet(context, Widget child, onClicked) {
           ));
 }
 
-AwesomeDialog showDialogAwsome(context, desc, DialogType dialogType) {
+AwesomeDialog showDialogAwsome(
+    context, desc, DialogType dialogType, functionOk) {
   return AwesomeDialog(
     context: context,
     animType: AnimType.scale,
@@ -2413,8 +2419,39 @@ AwesomeDialog showDialogAwsome(context, desc, DialogType dialogType) {
     ),
     title: 'This is Ignored',
     desc: 'This is also Ignored',
-    btnOkOnPress: () {},
+    btnOkOnPress: functionOk,
   )..show();
+}
+
+AwesomeDialog askDialogAwsome(
+    context, desc, DialogType dialogType, functionOk) {
+  return AwesomeDialog(
+      context: context,
+      animType: AnimType.scale,
+      dialogType: dialogType,
+      body: Center(
+        child: Text(
+          desc,
+          style: StylesManager.headPrimary3
+              .copyWith(fontStyle: FontStyle.italic, fontSize: SizeManager.s16),
+        ),
+      ),
+      btnOkOnPress: functionOk,
+      btnCancel: InkWell(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.all(Radius.circular(22))),
+          child: Text('cancel',
+              style: TextStyle(color: Colors.white, fontSize: SizeManager.s16),
+              textAlign: TextAlign.center),
+        ),
+      ))
+    ..show();
 }
 
 void showToast(String msg) async {
@@ -2464,14 +2501,14 @@ Widget itemPatientPosts(
                       context,
                       cubit.patientPost[index]['userProfileImage'] != null
                           ? '$startPhoto${cubit.patientPost[index]['userProfileImage']}'
-                          : 'https://scontent-hbe1-1.xx.fbcdn.net/v/t39.30808-6/298097482_1446954539154955_1988367110792247724_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=FFReHi-nagsAX87ZcvY&_nc_ht=scontent-hbe1-1.xx&oh=00_AfBR4tLjkA3jow-9csULLoXjLqFlsmUxRCSXjSLiwluoKA&oe=65C08341');
+                          : 'https://scontent-hbe1-2.xx.fbcdn.net/v/t39.30808-6/298097482_1446954539154955_1988367110792247724_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=geNfUqd8UeYAX9Qwg0r&_nc_ht=scontent-hbe1-2.xx&oh=00_AfDaWkKnVrufe4zf0Z29FOXYqOGRdQ48uK-RvHtWE3yXYw&oe=65D05541');
                 },
                 child: profileImage(
                     image: NetworkImage(cubit.patientPost[index]
                                 ['userProfileImage'] !=
                             null
                         ? '$startPhoto${cubit.patientPost[index]['userProfileImage']}'
-                        : 'https://scontent-hbe1-1.xx.fbcdn.net/v/t39.30808-6/298097482_1446954539154955_1988367110792247724_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=FFReHi-nagsAX87ZcvY&_nc_ht=scontent-hbe1-1.xx&oh=00_AfBR4tLjkA3jow-9csULLoXjLqFlsmUxRCSXjSLiwluoKA&oe=65C08341'),
+                        : 'https://scontent-hbe1-2.xx.fbcdn.net/v/t39.30808-6/298097482_1446954539154955_1988367110792247724_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=geNfUqd8UeYAX9Qwg0r&_nc_ht=scontent-hbe1-2.xx&oh=00_AfDaWkKnVrufe4zf0Z29FOXYqOGRdQ48uK-RvHtWE3yXYw&oe=65D05541'),
                     height: SizeManager.s65,
                     width: SizeManager.s65,
                     radius: SizeManager.s35)),
@@ -2494,7 +2531,9 @@ Widget itemPatientPosts(
                             overflow: TextOverflow.ellipsis,
                           )),
                       Spacer(),
-                      popMenu(cubit.menueItems,
+                      popMenu(
+                          cubit.menuePop(
+                              context, cubit.patientPost[index]['id'], index),
                           const Icon(FontAwesomeIcons.ellipsisH))
                     ],
                   ),

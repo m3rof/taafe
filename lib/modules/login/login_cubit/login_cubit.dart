@@ -66,7 +66,7 @@ class LoginCubit extends Cubit<LoginState> {
     }on DioException catch (e) {
       if (e.response!.statusCode == 406 || e.response!.statusCode == 404) {
         print(e.response!.data);
-        showDialogAwsome(context,'${e.response!.data}',DialogType.error);
+        showDialogAwsome(context,'${e.response!.data}',DialogType.error,(){Navigator.pop(context);});
       } else {
         print('Error: ${e.response!.statusCode} - ${e.response!.statusMessage}');
         // Handle other HTTP errors if needed

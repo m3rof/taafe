@@ -11,10 +11,15 @@ import 'package:taafe/shared/resourses/styles.dart';
 import 'package:taafe/shared/resourses/value_app.dart';
 
 class AddPostScreen extends StatefulWidget {
-  const AddPostScreen({Key? key}) : super(key: key);
+
+  int whichScreen;
+
+  AddPostScreen(this.whichScreen,this.idPost, {super.key});
+
+  int idPost;
 
   @override
-  State<AddPostScreen> createState() => _AddPostScreenState();
+  State<AddPostScreen> createState() => _AddPostScreenState(whichScreen,idPost);
 }
 
 class _AddPostScreenState extends State<AddPostScreen> {
@@ -22,6 +27,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
   late TextEditingController desvription;
   late TextEditingController tags;
   late GlobalKey<FormState> key;
+  int which;
+  int idPost;
+
+  _AddPostScreenState(this.which,this.idPost);
 
   @override
   void initState() {
@@ -69,7 +78,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                       key: key,
                                       title: title,
                                       desvription: desvription,
-                                      tags: tags);
+                                      tags: tags,
+                                      idPost: idPost,
+                                      which: which
+                                  );
                                 },
                                 icon: const Icon(
                                   Icons.check,

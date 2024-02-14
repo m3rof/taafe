@@ -46,7 +46,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         // The server responded with an error status code (4xx or 5xx)
         if (e.response!.statusCode == 406 || e.response!.statusCode == 404) {
           print(e.response!.data);
-          showDialogAwsome(context,'${e.response!.data}',DialogType.info);
+          showDialogAwsome(context,'${e.response!.data}',DialogType.info,(){Navigator.pop(context);});
 
         }
         else {

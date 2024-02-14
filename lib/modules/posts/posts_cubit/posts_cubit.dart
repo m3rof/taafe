@@ -1,12 +1,17 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:taafe/modules/posts/patient_posts_screen.dart';
 
+import '../../../shared/components/components.dart';
 import '../../../shared/network/remote/dio_helper.dart';
 import '../../../shared/network/remote/end_points.dart';
+import '../add_post_screen.dart';
 import 'posts_state.dart';
 
 class PostsCubit extends Cubit<PostsState> {
@@ -47,15 +52,16 @@ class PostsCubit extends Cubit<PostsState> {
     emit(PostsTypeState());
   }
 
-  void checkValidation(
-      {required context,
-      required GlobalKey<FormState> key,
-      required TextEditingController title,
-      required TextEditingController desvription,
-      required TextEditingController tags,
-      }) {
+  void checkValidation({required context,
+    required GlobalKey<FormState> key,
+    required TextEditingController title,
+    required TextEditingController desvription,
+    required TextEditingController tags,
+    required int which,
+    required int idPost
+  }) {
     if (key.currentState!.validate()) {
-      addPost(1,idCommunity, title.text,currentType);
+      whichFunction(idPost, 1, idCommunity, title.text, currentType, which);
       emit(PostsValidationState());
     }
   }
@@ -89,24 +95,38 @@ class PostsCubit extends Cubit<PostsState> {
     });
   }
 
-  final List<PopupMenuEntry> menueItems = [
-    PopupMenuItem(
-        child: ListTile(
-      onTap: () {},
-      leading: Icon(FontAwesomeIcons.edit),
-      title: Text('edit post'),
-    )),
-    PopupMenuItem(
-        child: ListTile(
-      onTap: () {},
-      leading: Icon(FontAwesomeIcons.trash),
-      title: Text('delete post'),
-    ))
-  ];
+  List<PopupMenuEntry> menuePop(context, int idPost, int index) {
+    return [
+      PopupMenuItem(
+          child: ListTile(
+            onTap: () {
+              Navigator.of(context).push(PageTransition(
+                  duration: const Duration(milliseconds: 600),
+                  type: PageTransitionType.rightToLeft,
+                  child: AddPostScreen(2, idPost)));
+            },
+            leading: Icon(FontAwesomeIcons.edit),
+            title: Text('edit post'),
+          )),
+      PopupMenuItem(
+          child: ListTile(
+            onTap: () {
+              askDialogAwsome(context, 'Are you sure', DialogType.question, () {
+                deletePost(idPost, 1);
+                patientPost.removeAt(index);
+                emit(PostsRemoveItemState());
+              });
+            },
+            leading: Icon(FontAwesomeIcons.trash),
+            title: Text('delete post'),
+          ))
+    ];
+  }
 
-  void addPost(
-      int patientID, int communityID, String mainText, String hideIdentity) {
-    var now =  DateTime.now();
+
+  void addPost(int patientID, int communityID, String mainText,
+      String hideIdentity) {
+    var now = DateTime.now();
     var formatter = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     String formattedDate = formatter.format(now);
     DioHelper.postData(url: newPost, data: {
@@ -121,4 +141,46 @@ class PostsCubit extends Cubit<PostsState> {
       print(Error);
     });
   }
+
+  void editPost(int postID,
+      int patientID, int communityID, String mainText, String hideIdentity) {
+    var now = DateTime.now();
+    var formatter = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    String formattedDate = formatter.format(now);
+    DioHelper.postData(url: editPosts, data: {
+      'patientID': patientID,
+      'communityID': communityID,
+      'mainText': mainText,
+      'editDate': formattedDate,
+      'postID': postID,
+      'hideIdentity': hideIdentity == 'Your name' ? false : true,
+    }).then((value) {
+      print(value.data);
+    }).catchError((Error) {
+      print(Error);
+    });
+  }
+
+  void whichFunction(int postID, int patientID, int communityID,
+      String mainText, String hideIdentity, int which) {
+    if (which == 1) {
+      addPost(patientID, communityID, mainText, hideIdentity);
+    }
+    else {
+      editPost(postID, patientID, communityID, mainText, hideIdentity);
+    }
+  }
+
+  void deletePost(int postID, int patientID) {
+    DioHelper.deleteData(url: deletePosts, data: {
+      'postID': postID,
+      'patientID': patientID
+    }).then((value) {
+      print(value.data);
+    }).catchError((Error) {
+      print(Error);
+    });
+  }
+
+
 }

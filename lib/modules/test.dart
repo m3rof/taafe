@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _pickImage() async {
     final ImagePicker _picker = ImagePicker();
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
 
     setState(() {
       _pickedImage = pickedFile;
@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             _pickedImage == null
                 ? Text('No image selected.')
-                : Image.file(File(_pickedImage!.path)),
+                : Image.file(File(_pickedImage!.path),width: 200,height: 200),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _pickImage,

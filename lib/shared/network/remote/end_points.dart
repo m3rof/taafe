@@ -15,6 +15,10 @@ const String postPatient='/community/patient-posts';
 
 const String newPost='/community/new-post';
 
+const String editPosts='/community/edit-post';
+
+const String deletePosts='/community/post';
+
 
 
 const String blogList='/blog/article-list';

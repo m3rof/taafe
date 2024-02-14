@@ -8,6 +8,7 @@ class PostsTypeState extends PostsState{}
 class PostsSuccessState extends PostsState{}
 class PostsErrorState extends PostsState{}
 class PostsVisibleState extends PostsState{}
+class PostsRemoveItemState extends PostsState{}
 
 
 

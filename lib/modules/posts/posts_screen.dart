@@ -93,7 +93,7 @@ class PostsScreen extends StatelessWidget {
               Navigator.of(context).push(PageTransition(
                   duration: const Duration(milliseconds: 600),
                   type: PageTransitionType.rightToLeft,
-                  child:const AddPostScreen()));
+                  child: AddPostScreen(1,0)));
             },
           ),
         ],
