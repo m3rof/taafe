@@ -19,6 +19,7 @@ class DrawerBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Colors.white,
       width: widthMedia(context: context, x: SizeManager.s_7),
       child:
       Padding(
@@ -36,9 +37,7 @@ class DrawerBody extends StatelessWidget {
               const Text(StringManager.accountProfile),
               const SizedBox(height: SizeManager.s30,),
               itemDrawer(context,FontAwesomeIcons.facebookMessenger,'chat',(){}),
-              itemDrawer(context,Icons.medical_information,'Medical Record',(){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const MedicalRecordScreen(),));
-              }),
+              itemDrawer(context,Icons.medical_information,'Medical Record',(){}),
               itemDrawer(context,FontAwesomeIcons.bell,'Medicine Alarm',(){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const MedicineAlarmScreen(),));
               }),

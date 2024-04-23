@@ -1,23 +1,29 @@
+import 'dart:ffi';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:like_button/like_button.dart';
 import 'package:readmore/readmore.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:taafe/modules/about_doctor/about_doctor_screen.dart';
 import 'package:taafe/modules/drawer_items/appointment/appointment_screen.dart';
 import 'package:taafe/modules/navigation_bar_items/blogs/blogs_cubit/blog_cubit.dart';
+import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_cubit.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 import 'package:taafe/modules/search/search_cubit/search_cubit.dart';
 import 'package:taafe/shared/network/remote/end_points.dart';
 import '../../layout/home/home_cubit/home_cubit.dart';
 import '../../modules/appointment_doctor/appointment_doctor_screen.dart';
 import '../../modules/drawer_items/medicine_alarm/medicine_alarm_cubit/medicine_alarm_cubit.dart';
+import '../../modules/navigation_bar_items/blogs/widget/article_details.dart';
 import '../resourses/assets_manager.dart';
 import '../resourses/color_manager.dart';
 import '../resourses/strings_manager.dart';
@@ -30,7 +36,7 @@ Widget logoLogin(context) {
     alignment: Alignment.center,
     child: Container(
       margin: EdgeInsets.symmetric(
-          vertical: hightMedia(context: context, h: SizeManager.s_07)),
+          vertical: hightMedia(context: context, h: SizeManager.s_05)),
       child: Column(
         children: [
           Image(
@@ -243,11 +249,39 @@ Widget titleKind(context, String kind) {
   );
 }
 
+Widget searchField(function(value), String hint) {
+  return TextFormField(
+    onChanged: (value) {
+      function(value);
+    },
+    style: StylesManager.label,
+    cursorColor: ColorManager.primaryColor,
+    autofocus: true,
+    decoration: InputDecoration(
+      prefixIcon: const Icon(Icons.search_outlined),
+      fillColor: Colors.white,
+      filled: true,
+      hintText: hint,
+      isDense: true,
+      contentPadding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+      hintStyle: const TextStyle(color: ColorManager.primaryColor),
+      focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(SizeManager.s16)),
+          borderSide: BorderSide(color: ColorManager.search)),
+      enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(SizeManager.s16)),
+          borderSide: BorderSide(color: ColorManager.search)),
+    ),
+  );
+}
+
 Widget searchKind(
   context,
   function,
   String hint,
   SearchCubit cubit, {
+  BlogCubit? blogCubit,
+  CommunityCubit? communityCubit,
   double left = SizeManager.s24,
   double right = SizeManager.s22,
 }) {
@@ -256,28 +290,18 @@ Widget searchKind(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextFormField(
-          onChanged: (value) {
-            cubit.getSearchResult(value);
-          },
-          style: StylesManager.label,
-          cursorColor: ColorManager.primaryColor,
-          decoration: InputDecoration(
-            suffixIcon: const Icon(Icons.search_outlined),
-            fillColor: ColorManager.search,
-            filled: true,
-            hintText: hint,
-            hintStyle: const TextStyle(color: ColorManager.primaryColor),
-            focusedBorder: const OutlineInputBorder(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(SizeManager.s24)),
-                borderSide: BorderSide(color: ColorManager.search)),
-            enabledBorder: const OutlineInputBorder(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(SizeManager.s24)),
-                borderSide: BorderSide(color: ColorManager.search)),
-          ),
-        )
+        searchField((value) => cubit.getSearchResult(value), hint),
+        collectionDropFormField(
+            validator: 'enter the category',
+            selectedItem: cubit.selectedCategory,
+            list: communityCubit!.name,
+            function: (value) => cubit.showResult(
+                value, cubit.selectedCategory, communityCubit.community),
+            left: SizeManager.s10,
+            right: SizeManager.s10,
+            top: SizeManager.s10,
+            bottom: SizeManager.s10,
+            text: 'category'),
       ],
     ),
   );
@@ -300,7 +324,7 @@ Widget appBarLeading() {
 
 Widget appBarAction(
   String name,
-  String assets,
+  String image,
 ) {
   return Row(
     children: [
@@ -313,7 +337,8 @@ Widget appBarAction(
         width: SizeManager.s24,
         child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(25)),
-          child: Image(fit: BoxFit.cover, image: AssetImage(assets)),
+          child: Image(
+              fit: BoxFit.cover, image: NetworkImage('$startPhoto$image')),
         ),
       ),
       const SizedBox(
@@ -375,40 +400,31 @@ Widget listViewServices(context, List<ItemServices> list) {
   );
 }
 
-Widget titleRow(context, String title, function, String sort) {
-  return Row(
-    children: [
-      Text(
-        title,
-        style: Theme.of(context).textTheme.bodyMedium,
+Widget titleRow(String sort) {
+  return Align(
+    alignment: Alignment.topRight,
+    child: Container(
+      margin: const EdgeInsets.only(top: SizeManager.s2),
+      padding: const EdgeInsets.all(SizeManager.s8),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(SizeManager.s14)),
+        border: Border.all(color: ColorManager.primaryColor, width: 1),
       ),
-      const Spacer(),
-      InkWell(
-        onTap: function,
-        child: Container(
-          margin: const EdgeInsets.only(top: SizeManager.s2),
-          padding: const EdgeInsets.all(SizeManager.s6),
-          decoration: BoxDecoration(
-            borderRadius:
-                const BorderRadius.all(Radius.circular(SizeManager.s14)),
-            border: Border.all(color: ColorManager.primaryColor, width: 1),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(
+            height: 20,
+            width: 20,
+            child: Image(image: AssetImage(AssetsManager.sort)),
           ),
-          child: Row(
-            children: [
-              const SizedBox(
-                height: 20,
-                width: 20,
-                child: Image(image: AssetImage(AssetsManager.sort)),
-              ),
-              const SizedBox(
-                width: SizeManager.s4,
-              ),
-              Text(sort, style: StylesManager.category)
-            ],
+          const SizedBox(
+            width: SizeManager.s4,
           ),
-        ),
-      )
-    ],
+          Text(sort, style: StylesManager.category)
+        ],
+      ),
+    ),
   );
 }
 
@@ -465,12 +481,12 @@ Widget greenDone() {
   );
 }
 
-Widget starsYellow() {
+Widget starsYellow(double rating) {
   return SmoothStarRating(
       allowHalfRating: true,
       halfFilledIconData: Icons.star_half,
       starCount: 5,
-      rating: 3.3,
+      rating: rating,
       size: 20.0,
       filledIconData: Icons.star,
       color: Colors.orange,
@@ -515,7 +531,7 @@ Widget itemTherapists(context) {
                   child: Text("Heart Sergeon",
                       style: StylesManager.or,
                       overflow: TextOverflow.ellipsis)),
-              starsYellow(),
+              starsYellow(4),
               const SizedBox(
                 height: SizeManager.s12,
               ),
@@ -554,7 +570,7 @@ Widget listViewTherapists(context) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        titleRow(context, StringManager.therapists, null, StringManager.sort),
+        titleRow(StringManager.sort),
         const SizedBox(height: SizeManager.s4),
         SizedBox(
           height: SizeManager.s400,
@@ -573,15 +589,22 @@ Widget listViewTherapists(context) {
 
 Widget blueContainer(
     {function,
+    double height = SizeManager.s20,
+    double pLeft = SizeManager.s0,
+    double pTop = SizeManager.s0,
+    double pRight = SizeManager.s0,
+    double pButton = SizeManager.s0,
     double left = SizeManager.s0,
     double top = SizeManager.s0,
     double width = SizeManager.s58,
+    double fontSize = SizeManager.s10,
     required double radius,
     required String text}) {
   return InkWell(
     onTap: function,
     child: Container(
-      padding: const EdgeInsets.only(top: SizeManager.s4),
+      padding: EdgeInsets.only(
+          top: pTop, left: pLeft, right: pRight, bottom: pButton),
       margin: EdgeInsets.only(left: left, top: top),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(
@@ -590,15 +613,14 @@ Widget blueContainer(
         color: ColorManager.primaryColor,
       ),
       width: width,
-      height: SizeManager.s20,
+      height: height,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             text,
-            style: StylesManager.greenContainer
-                .copyWith(fontSize: SizeManager.s10),
+            style: StylesManager.greenContainer.copyWith(fontSize: fontSize),
             textAlign: TextAlign.center,
           ),
         ],
@@ -687,7 +709,7 @@ Widget listViewBlogs(context) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        titleRow(context, StringManager.blogs, null, StringManager.sort),
+        titleRow(StringManager.sort),
         const SizedBox(height: SizeManager.s18),
         SizedBox(
           height: SizeManager.s300,
@@ -838,7 +860,7 @@ Widget itemTherapistsV(context) {
                   const SizedBox(
                     height: SizeManager.s2,
                   ),
-                  starsYellow(),
+                  starsYellow(5),
                   const SizedBox(
                     height: SizeManager.s2,
                   ),
@@ -982,13 +1004,15 @@ Widget listViewBlogsV(context, BlogCubit cubit) {
   return ListView.builder(
     shrinkWrap: true,
     physics: const NeverScrollableScrollPhysics(),
-    itemCount: cubit.blog.length,
+    itemCount: cubit.listArticle.length,
     itemBuilder: (context, index) {
       return itemBlogsV(
           context: context,
-          image: cubit.blog[index]['covorImage'],
-          title: cubit.blog[index]['title'],
-          doctorName: cubit.blog[index]['doctorName']);
+          mainText: cubit.listArticle[index]['mainText'],
+          image: '$baseUrl/file/${cubit.listArticle[index]['covorImage']}',
+          title: cubit.listArticle[index]['title'],
+          doctorName: cubit.listArticle[index]['doctorName'],
+          articleID: cubit.listArticle[index]['id']);
     },
   );
 }
@@ -996,86 +1020,99 @@ Widget listViewBlogsV(context, BlogCubit cubit) {
 Widget itemBlogsV(
     {context,
     required String image,
+    required String mainText,
     required String title,
+    required int articleID,
     required String doctorName}) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: SizeManager.s10),
-    margin: const EdgeInsets.all(SizeManager.s14),
-    decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
-        color: Colors.white),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          height: SizeManager.s170,
-          decoration: BoxDecoration(
-            image: DecorationImage(image: CachedNetworkImageProvider(image)),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(SizeManager.s30),
+  return InkWell(
+    onTap: () {
+      moveScreen(
+          context: context,
+          screen: ArticleDetails(
+            articleId: articleID,
+          ));
+    },
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: SizeManager.s10),
+      margin: const EdgeInsets.all(SizeManager.s14),
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
+          color: Colors.white),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: SizeManager.s200,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: CachedNetworkImageProvider(image), fit: BoxFit.fill),
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(SizeManager.s30),
+                topLeft: Radius.circular(SizeManager.s30),
+              ),
             ),
           ),
-        ),
-        const SizedBox(height: SizeManager.s3),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Colors.orange,
-              fontWeight: FontWeight.w600,
-              fontSize: SizeManager.s18),
-        ),
-        const SizedBox(height: SizeManager.s3),
-        SizedBox(
-          height: 25,
-          child: Text(
-              'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam Lorem ipsum dolor sit amet, consectetur adipisicing Lorem ipsum dolor sit amet,   ',
-              style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s10),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis),
-        ),
-        const SizedBox(height: SizeManager.s2),
-        Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(doctorName, style: StylesManager.drContent),
-                const SizedBox(
-                  height: SizeManager.s3,
-                ),
-                Container(
-                  width: SizeManager.s120,
-                  height: SizeManager.s_7,
-                  color: ColorManager.primaryColor,
-                ),
-                const SizedBox(
-                  height: SizeManager.s3,
-                ),
-                SizedBox(
-                  width: 120,
-                  child: Text(
-                    'The head of psychology department - alex university',
-                    style: StylesManager.drContent.copyWith(
-                      fontSize: 10,
-                    ),
-                    maxLines: 2,
+          const SizedBox(height: SizeManager.s8),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Colors.orange,
+                fontWeight: FontWeight.w600,
+                fontSize: SizeManager.s20),
+          ),
+          const SizedBox(height: SizeManager.s3),
+          SizedBox(
+            height: 50,
+            child: Text(mainText,
+                style:
+                    StylesManager.itemHome.copyWith(fontSize: SizeManager.s14),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis),
+          ),
+          const SizedBox(height: SizeManager.s2),
+          Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(doctorName, style: StylesManager.drContent),
+                  const SizedBox(
+                    height: SizeManager.s3,
                   ),
-                ),
-                const SizedBox(
-                  height: SizeManager.s10,
-                ),
-              ],
-            ),
-            const Spacer(),
-            blueContainer(
-                function: null,
-                left: SizeManager.s10,
-                top: SizeManager.s10,
-                radius: SizeManager.s12,
-                text: StringManager.read)
-          ],
-        )
-      ],
+                  Container(
+                    width: SizeManager.s120,
+                    height: SizeManager.s_7,
+                    color: ColorManager.primaryColor,
+                  ),
+                  const SizedBox(
+                    height: SizeManager.s3,
+                  ),
+                  SizedBox(
+                    width: 200,
+                    child: Text(
+                      'The head of psychology department - alex university',
+                      style: StylesManager.drContent.copyWith(
+                        fontSize: 12,
+                      ),
+                      maxLines: 2,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: SizeManager.s10,
+                  ),
+                ],
+              ),
+              const Spacer(),
+              blueContainer(
+                  function: null,
+                  left: SizeManager.s10,
+                  top: SizeManager.s10,
+                  radius: SizeManager.s12,
+                  text: StringManager.read)
+            ],
+          )
+        ],
+      ),
     ),
   );
 }
@@ -1334,13 +1371,16 @@ Widget itemDrawer(context, icon, title, function) {
 }
 
 Widget dividerBlue(
-    {required double width, Color color = ColorManager.primaryColor}) {
+    {required double width,
+    double height = 4,
+    Color color = ColorManager.primaryColor,
+    double thickness = 1}) {
   return SizedBox(
     width: width,
     child: Divider(
       color: color,
-      height: 4,
-      thickness: 1,
+      height: height,
+      thickness: thickness,
     ),
   );
 }
@@ -1377,6 +1417,75 @@ Widget medicalRecordItem(
                       .copyWith(fontSize: SizeManager.s16),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(height: SizeManager.s10),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          dividerBlue(
+              width: widthMedia(context: context, x: SizeManager.s_4),
+              color: ColorManager.greenColor),
+          const SizedBox(
+            height: SizeManager.s20,
+          ),
+        ],
+      )
+    ],
+  );
+}
+
+Widget medicalRecordListView(
+    {context,
+    required IconData icon,
+    required String title,
+    required List list,
+    functionBlue,
+    Axis axis = Axis.horizontal,
+    double height = 30,
+    required Widget widget(int index, List list)}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        children: [
+          Icon(icon, color: ColorManager.headOrange),
+          const SizedBox(width: SizeManager.s14),
+          Text(
+            title,
+            style: StylesManager.headPrimary3,
+          ),
+          Spacer(),
+          list.length > 1
+              ? blueContainer(
+                  radius: 18,
+                  text: 'read more',
+                  width: 90,
+                  fontSize: 14,
+                  height: 24,
+                  pTop: 2,
+                  top: 10,
+                  function: functionBlue)
+              : Text('')
+        ],
+      ),
+      const SizedBox(height: SizeManager.s16),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: height,
+            width: SizeManager.s300,
+            child: Align(
+              alignment: Alignment.center,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  scrollDirection: axis,
+                  itemCount: list.length,
+                  itemBuilder: (context, index) => widget(index, list)),
             ),
           ),
         ],
@@ -1476,7 +1585,7 @@ Widget textFormGrey(
     controller: textEditingController,
     validator: (value) => value!.trim().isEmpty ? validator : null,
     keyboardType: textInputType,
-    style: StylesManager.label,
+    style: StylesManager.label.copyWith(color: Colors.black87),
     cursorColor: ColorManager.primaryColor,
     decoration: InputDecoration(
         suffixIcon: icon,
@@ -1743,7 +1852,7 @@ Widget itemReview() {
               '21 / 03 / 2023',
               style: StylesManager.or,
             ),
-            starsYellow()
+            starsYellow(1)
           ],
         ),
         const SizedBox(
@@ -2227,8 +2336,42 @@ Widget itemPosts(
             color: ColorManager.primaryColor,
             borderRadius: BorderRadius.all(Radius.circular(SizeManager.s24)),
           ),
-          child: Image.asset(AssetsManager.session, fit: BoxFit.fill),
+          child: CachedNetworkImage(
+              imageUrl: '$startPhoto${cubit.post[index]['images']}'),
         ),
+        const SizedBox(
+          height: SizeManager.s16,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+              left: SizeManager.s12, right: SizeManager.s12),
+          child: Row(
+            children: [
+              Text(
+                '${cubit.post[index]['reactions']}',
+                style: StylesManager.or,
+              ),
+              SizedBox(
+                width: SizeManager.s6,
+              ),
+              const Icon(
+                FontAwesomeIcons.heart,
+                size: SizeManager.s16,
+                color: Colors.red,
+              ),
+              Spacer(),
+              Text(
+                '${cubit.post[index]['commentsNumber']}  comments',
+                style: StylesManager.or,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: SizeManager.s8,
+        ),
+        dividerBlue(
+            width: double.infinity, color: ColorManager.backGrey, thickness: 3),
         const SizedBox(
           height: SizeManager.s16,
         ),
@@ -2240,13 +2383,14 @@ Widget itemPosts(
             children: [
               InkWell(
                 onTap: () {
-                  cubit.makeLike();
+                  cubit.makeAndDeleteLike(cubit.post[index]['id'], 1,
+                      cubit.post[index]['likedByUser']);
                 },
                 child: Row(
                   children: [
                     Icon(FontAwesomeIcons.thumbsUp,
                         size: SizeManager.s24,
-                        color: cubit.like == true
+                        color: cubit.post[index]['likedByUser'] == true
                             ? ColorManager.headOrange
                             : ColorManager.greyColor),
                     const SizedBox(
@@ -2256,7 +2400,7 @@ Widget itemPosts(
                         margin: const EdgeInsets.only(top: 5),
                         child: Text('like',
                             style: StylesManager.or.copyWith(
-                                color: cubit.like == true
+                                color: cubit.post[index]['likedByUser'] == true
                                     ? ColorManager.headOrange
                                     : ColorManager.greyColor,
                                 fontSize: SizeManager.s16))),
@@ -2265,9 +2409,7 @@ Widget itemPosts(
               ),
               const Spacer(),
               InkWell(
-                onTap: () {
-                  cubit.makeCommsent();
-                },
+                onTap: () {},
                 child: Row(
                   children: [
                     Icon(FontAwesomeIcons.comment,
@@ -2402,6 +2544,36 @@ Future showSheet(context, Widget child, onClicked) {
             cancelButton: CupertinoActionSheetAction(
                 child: Text('done'), onPressed: onClicked),
           ));
+}
+
+Widget textFieldEdit({
+  required String hint,
+  required TextEditingController textEditingController,
+  required String validator,
+  required Widget Icon
+}) {
+  return TextFormField(
+    controller: textEditingController,
+    validator: (value) => value!.trim().isEmpty ? validator : null,
+    style: StylesManager.itemHome.copyWith(fontSize: 20),
+    decoration: InputDecoration(
+      prefixIcon: Icon,
+      labelText: hint,
+      labelStyle: const TextStyle(color: Colors.black87,fontSize: 18),
+      focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(18)),
+          borderSide: BorderSide(width: SizeManager.s1, color: Colors.grey)),
+      enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(18)),
+          borderSide: BorderSide(width: SizeManager.s1, color: Colors.grey)),
+      focusedErrorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(18)),
+          borderSide: BorderSide(color: ColorManager.primaryColor)),
+      errorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(18)),
+          borderSide: BorderSide(color: ColorManager.headOrange)),
+    ),
+  );
 }
 
 AwesomeDialog showDialogAwsome(
@@ -2591,9 +2763,7 @@ Widget itemPatientPosts(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               InkWell(
-                onTap: () {
-                  cubit.makeLike();
-                },
+                onTap: () {},
                 child: Row(
                   children: [
                     Icon(FontAwesomeIcons.thumbsUp,
@@ -2617,9 +2787,7 @@ Widget itemPatientPosts(
               ),
               const Spacer(),
               InkWell(
-                onTap: () {
-                  cubit.makeCommsent();
-                },
+                onTap: () {},
                 child: Row(
                   children: [
                     Icon(FontAwesomeIcons.comment,
@@ -2654,5 +2822,297 @@ Widget popMenu(List<PopupMenuEntry> list, widget) {
     color: Colors.white,
     itemBuilder: (context) => list,
     icon: widget,
+  );
+}
+
+Widget dateField(TextEditingController date, TextStyle style,
+    InputDecoration inputDecoration, function) {
+  return TextFormField(
+      controller: date,
+      style: style,
+      decoration: inputDecoration,
+      readOnly: true,
+      onTap: function);
+}
+
+Widget addBorderTop(function, String title) {
+  return Container(
+    width: double.infinity,
+    height: 100,
+    padding: EdgeInsets.symmetric(vertical: 30, horizontal: SizeManager.s16),
+    decoration: const BoxDecoration(
+        color: ColorManager.primaryColor,
+        borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(SizeManager.s22),
+            bottomLeft: Radius.circular(SizeManager.s22))),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(title,
+            style: StylesManager.registerAccount
+                .copyWith(fontSize: SizeManager.s28)),
+        IconButton(
+            onPressed: function,
+            icon: const Icon(
+              Icons.check,
+              color: Colors.white,
+              size: SizeManager.s35,
+            )),
+      ],
+    ),
+  );
+}
+
+Widget listDoctorPosts(context, BlogCubit cubit) {
+  return AnimationLimiter(
+    child: ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: cubit.doctorPosts.length,
+      itemBuilder: (context, index) {
+        return AnimationConfiguration.staggeredList(
+            position: 0,
+            duration: const Duration(milliseconds: 500),
+            child: SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                    child: itemDoctorPosts(
+                        context: context,
+                      index: index,
+                      cubit: cubit
+                        )
+                )));
+      },
+    ),
+  );
+}
+
+Widget itemDoctorPosts(
+    {required context, required int index, required BlogCubit cubit}) {
+  String date = cubit.doctorPosts[index]['date'];
+  DateTime parseDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(date);
+  return Container(
+    margin: const EdgeInsets.symmetric(
+        horizontal: SizeManager.s16, vertical: SizeManager.s20),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            GestureDetector(
+                onTap: () {
+                  showImage(
+                      context,
+                      cubit.doctorPosts[index]['doctorProfileImage'] != null
+                          ? '$startPhoto${cubit.doctorPosts[index]['doctorProfileImage']}'
+                          : 'https://scontent-hbe1-2.xx.fbcdn.net/v/t39.30808-6/298097482_1446954539154955_1988367110792247724_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=geNfUqd8UeYAX9Qwg0r&_nc_ht=scontent-hbe1-2.xx&oh=00_AfDaWkKnVrufe4zf0Z29FOXYqOGRdQ48uK-RvHtWE3yXYw&oe=65D05541');
+                },
+                child: profileImage(
+                    image: NetworkImage(cubit.doctorPosts[index]
+                    ['doctorProfileImage'] !=
+                        null
+                        ? '$startPhoto${cubit.doctorPosts[index]['doctorProfileImage']}'
+                        : 'https://scontent-hbe1-2.xx.fbcdn.net/v/t39.30808-6/298097482_1446954539154955_1988367110792247724_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=geNfUqd8UeYAX9Qwg0r&_nc_ht=scontent-hbe1-2.xx&oh=00_AfDaWkKnVrufe4zf0Z29FOXYqOGRdQ48uK-RvHtWE3yXYw&oe=65D05541'),
+                    height: SizeManager.s65,
+                    width: SizeManager.s65,
+                    radius: SizeManager.s35)),
+            const SizedBox(
+              width: SizeManager.s12,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                          width: SizeManager.s150,
+                          child: Text(
+                            cubit.doctorPosts[index]['doctorName'] != null
+                                ? cubit.doctorPosts[index]['doctorName']
+                                : '',
+                            style: StylesManager.loginCreate,
+                            overflow: TextOverflow.ellipsis,
+                          )),
+                      Spacer(),
+                      popMenu(
+                          cubit.menuePop(
+                              context, cubit.doctorPosts[index]['id'], index),
+                          const Icon(FontAwesomeIcons.ellipsisH))
+                    ],
+                  ),
+                  Text(
+                    DateFormat('MM/dd/yyyy   hh:mm a').format(parseDate),
+                    style: StylesManager.or,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+        const SizedBox(
+          height: SizeManager.s20,
+        ),
+        Text(
+          'The title of post:',
+          style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s20),
+        ),
+        const SizedBox(
+          height: SizeManager.s10,
+        ),
+        ReadMoreText(
+          cubit.doctorPosts[index]['title'],
+          style: StylesManager.itemHome.copyWith(fontSize: SizeManager.s16),
+          trimLines: 2,
+          colorClickableText: ColorManager.primaryColor,
+          trimMode: TrimMode.Line,
+          trimCollapsedText: 'Show more',
+          trimExpandedText: 'Show less',
+          moreStyle: const TextStyle(
+              color: ColorManager.primaryColor,
+              fontSize: 14,
+              fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: SizeManager.s10,
+        ),
+        Container(
+          height: SizeManager.s230,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: ColorManager.primaryColor,
+            borderRadius: BorderRadius.all(Radius.circular(SizeManager.s24)),
+          ),
+          child: Image.network('$baseUrl/file/${cubit.doctorPosts[index]['covorImage']}', fit: BoxFit.fill),
+        ),
+        const SizedBox(
+          height: SizeManager.s16,
+        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(
+        //       left: SizeManager.s12, right: SizeManager.s12),
+        //   child: Row(
+        //     crossAxisAlignment: CrossAxisAlignment.center,
+        //     children: [
+        //       InkWell(
+        //         onTap: () {},
+        //         child: Row(
+        //           children: [
+        //             Icon(FontAwesomeIcons.thumbsUp,
+        //                 size: SizeManager.s24,
+        //                 color: cubit.like == true
+        //                     ? ColorManager.headOrange
+        //                     : ColorManager.greyColor),
+        //             const SizedBox(
+        //               width: SizeManager.s4,
+        //             ),
+        //             Container(
+        //                 margin: const EdgeInsets.only(top: 5),
+        //                 child: Text('like',
+        //                     style: StylesManager.or.copyWith(
+        //                         color: cubit.like == true
+        //                             ? ColorManager.headOrange
+        //                             : ColorManager.greyColor,
+        //                         fontSize: SizeManager.s16))),
+        //           ],
+        //         ),
+        //       ),
+        //       const Spacer(),
+        //       InkWell(
+        //         onTap: () {},
+        //         child: Row(
+        //           children: [
+        //             Icon(FontAwesomeIcons.comment,
+        //                 size: SizeManager.s24,
+        //                 color: cubit.comment == true
+        //                     ? ColorManager.headOrange
+        //                     : ColorManager.greyColor),
+        //             const SizedBox(
+        //               width: SizeManager.s4,
+        //             ),
+        //             Container(
+        //                 margin: const EdgeInsets.only(top: 5),
+        //                 child: Text('comment',
+        //                     style: StylesManager.or.copyWith(
+        //                         color: cubit.comment == true
+        //                             ? ColorManager.headOrange
+        //                             : ColorManager.greyColor,
+        //                         fontSize: SizeManager.s16))),
+        //           ],
+        //         ),
+        //       )
+        //     ],
+        //   ),
+        // )
+      ],
+    ),
+  );
+}
+
+
+Widget likedComment(bool isLiked, int reaction,function) {
+  return LikeButton(
+    onTap: (isLiked) {
+      // Perform your desired action here
+      print('Button is liked: $isLiked');
+      function();
+      return Future.value(!isLiked); // Toggle like state
+    },
+    isLiked: isLiked,
+    likeCount: reaction,
+    bubblesColor: BubblesColor(
+        dotPrimaryColor: Colors.green, dotSecondaryColor: Colors.greenAccent),
+    circleColor: CircleColor(
+        start: ColorManager.daysColor, end: ColorManager.daysColor),
+    likeBuilder: (isLiked) {
+      final Color color = isLiked ? Colors.red : Colors.grey;
+      return Icon(
+        Icons.favorite,
+        color: color,
+      );
+    },
+    countBuilder: (likeCount, isLiked, text) {
+      final Color color = isLiked ? Colors.black : Colors.grey;
+      return Text(
+        text,
+        style: TextStyle(
+            color: color, fontWeight: FontWeight.bold, fontSize: 20),
+      );
+    },
+  );
+}
+
+Widget likedArticled(bool isLiked, int reaction,function) {
+  return LikeButton(
+    isLiked: isLiked,
+    likeCount: reaction,
+    bubblesColor: BubblesColor(
+        dotPrimaryColor: Colors.green, dotSecondaryColor: Colors.greenAccent),
+    circleColor:
+    CircleColor(start: ColorManager.daysColor, end: ColorManager.daysColor),
+    likeBuilder: (isLiked) {
+      final Color color = isLiked ? Colors.red : Colors.grey;
+      return Icon(
+        Icons.favorite,
+        color: color,
+      );
+    },
+    countBuilder: (likeCount, isLiked, text) {
+      final Color color = isLiked ? Colors.black : Colors.grey;
+
+      return Text(
+        text,
+        style:
+        TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 20),
+      );
+    },
+    onTap: (isLiked) {
+      // Perform your desired action here
+      print('Button is liked: $isLiked');
+      function();
+      return Future.value(!isLiked); // Toggle like state
+    },
+
   );
 }

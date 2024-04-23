@@ -44,7 +44,7 @@ class AppointmentDoctorScreen extends StatelessWidget {
                           child: Text("Heart Sergeon",
                               style: StylesManager.or.copyWith(color: Colors.white,fontWeight: FontWeight.w300), overflow: TextOverflow.ellipsis)),
                       SizedBox(height: SizeManager.s14,),
-                      starsYellow()
+                      starsYellow(2)
                     ],
                   ),
                 )

@@ -10,6 +10,7 @@ import 'package:taafe/modules/register/register_screen.dart';
 import 'package:taafe/shared/components/components.dart';
 import 'package:taafe/shared/network/remote/dio_helper.dart';
 import 'package:taafe/shared/network/remote/end_points.dart';
+
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());
 
@@ -66,7 +67,7 @@ class LoginCubit extends Cubit<LoginState> {
     }on DioException catch (e) {
       if (e.response!.statusCode == 406 || e.response!.statusCode == 404) {
         print(e.response!.data);
-        showDialogAwsome(context,'${e.response!.data}',DialogType.error,(){Navigator.pop(context);});
+        showDialogAwsome(context,'${e.response!.data}',DialogType.error,(){});
       } else {
         print('Error: ${e.response!.statusCode} - ${e.response!.statusMessage}');
         // Handle other HTTP errors if needed

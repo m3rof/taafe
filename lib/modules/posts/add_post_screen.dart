@@ -55,42 +55,15 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      Container(
-                        width: double.infinity,
-                        height: hightMedia(context: context, h: SizeManager.s_1),
-                        padding:EdgeInsets.symmetric(horizontal: SizeManager.s16) ,
-                        decoration: const BoxDecoration(
-                            color: ColorManager.primaryColor,
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(SizeManager.s22),
-                                bottomLeft: Radius.circular(SizeManager.s22))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text('Add New Post',
-                                style: StylesManager.registerAccount
-                                    .copyWith(fontSize: SizeManager.s28)),
-                            IconButton(
-                                onPressed: () {
-                                  cubit.checkValidation(
-                                      context: context,
-                                      key: key,
-                                      title: title,
-                                      desvription: desvription,
-                                      tags: tags,
-                                      idPost: idPost,
-                                      which: which
-                                  );
-                                },
-                                icon: const Icon(
-                                  Icons.check,
-                                  color: Colors.white,
-                                  size: SizeManager.s35,
-                                )),
-                          ],
-                        ),
-                      ),
+                      addBorderTop((){cubit.checkValidation(
+                          context: context,
+                          key: key,
+                          title: title,
+                          desvription: desvription,
+                          tags: tags,
+                          idPost: idPost,
+                          which: which
+                      );},'Add New Post'),
                       const SizedBox(
                         height: SizeManager.s22,
                       ),

@@ -25,7 +25,6 @@ class ThemeManager {
           elevation: 0,
           iconTheme: IconThemeData(color: ColorManager.primaryColor),
           systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: ColorManager.primaryColor,
               statusBarBrightness: Brightness.light)),
 
       inputDecorationTheme: InputDecorationTheme(

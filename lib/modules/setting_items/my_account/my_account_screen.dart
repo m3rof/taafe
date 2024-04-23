@@ -78,7 +78,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       selectedItem: cubit.selectedItemBload,
                       list: MyAccountCubit.bload,
                       function: (value) {
-                        cubit.showResult(value, cubit.selectedItemBload);
+                        cubit.showResultBload(value);
                       },
                       left: SizeManager.s10,
                       right: SizeManager.s10,
@@ -90,9 +90,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       selectedItem: cubit.selectedItemMartial,
                       list: MyAccountCubit.martialStatus,
                       function: (value) {
-                        if (value != null) {
-                          cubit.showResult(value, cubit.selectedItemMartial);
-                        }
+                        cubit.showResultMartial(value);
                       },
                       left: SizeManager.s10,
                       right: SizeManager.s10,
@@ -104,9 +102,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       selectedItem: cubit.selectedItemAlcohol,
                       list: MyAccountCubit.alcohol,
                       function: (value) {
-                        if (value != null) {
-                          cubit.showResult(value, cubit.selectedItemAlcohol);
-                        }
+                        cubit.showResultAlcohol(value);
                       },
                       left: SizeManager.s10,
                       right: SizeManager.s10,
@@ -118,9 +114,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       selectedItem: cubit.selectedItemDrugs,
                       list: MyAccountCubit.drugs,
                       function: (value) {
-                        if (value != null) {
-                          cubit.showResult(value, cubit.selectedItemDrugs);
-                        }
+                        cubit.showResultDrugs(value);
                       },
                       left: SizeManager.s10,
                       right: SizeManager.s10,
@@ -132,9 +126,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       selectedItem: cubit.selectedItemReligious,
                       list: MyAccountCubit.religious,
                       function: (value) {
-                        if (value != null) {
-                          cubit.showResult(value, cubit.selectedItemReligious);
-                        }
+                        cubit.showResultReligious(value);
                       },
                       left: SizeManager.s10,
                       right: SizeManager.s10,
@@ -143,12 +135,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   collectionDropFormField(
                       text: 'Religion:',
                       validator: 'Enter your Religion',
-                      selectedItem: cubit.selectedItemReligious,
-                      list: MyAccountCubit.religious,
+                      selectedItem: cubit.selectedItemReligion,
+                      list: MyAccountCubit.religion,
                       function: (value) {
-                        if (value != null) {
-                          cubit.showResult(value, cubit.selectedItemReligious);
-                        }
+                        cubit.showResultReligion(value);
                       },
                       left: SizeManager.s10,
                       right: SizeManager.s10,

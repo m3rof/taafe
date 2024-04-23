@@ -21,14 +21,48 @@ class PostsCubit extends Cubit<PostsState> {
   bool like = false;
   bool comment = false;
 
-  void makeLike() {
-    like = !like;
-    emit(PostsLikeState());
+  void makeAndDeleteLike(int postID,int patientID,bool likedByUser) {
+    emit(PostsInitialState());
+    if(likedByUser==false){
+      DioHelper.postData(url: reactionSend, data: {
+        'postID':postID,
+        'patientID':patientID
+      }).then((value) {
+        print(value.data);
+         getPostsList(1);
+        emit(PostsLikeSuccessState());
+      }).catchError((Error) {
+        print(Error.toString());
+        emit(PostsLikeErrorState());
+      });
+    }
+    else{
+      DioHelper.deleteData(url: reactionSend, data: {
+        'postID':postID,
+        'patientID':patientID
+      }).then((value) {
+        getPostsList(1);
+        print(value.data);
+        emit(PostsLikeDeleteSuccessState());
+      }).catchError((Error) {
+        print(Error);
+        emit(PostsLikeDeleteErrorState());
+      });
+    }
   }
 
-  void makeCommsent() {
-    comment = !comment;
-    emit(PostsCommentState());
+
+  void getComment(int postID,int loadBlock) {
+      DioHelper.postData(url: commentGet, data: {
+        'postID':postID,
+        'loadBlock':loadBlock
+      }).then((value) {
+        print(value.data);
+        emit(PostsCommentSuccessState());
+      }).catchError((Error) {
+        print(Error);
+        emit(PostsCommentErrorState());
+      });
   }
 
   var category;
@@ -39,6 +73,7 @@ class PostsCubit extends Cubit<PostsState> {
     for (var e in community) {
       if (selectedItem == e['name']) {
         idCommunity = e['id'];
+        print(idCommunity);
       }
     }
     emit(PostsDropState());
@@ -70,7 +105,7 @@ class PostsCubit extends Cubit<PostsState> {
 
   void getPostsList(int id) {
     emit(PostsInitialState());
-    DioHelper.getData(url: postFeed, query: {'loadBlock': 1, 'communityID': id})
+    DioHelper.getData(url: postFeed, query: {'loadBlock': 1, 'communityID': id,'patientID': 1})
         .then((value) {
       post = value.data;
       emit(PostsSuccessState());

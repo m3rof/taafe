@@ -48,7 +48,7 @@ class PostsScreen extends StatelessWidget {
                           const SizedBox(
                             height: SizeManager.s20,
                           ),
-                          titleRow(context, '', () {}, StringManager.sort),
+                          titleRow(StringManager.sort),
                           const SizedBox(
                             height: SizeManager.s20,
                           ),

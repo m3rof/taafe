@@ -75,7 +75,7 @@ class StylesManager {
   );
   static TextStyle drContent =const TextStyle(
     color: ColorManager.primaryColor,
-    fontSize: SizeManager.s14,
+    fontSize: SizeManager.s16,
   );
 
 }

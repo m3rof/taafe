@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:taafe/layout/home/home_screen.dart';
+import 'package:taafe/shared/components/constants.dart';
 
 import '../../../shared/resourses/color_manager.dart';
 import '../../../shared/resourses/value_app.dart';
@@ -13,7 +15,9 @@ class OnboardingSkip extends StatelessWidget {
         top: SizeManager.s20,
         right: SizeManager.s2,
         child: TextButton(
-            onPressed: (){},
+            onPressed: (){
+              moveScreen(context: context,screen: HomeScreen());
+            },
             child: Text(
               'skip',
               style: TextStyle(

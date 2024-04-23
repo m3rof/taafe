@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:taafe/layout/home/home_screen.dart';
+import 'package:taafe/modules/onboarding/onboarding_cubit/onboarding_cubit.dart';
+import 'package:taafe/modules/onboarding/onboarding_cubit/onboarding_state.dart';
+import 'package:taafe/modules/onboarding/widget/hobby_screen.dart';
 import 'package:taafe/modules/onboarding/widget/onboarding_page.dart';
 import 'package:taafe/modules/onboarding/widget/onboarding_skip.dart';
 import 'package:taafe/shared/components/constants.dart';
@@ -18,7 +23,9 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   late PageController pageController;
 
-  int pageNum = 0;
+  int lastPage = 0;
+
+  bool isLast = false;
 
   @override
   void initState() {
@@ -34,69 +41,93 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var cubit = OnBoardingCubit.get(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(SizeManager.s16),
-        child: Stack(
-          children: [
-            PageView(
-              controller: pageController,
-              onPageChanged: (value) {
-                setState(() {
-                  pageNum = value;
-                });
-                pageController.animateToPage(value,
-                    duration: const Duration(milliseconds: 350),
-                    curve: Curves.bounceInOut);
-              },
-              children: [
-                OnboardingPage(
-                    image: AssetsManager.onboardingLogo3,
-                    title: 'Psychology is the study',
-                    content:
-                        'Psychology is the study of mind and behavior.Its subject matter includes the behavior of humans'),
-                OnboardingPage(
-                    image: AssetsManager.onboardingLogo2,
-                    title: 'Psychology is the study',
-                    content:
-                        'Psychology is the study of mind and behavior.Its subject matter includes the behavior of humans'),
-                OnboardingPage(
-                    image: AssetsManager.onboardingLogo1,
-                    title: 'Psychology is the study',
-                    content:
-                        'Psychology is the study of mind and behavior.Its subject matter includes the behavior of humans')
-              ],
-            ),
-            OnboardingSkip(),
-            Positioned(
-              bottom: SizeManager.s40,
-              left: SizeManager.s20,
-              child: SmoothPageIndicator(
+      body: BlocConsumer<OnBoardingCubit, OnBoardingState>(
+        listener: (context, state) {},
+        builder: (context, state) => Padding(
+          padding: const EdgeInsets.all(SizeManager.s16),
+          child: Stack(
+            children: [
+              PageView(
                 controller: pageController,
-                count: 3,
-                effect: ExpandingDotsEffect(
-                    activeDotColor: ColorManager.primaryColor,
-                    dotHeight: SizeManager.s6),
+                onPageChanged: (value) {
+                  setState(() {
+                    if (value == 3) {
+                      isLast = true;
+                      cubit.hobbyLocal.forEach((element) {
+                        cubit.sendHobby(1, element);
+                      });
+                    } else {
+                      isLast = false;
+                    }
+                  });
+                  pageController.animateToPage(value,
+                      duration: const Duration(milliseconds: 350),
+                      curve: Curves.easeIn);
+                },
+                children: [
+                  const OnboardingPage(
+                      image: AssetsManager.onboardingLogo3,
+                      title: 'Psychology is the study',
+                      content:
+                          'Psychology is the study of mind and behavior.Its subject matter includes the behavior of humans'),
+                  const OnboardingPage(
+                      image: AssetsManager.onboardingLogo2,
+                      title: 'Psychology is the study',
+                      content:
+                          'Psychology is the study of mind and behavior.Its subject matter includes the behavior of humans'),
+                  HobbyScreen(cubit),
+                  const OnboardingPage(
+                      image: AssetsManager.onboardingLogo1,
+                      title: 'Psychology is the study',
+                      content:
+                          'Psychology is the study of mind and behavior.Its subject matter includes the behavior of humans'),
+                ],
               ),
-            ),
-
-            Positioned(
-              bottom: SizeManager.s20,
-              right: SizeManager.s2,
-              child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      pageNum=pageNum+1;
-                    });
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorManager.primaryColor,
-                      shape: CircleBorder(),
-                  ),
-                  child: const Icon(Icons.arrow_forward_ios,color: Colors.white,size: SizeManager.s20,)),
-            )
-          ],
+              OnboardingSkip(),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Row(
+                  children: [
+                    SmoothPageIndicator(
+                      controller: pageController,
+                      count: 4,
+                      effect: const ExpandingDotsEffect(
+                          activeDotColor: ColorManager.primaryColor,
+                          dotHeight: SizeManager.s6),
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          pageController.nextPage(
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeInOut);
+                        });
+                        if (isLast)
+                          return moveScreen(
+                              context: context, screen: const HomeScreen());
+                      },
+                      child: Container(
+                          width: 50,
+                          height: 50,
+                          margin: const EdgeInsets.only(right: SizeManager.s4),
+                          decoration: const BoxDecoration(
+                              color: ColorManager.primaryColor,
+                              shape: BoxShape.circle),
+                          child: const Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.white,
+                            size: SizeManager.s20,
+                          )),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

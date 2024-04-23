@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:taafe/shared/components/constants.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({Key? key}) : super(key: key);
@@ -19,7 +20,6 @@ class _TestScreenState extends State<TestScreen> {
     'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
     'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
     'https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-
   ];
 
   @override
@@ -64,44 +64,48 @@ class _TestScreenState extends State<TestScreen> {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+// class MyHomePage extends StatefulWidget {
+//   @override
+//   _MyHomePageState createState() => _MyHomePageState();
+// }
+//
+// class _MyHomePageState extends State<MyHomePage> {
+//     File? pickedImage;
+//
+//   Future<void> _pickImage() async {
+//     final ImagePicker _picker = ImagePicker();
+//     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
+//     setState(() {
+//       pickedImage =File(pickedFile!.path) ;
+//       print(pickedImage!.path.split(Platform.pathSeparator).last);
+//     });
+//     uploadImage(pickedImage!);
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Image Picker Example'),
+//       ),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             pickedImage == null
+//                 ? Text('No image selected.')
+//                 : Image.file(File(pickedImage!.path),width: 200,height: 200),
+//             SizedBox(height: 20),
+//             ElevatedButton(
+//               onPressed: _pickImage,
+//               child: Text('Pick Image'),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
-class _MyHomePageState extends State<MyHomePage> {
-   XFile? _pickedImage;
 
-  Future<void> _pickImage() async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
 
-    setState(() {
-      _pickedImage = pickedFile;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Image Picker Example'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _pickedImage == null
-                ? Text('No image selected.')
-                : Image.file(File(_pickedImage!.path),width: 200,height: 200),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _pickImage,
-              child: Text('Pick Image'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

@@ -20,7 +20,7 @@ class TherapistsScreen extends StatelessWidget {
                 const SizedBox(height: SizeManager.s14,),
                 Padding(
                 padding: const EdgeInsets.only(left: SizeManager.s24, right: SizeManager.s22),
-                child: titleRow(context,'',(){},StringManager.filter),
+                child: titleRow(StringManager.filter),
                 ),
                 const SizedBox(height: SizeManager.s18),
                 ],

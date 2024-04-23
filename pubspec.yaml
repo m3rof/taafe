@@ -52,6 +52,9 @@ dependencies:
   font_awesome_flutter: ^10.6.0
   flutter_staggered_animations: ^1.1.1
   page_transition: ^2.1.0
+  loading_animation_widget: ^1.2.0+4
+  group_button: ^5.3.4
+  like_button: ^2.0.5
 
 dev_dependencies:
   flutter_test:

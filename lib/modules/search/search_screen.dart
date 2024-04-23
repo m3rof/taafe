@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_cubit.dart';
+import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_state.dart';
 import 'package:taafe/modules/search/search_cubit/search_cubit.dart';
 import 'package:taafe/modules/search/search_cubit/search_state.dart';
 import 'package:taafe/shared/components/components.dart';
@@ -15,13 +17,23 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var cubit = SearchCubit.get(context);
+    var communityCubit = CommunityCubit.get(context);
     return Scaffold(
       appBar: AppBar(),
       body: BlocConsumer<SearchCubit, SearchState>(
         listener: (context, state) {},
         builder: (context, state) => Column(
           children: [
-            searchKind(context, () {}, 'search', cubit),
+            BlocConsumer<CommunityCubit, CommunityState>(
+              listener: (context, state) {},
+              builder: (context, state) => searchKind(
+                context,
+                () {},
+                'search',
+                cubit,
+                communityCubit: communityCubit
+              ),
+            ),
             const SizedBox(
               height: SizeManager.s16,
             ),
