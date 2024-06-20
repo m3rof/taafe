@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taafe/modules/about_doctor/about_doctor_screen.dart';
-import 'package:taafe/modules/chat/chat_cubit/chat_cubit.dart';
+import 'package:taafe/modules/chat/communication_chats/chat_room.dart';
 import 'package:taafe/modules/drawer_items/appointment/appointment_cubit/appointment_cubit.dart';
 import 'package:taafe/modules/drawer_items/diagnosis/diagnosis_cubit/diagnosis_cubit.dart';
 import 'package:taafe/modules/login/login_cubit/login_cubit.dart';
@@ -11,6 +11,7 @@ import 'package:taafe/modules/navigation_bar_items/blogs/blogs_cubit/blog_cubit.
 import 'package:taafe/modules/navigation_bar_items/blogs/blogs_screen.dart';
 import 'package:taafe/modules/navigation_bar_items/blogs/widget/article_details.dart';
 import 'package:taafe/modules/navigation_bar_items/blogs/widget/doctor_posts_screen.dart';
+import 'package:taafe/modules/notification/notification_manager/notification_cubit.dart';
 import 'package:taafe/modules/onboarding/onboarding_cubit/onboarding_cubit.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 import 'package:taafe/modules/register/register_screen.dart';
@@ -21,9 +22,11 @@ import 'package:taafe/shared/network/local/notification/notification.dart';
 import 'package:taafe/shared/network/remote/dio_helper.dart';
 import 'layout/home/home_cubit/home_cubit.dart';
 import 'layout/home/home_screen.dart';
-import 'modules/chat/ai_chat.dart';
+import 'modules/chat/chat_cubit/chat_cubit.dart';
+import 'modules/chat/communication_chats/chat_screen.dart';
 import 'modules/drawer_items/medicine_alarm/medicine_alarm_cubit/medicine_alarm_cubit.dart';
 import 'modules/navigation_bar_items/communities/communites_cubit/community_cubit.dart';
+import 'modules/notification/notification_screen.dart';
 import 'modules/onboarding/onboarding_screen.dart';
 import 'modules/posts/comments_screen.dart';
 import 'modules/register/register_cubit/register_cubit.dart';
@@ -32,12 +35,15 @@ import 'shared/bloc_observer/bloc_observer.dart';
 import 'shared/network/remote/end_points.dart';
 import 'shared/resourses/themes.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 void main() async{
-
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -62,6 +68,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => MedicalRecordCubit()..getPatientInfo()..getHobby()..getDiagnose()..getMedicine()),
         BlocProvider(create: (context) => DiagnosisCubit()),
         BlocProvider(create: (context) => ChatCubit()),
+        BlocProvider(create: (context) => NotificationCubit()),
 
       ],
       child: MaterialApp(

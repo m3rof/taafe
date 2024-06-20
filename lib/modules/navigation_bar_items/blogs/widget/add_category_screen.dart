@@ -26,6 +26,12 @@ class _AddCategoryScreenState extends State<AddCategoryScreen> {
     key = GlobalKey();
     super.initState();
   }
+  @override
+  void dispose() {
+    categoryName.dispose();
+    description.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

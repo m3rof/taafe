@@ -1,8 +1,5 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:taafe/shared/components/constants.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({Key? key}) : super(key: key);
@@ -38,26 +35,30 @@ class _TestScreenState extends State<TestScreen> {
                 mainAxisSpacing: 2, // Spacing between rows
               ),
               itemBuilder: (context, index) {
-                if(images.length<4){
+                if (images.length < 4) {
                   return Image.network(images[index], fit: BoxFit.cover);
-                }
-                else{
-                    if(index==3){
-                      return Stack(
-                        fit: StackFit.passthrough,
-                        children: [
-                          Image.network(images[index], fit: BoxFit.cover),
-                          Container(color: Colors.black12,),
-                          Align(alignment: Alignment.center,child: Text('${images.length-4} +',style: TextStyle(color: Colors.white),))
-                        ],
-                      );
-                    }
-                    else{
-                      return Image.network(images[index], fit: BoxFit.cover);
-                    }
+                } else {
+                  if (index == 3) {
+                    return Stack(
+                      fit: StackFit.passthrough,
+                      children: [
+                        Image.network(images[index], fit: BoxFit.cover),
+                        Container(
+                          color: Colors.black12,
+                        ),
+                        Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              '${images.length - 4} +',
+                              style: TextStyle(color: Colors.white),
+                            ))
+                      ],
+                    );
+                  } else {
+                    return Image.network(images[index], fit: BoxFit.cover);
                   }
                 }
-              ),
+              }),
         ),
       ),
     );
@@ -106,6 +107,15 @@ class _TestScreenState extends State<TestScreen> {
 //     );
 //   }
 // }
+
+
+
+
+
+
+
+
+
 
 
 

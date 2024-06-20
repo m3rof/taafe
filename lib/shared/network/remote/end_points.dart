@@ -45,11 +45,6 @@ const String blogDoctorUpvoteComment='/blog/doctor-comment-like';
 
 
 
-
-
-
-
-
 const String startPhoto='$baseUrl/profilepic/';
 
 
@@ -67,6 +62,10 @@ const String AICaht='/ai/prompt';
 
 const String doctorMainInfo='/profile/doctor-main-info';
 
+
+
+const String sendMessageEnd='/chat/message';
+const String makeSeenEnd='/chat/mark-seen';
 
 
 
