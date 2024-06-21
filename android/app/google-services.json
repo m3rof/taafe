@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "746643967201",
+    "project_id": "ta3afi-d63c0",
+    "storage_bucket": "ta3afi-d63c0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746643967201:android:a1e831cb413922a441bba0",
+        "android_client_info": {
+          "package_name": "com.example.taafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746643967201-hcebd0vtofhu7siidluikid1n17cj8j3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnq2JOSaKJBQpnBBVdLjBkSt51gy-RnJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746643967201-hcebd0vtofhu7siidluikid1n17cj8j3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
