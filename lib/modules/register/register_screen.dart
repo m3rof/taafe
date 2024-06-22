@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:taafe/modules/register/register_cubit/register_state.dart';
 import 'package:taafe/shared/resourses/assets_manager.dart';
 import 'package:taafe/shared/resourses/color_manager.dart';
@@ -10,6 +12,7 @@ import 'package:taafe/shared/resourses/value_app.dart';
 
 import '../../shared/components/components.dart';
 import '../../shared/components/constants.dart';
+import 'email_verification_screen.dart';
 import 'register_cubit/register_cubit.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -51,7 +54,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     var cubit = RegisterCubit.get(context);
     return BlocConsumer<RegisterCubit, RegisterState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+         if (state is AppRegisterErrorState) {
+         
+Fluttertoast.showToast(
+        msg: state.error,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: ColorManager.erroeColor,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+        }
+        if (state is AppCreateUserErrorState) {
+         Fluttertoast.showToast(
+        msg: state.error,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: ColorManager.erroeColor,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+        }
+        if (state is AppCreateUserSuccessState) {
+          Fluttertoast.showToast(
+        msg: "Your Register Done Successfully",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: ColorManager.primaryColor,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+          animatedNavigateTo(
+            context: context,
+            widget: const EmailVerificationScreen(),
+            direction: PageTransitionType.bottomToTop,
+            curve: Curves.bounceIn,
+          );
+        }
+      },
       builder: (context, state) => Scaffold(
         body: SingleChildScrollView(
           child: Form(

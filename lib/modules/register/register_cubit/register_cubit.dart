@@ -108,45 +108,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
-  void signUp(
-    context,
-    String name,
-    String email,
-    String password,
-    DateTime birthDate,
-    String gender,
-  ) async {
-    emit(RegisterLoadingState());
-    try {
-      Response response = await DioHelper.postData(url: signupPatient, data: {
-        'email': email,
-        'password': password,
-        'name': name,
-        'birthDate': '$birthDate',
-        'gender': gender,
-      });
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ));
-      print(response.data);
-      emit(RegisterSuccessState());
-    } on DioException catch (e) {
-      // The server responded with an error status code (4xx or 5xx)
-      if (e.response!.statusCode == 406 || e.response!.statusCode == 404) {
-        print(e.response!.data);
-        showDialogAwsome(context, '${e.response!.data}', DialogType.info, () {
-          Navigator.pop(context);
-        });
-      } else {
-        print(
-            'Error: ${e.response!.statusCode} - ${e.response!.statusMessage}');
-        // Handle other HTTP errors if needed
-      }
-      emit(RegisterErrorState());
-    }
-  }
+  
 
   bool visibility1 = true;
   Widget iconVisibility = const Icon(Icons.visibility_off_outlined);

@@ -13,6 +13,7 @@ class ColorManager{
  static const Color transparentColor=Color(0xFFFFFF);
  static const Color search=Color(0xffdbe9f3);
  static const Color backGrey=Color(0xffeeeeef);
+ static const Color erroeColor=Color.fromARGB(255, 108, 1, 1);
 
  //0xff1aad9f
 }

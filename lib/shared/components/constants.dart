@@ -34,6 +34,38 @@ void moveScreen({required context, required dynamic screen}) {
       type: PageTransitionType.rightToLeft,
       child: screen));
 }
+void animatedNavigateTo(
+    {required BuildContext context,
+    required Widget widget,
+    required PageTransitionType direction,
+    required Curve curve}) {
+  Navigator.push(
+      context,
+      PageTransition(
+        child: widget,
+        type: direction,
+        curve: curve,
+        //alignment: Alignment.bottomLeft,
+        duration: const Duration(milliseconds: 700),
+      ));
+}
+
+void animatedNavigateAndDelete(
+    {required BuildContext context,
+    required Widget widget,
+    required PageTransitionType direction,
+    required Curve curve}) {
+  Navigator.pushAndRemoveUntil(
+      context,
+      PageTransition(
+        child: widget,
+        type: direction,
+        curve: curve,
+        //alignment: Alignment.bottomLeft,
+        duration: const Duration(milliseconds: 700),
+      ),
+      (Route<dynamic> route) => false);
+}
 
 void showImage(context, image) {
   Navigator.push(context,
