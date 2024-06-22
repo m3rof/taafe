@@ -31,6 +31,7 @@ import 'modules/onboarding/onboarding_screen.dart';
 import 'modules/posts/comments_screen.dart';
 import 'modules/register/register_cubit/register_cubit.dart';
 import 'modules/test.dart';
+import 'modules/vedio_call/call_enter_screen.dart';
 import 'shared/bloc_observer/bloc_observer.dart';
 import 'shared/network/remote/end_points.dart';
 import 'shared/resourses/themes.dart';
@@ -75,7 +76,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'taafe',
         theme: ThemeManager.themeApp,
-        home: LoginScreen(),
+        home: CallEnterScreen(),
       ),
     );
   }

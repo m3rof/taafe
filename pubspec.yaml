@@ -62,6 +62,7 @@ dependencies:
   firebase_database:
   cloud_firestore:
   google_sign_in:
+  zego_uikit_prebuilt_call: ^4.12.8
 
 
 dev_dependencies:
