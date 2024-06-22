@@ -1,45 +1,27 @@
 class UserData {
   String? name;
   String? email;
-  String? phone;
+  String? date;
   String? uId;
-  String? image;
-  String? cover;
-  String? bio;
-  bool? isEmailVerified;
-  List? followers;
-  List? followings;
-  List? posts;
-  List? savedPosts;
+  String? gender;
+
 
   UserData({
     required this.email,
     required this.name,
-    required this.phone,
+    required this.date,
     required this.uId,
-    required this.image,
-    required this.cover,
-    required this.bio,
-    required this.isEmailVerified,
-    required this.followers,
-    required this.followings,
-    required this.posts,
-    required this.savedPosts,
+    required this.gender,
+  
   });
   factory UserData.fromJson(json) {
     return UserData(
       email: json?["email"],
       name: json?["name"],
-      phone: json?["phone"],
+      date: json?["date"],
       uId: json?["uId"],
-      image: json?["image"],
-      cover: json?["cover"],
-      bio: json?["bio"],
-      isEmailVerified: json?["isEmailVerified"],
-      followers: json?["followers"],
-      followings: json?["followings"],
-      posts: json?["posts"],
-      savedPosts: json?["saved posts"],
+      gender: json?["gender"],
+      
     );
   }
 
@@ -47,16 +29,10 @@ class UserData {
     return {
       "name": name,
       "email": email,
-      "phone": phone,
+      "date": date,
       "uId": uId,
-      "image": image,
-      "cover": cover,
-      "bio": bio,
-      "isEmailVerified": isEmailVerified,
-      "followers": followers,
-      "followings": followings,
-      "posts": posts,
-      "saved posts": savedPosts,
+      "gender": gender,
+      
     };
   }
 }
