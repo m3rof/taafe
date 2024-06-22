@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return ConditionalBuilder(
-              condition: cubit.pateintMainModel != null,
+              condition: true,
               builder: (context) => Scaffold(
                     drawer: const DrawerBody(),
                     appBar: AppBar(
@@ -30,8 +30,8 @@ class HomeScreen extends StatelessWidget {
                       actions: [
                         popMenu(
                             cubit.popMenueItems(context),
-                            appBarAction('hi ${cubit.pateintMainModel!.name}',
-                                '$startPhoto${cubit.pateintMainModel!.profileImage}')),
+                            appBarAction('hi ahmed',
+                                '')),
                       ],
                     ),
                     body: SafeArea(

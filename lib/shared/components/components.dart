@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,10 @@ import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import 'package:readmore/readmore.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
+import 'package:taafe/layout/home/home_screen.dart';
 import 'package:taafe/modules/about_doctor/about_doctor_screen.dart';
 import 'package:taafe/modules/drawer_items/appointment/appointment_screen.dart';
+import 'package:taafe/modules/login/login_cubit/login_cubit.dart';
 import 'package:taafe/modules/navigation_bar_items/blogs/blogs_cubit/blog_cubit.dart';
 import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_cubit.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
@@ -138,7 +141,7 @@ Widget loginWith(function, String assets) {
   );
 }
 
-Widget loginIcon() {
+Widget loginIcon(LoginCubit loginCubit,context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -150,7 +153,19 @@ Widget loginIcon() {
       const SizedBox(
         width: SizeManager.s12,
       ),
-      loginWith(null, AssetsManager.gmail),
+      loginWith((){
+        try{
+         final user= loginCubit.signInWithGoogle();
+         if(user !=null ){
+           moveScreen(context: context, screen: HomeScreen());
+         }
+        }on FirebaseException catch(e){
+          print('eeeeeee ${e.message}');
+        }catch(e){
+          print('ssssss ${e.toString()}');
+        }
+
+        }, AssetsManager.gmail),
     ],
   );
 }

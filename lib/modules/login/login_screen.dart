@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: SizeManager.s24,
                   ),
-                  loginIcon(),
+                  loginIcon(cubit,context),
                   const SizedBox(
                     height: SizeManager.s18,
                   ),
