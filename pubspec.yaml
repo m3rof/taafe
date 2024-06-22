@@ -32,6 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   bloc:
   flutter_bloc:
+  lottie:
   curved_navigation_bar: ^1.0.3
   awesome_icons: ^1.1.0
   dio:
@@ -60,6 +61,7 @@ dependencies:
   firebase_messaging:
   firebase_database:
   cloud_firestore:
+  google_sign_in:
 
 
 dev_dependencies:

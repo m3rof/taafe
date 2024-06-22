@@ -70,4 +70,8 @@ Widget loadingProgress() {
 }
 
 
+class CallInfo {
+  static const int appID = 896073889;
+  static const String appSign = "cabd67d8c09900309c86c8d445143e2c1be46a462de461bad60e27673324d0e4";
+}
 
