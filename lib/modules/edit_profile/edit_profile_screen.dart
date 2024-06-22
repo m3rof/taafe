@@ -279,9 +279,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                       Radius.circular(SizeManager.s12)), // <-- Radius
-                ),
+                ), backgroundColor: ColorManager.primaryColor,
                 padding: const EdgeInsets.symmetric(vertical: SizeManager.s16),
-                primary: ColorManager.primaryColor,
               ),
             ),
             SizedBox(

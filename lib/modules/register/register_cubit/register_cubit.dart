@@ -29,7 +29,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
-  void signUp(context,String name,String email, String password,DateTime birthDate,String gender) async{
+  void signUp(context,String name,String email, String password,DateTime birthDate,String gender,) async{
     emit(RegisterLoadingState());
     try{
     Response response=await DioHelper.postData(

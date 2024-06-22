@@ -539,7 +539,7 @@ Widget itemTherapists(context) {
                 StringManager.about,
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1
+                    .bodySmall
                     ?.copyWith(fontWeight: FontWeight.w600),
               ),
               SizedBox(

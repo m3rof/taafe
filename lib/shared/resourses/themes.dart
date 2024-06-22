@@ -51,10 +51,9 @@ class ThemeManager {
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
                 Radius.circular(SizeManager.s35)), // <-- Radius
-          ),
+          ), backgroundColor: ColorManager.primaryColor,
           padding: const EdgeInsets.symmetric(
               horizontal: SizeManager.s55, vertical: SizeManager.s14),
-          primary: ColorManager.primaryColor,
         ),
       ));
 
