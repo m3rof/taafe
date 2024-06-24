@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:taafe/shared/resourses/color_manager.dart';
 
 class ReciveMessage extends StatelessWidget {
   String message;
@@ -17,11 +19,12 @@ class ReciveMessage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CircleAvatar(
+                backgroundColor: Colors.white,
                   radius: 20,
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(30)),
-                    child: Image.network(
-                        'https://wac-cdn.atlassian.com/dam/jcr:ba03a215-2f45-40f5-8540-b2015223c918/Max-R_Headshot%20(1).jpg?cdnVersion=1541'),
+                    child: 
+                    Icon(FontAwesomeIcons.robot),
                   )),
               SizedBox(
                 width: 15,

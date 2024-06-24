@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taafe/modules/about_doctor/about_doctor_screen.dart';
+import 'package:taafe/modules/chat/chat_ai/ai_chat.dart';
 import 'package:taafe/modules/chat/communication_chats/chat_room.dart';
 import 'package:taafe/modules/drawer_items/appointment/appointment_cubit/appointment_cubit.dart';
 import 'package:taafe/modules/drawer_items/diagnosis/diagnosis_cubit/diagnosis_cubit.dart';
@@ -76,7 +77,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'taafe',
         theme: ThemeManager.themeApp,
-        home: CallEnterScreen(),
+        home: AIChatScreen(),
       ),
     );
   }
