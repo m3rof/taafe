@@ -56,7 +56,6 @@ const String patientDiagnose='/profile/patient-diagnose';
 const String patientMedicine='/profile/patient-medicine';
 
 
-const String AICaht='/ai/prompt';
 
 
 

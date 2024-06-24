@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:meta/meta.dart';
 import 'package:taafe/models/chat_models/chat_messages_model.dart';
 import 'package:taafe/models/chat_models/chat_room_models.dart';
@@ -15,19 +16,7 @@ class ChatCubit extends Cubit<ChatState> {
 
   static ChatCubit get(context) => BlocProvider.of(context);
 
-  List answer=[];
 
-  void getAIChat(String message) {
-    DioHelper.getData(url: AICaht, query: {'prompt': message}).then((
-        value) {
-      answer.add(value.data);
-      print(answer);
-      emit(ChatAISuccessState());
-    }).catchError((Error) {
-      print(Error.toString());
-      emit(ChatAIErrorState());
-    });
-  }
 
   CollectionReference<ChatRoomModel> getChatRoomsCollection() {
     return FirebaseFirestore.instance.collection('chatrooms').withConverter(
@@ -76,4 +65,25 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
 
+
+  List answer = [];
+
+  String apiKey = 'AIzaSyBtCoMiin6alIxKH3TO0BD3hUZajy2SW-s';
+
+  Future<void> getAIChat(String message) async {
+    final model = GenerativeModel(
+      model: 'gemini-1.5-flash-latest',
+      apiKey: apiKey,
+    );
+    final prompt = message;
+    final content = [Content.text(prompt)];
+    final response = await model.generateContent(content);
+    print(response.text);
+    answer.add(message);
+    answer.add(response.text);
+    emit(ChatAISuccessState());
+  }
 }
+
+
+
