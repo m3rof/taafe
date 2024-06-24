@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'taafe',
         theme: ThemeManager.themeApp,
-        home: CallEnterScreen(),
+        home: LoginScreen(),
       ),
     );
   }

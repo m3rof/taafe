@@ -1,5 +1,5 @@
 
-const String baseUrl='http://34.125.246.105';
+const String baseUrl='http://api.taafy.omarelnemr.xyz';
 
 const String uploadProfile='/upload';
 

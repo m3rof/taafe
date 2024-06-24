@@ -50,7 +50,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     var cubit = HomeCubit.get(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+
+      ),
       body: BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {},
         builder: (context, state) => ListView(
