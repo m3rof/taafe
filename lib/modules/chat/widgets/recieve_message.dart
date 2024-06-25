@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:taafe/shared/resourses/color_manager.dart';
@@ -19,12 +18,11 @@ class ReciveMessage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CircleAvatar(
-                backgroundColor: Colors.white,
+                  backgroundColor: Colors.white,
                   radius: 20,
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(30)),
-                    child: 
-                    Icon(FontAwesomeIcons.robot),
+                    child: Icon(FontAwesomeIcons.robot),
                   )),
               SizedBox(
                 width: 15,
@@ -47,7 +45,7 @@ class ReciveMessage extends StatelessWidget {
                   color: Colors.grey[300]),
               child: Text(
                 message,
-                style: TextStyle(color: Colors.black,fontSize: 22),
+                style: TextStyle(color: Colors.black, fontSize: 22),
               )),
         ],
       ),

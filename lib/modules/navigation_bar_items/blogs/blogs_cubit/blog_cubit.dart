@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -170,8 +171,8 @@ class BlogCubit extends Cubit<BlogState> {
     required int articleID
   }) {
     if (key.currentState!.validate()) {
-      print('vvvvvv : $imageCoverBack');
-      whichFunction(articleID, 1, categoryID, mainText.text, title.text,imageCoverBack,which);
+      print('vvvvvv : $imageServerName');
+      whichFunction(articleID, 1, categoryID, mainText.text, title.text,imageServerName,which);
       print(articleID);
       print(categoryID);
       print(mainText.text);
@@ -242,7 +243,6 @@ class BlogCubit extends Cubit<BlogState> {
   }
 
   File? pickedImage;
-  var imageCoverBack;
 
   Future<void> pickImage(context) async {
     final ImagePicker _picker = ImagePicker();
@@ -253,11 +253,36 @@ class BlogCubit extends Cubit<BlogState> {
     emit(BlogsUploadImageState());
   }
 
+  var imageServerName;
+
   void setImage(String imageName){
     emit(BlogInitialState());
-    imageCoverBack=imageName;
+    imageServerName=imageName;
     emit(BlogsSetImageState());
   }
+
+  Future<void> uploadImage(File file,context) async {
+    FormData formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(file.path, filename:file.path.split(Platform.pathSeparator).last),
+      // Add any other fields you need to send along with the image
+    });
+    DioHelper.postData(
+      url: uploadPhoto,
+      data: formData,
+      options: Options(
+        headers: {
+          "contentType": 'multipart/form-data',
+        }, // Ensure the content type is set to multipart/form-data
+      ),
+    ).then((value) {
+      print(value.data);
+      setImage(value.data);
+      print('uuuuuuuuuuuu : $imageServerName');
+    }).catchError((Error) {
+      print(Error.toString());
+    });
+  }
+
 
   void whichFunction(int articleID, int doctorID, int categoryID,
       String mainText, String title,String coverImage ,int which) {

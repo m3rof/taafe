@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,7 +82,15 @@ class HomeCubit extends Cubit<HomeState> {
       PopupMenuItem(
           child: ListTile(
         onTap: () {
-          moveScreen(context: context, screen: EditProfileScreen());
+          moveScreen(
+              context: context,
+              screen: EditProfileScreen(
+                doctorMainModel!.name,
+                doctorMainModel!.birthDate,
+                doctorMainModel!.profileImage,
+                doctorMainModel!.title,
+                doctorMainModel!.description,
+              ));
         },
         leading: Icon(FontAwesomeIcons.edit),
         title: Text('Edit Profile'),
@@ -95,7 +106,9 @@ class HomeCubit extends Cubit<HomeState> {
       PopupMenuItem(
           child: ListTile(
         onTap: () {
-          moveScreen(context: context, screen: MedicalRecordScreen(pateintMainModel:pateintMainModel!));
+          moveScreen(
+              context: context,
+              screen: MedicalRecordScreen(pateintMainModel: pateintMainModel!));
         },
         leading: const Icon(Icons.medical_information),
         title: const Text(StringManager.medicalRecord),
@@ -238,18 +251,129 @@ class HomeCubit extends Cubit<HomeState> {
 
   DoctorMainModel? doctorMainModel;
 
-  void getDoctorMain() {
-    DioHelper.getData(url: doctorMainInfo, query: {'doctorID': 1})
-        .then((value) {
-      doctorMainModel = DoctorMainModel.fromJson(value.data);
+  void getDoctorMain() async {
+    try {
+      Response response =
+          await DioHelper.getData(url: doctorMainInfo, query: {'doctorID': 1});
+
+      doctorMainModel = DoctorMainModel.fromJson(response.data);
       emit(GetDoctorMainSuccessState());
-    }).catchError((Error) {
-      print(Error.toString());
-      emit(GetDoctorMainErrorState());
-    });
+    } catch (error) {
+      print(error.toString());
+      emit(GetDoctorMainErrorState(error.toString()));
+    }
   }
 
+  void editDoctorName(String newName) async {
+    try {
+      Response response = await DioHelper.postData(
+          url: doctorEditName, data: {'doctorID': 1, 'newName': newName});
+      print(response.data);
+      emit(EditDoctorNameSuccessState());
+    } catch (error) {
+      print(error.toString());
+      emit(EditDoctorNameErrorState(error.toString()));
+    }
+  }
 
+  void editDoctorTitle(String newTitle) async {
+    try {
+      Response response = await DioHelper.postData(
+          url: doctorEditTitle, data: {'doctorID': 1, 'newTitle': newTitle});
+      print(response.data);
+      emit(EditDoctorTitleSuccessState());
+    } catch (error) {
+      print(error.toString());
+      emit(EditDoctorTitleErrorState(error.toString()));
+    }
+  }
+
+  void editDoctorBirthDate(String newBirthDate) async {
+    try {
+      Response response = await DioHelper.postData(
+          url: doctorEditBirthdate,
+          data: {'doctorID': 1, 'newBirthDate': newBirthDate});
+      print(response.data);
+      emit(EditDoctorBirthDateSuccessState());
+    } catch (error) {
+      print(error.toString());
+      emit(EditDoctorBirthDateErrorState(error.toString()));
+    }
+  }
+
+  void editDoctorProfileImage(String imageName) async {
+    try {
+      Response response = await DioHelper.postData(
+          url: doctorEditImage, data: {'doctorID': 1, 'imageName': imageName});
+      print(response.data);
+      emit(EditDoctorProfileImageSuccessState());
+    } catch (error) {
+      print(error.toString());
+      emit(EditDoctorProfileImageErrorState(error.toString()));
+    }
+  }
+
+  void editDoctorDescription(String newDescription) async {
+    try {
+      Response response = await DioHelper.postData(
+          url: doctorEditDescription,
+          data: {'doctorID': 1, 'newDescription': newDescription});
+      print(response.data);
+      emit(EditDoctorDescriptionSuccessState());
+    } catch (error) {
+      print(error.toString());
+      emit(EditDoctorDescriptionErrorState(error.toString()));
+    }
+  }
+
+  File? pickedImageProfile;
+
+  Future<void> pickImageProfile(context) async {
+    try {
+      final ImagePicker _picker = ImagePicker();
+      final XFile? pickedFile =
+          await _picker.pickImage(source: ImageSource.gallery);
+      pickedImageProfile = File(pickedFile!.path);
+      print(pickedImageProfile!.path.split(Platform.pathSeparator).last);
+      uploadProfilePic(pickedImageProfile!, context);
+      emit(PickProfilePicSuccessState());
+    } catch (error) {
+      print(error.toString());
+      emit(PickProfilePicErrorState(error.toString()));
+    }
+  }
+
+  var ProfilePicServer;
+
+  void setImageProfile(String imageName) {
+    ProfilePicServer = imageName;
+    emit(SetProfileImageSuccessState());
+  }
+
+  Future<void> uploadProfilePic(File file, context) async {
+    FormData formData = FormData.fromMap({
+      'file': await MultipartFile.fromFile(file.path,
+          filename: file.path.split(Platform.pathSeparator).last),
+      // Add any other fields you need to send along with the image
+    });
+    try {
+      Response response = await DioHelper.postData(
+        url: uploadProfilePhoto,
+        data: formData,
+        options: Options(
+          headers: {
+            "contentType": 'multipart/form-data',
+          }, // Ensure the content type is set to multipart/form-data
+        ),
+      );
+      setImageProfile(response.data);
+      print('pppppp : $ProfilePicServer');
+      emit(UploadProfilePicSuccessState());
+    } catch (error) {
+      print(error.toString());
+      emit(UploadProfilePicErrorState(error.toString()));
+    }
+  }
 }
 
 class ItemServices {

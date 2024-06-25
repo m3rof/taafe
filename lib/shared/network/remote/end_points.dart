@@ -1,7 +1,11 @@
 
 const String baseUrl='http://api.taafy.omarelnemr.xyz';
 
-const String uploadProfile='/upload';
+const String uploadPhoto='/upload';
+const String uploadProfilePhoto='/uploadprofilepic';
+
+
+
 
 const String login='/auth/login';
 
@@ -56,15 +60,42 @@ const String patientDiagnose='/profile/patient-diagnose';
 const String patientMedicine='/profile/patient-medicine';
 
 
+const String sendMessageEnd='/chat/message';
+const String makeSeenEnd='/chat/mark-seen';
+
 
 
 
 const String doctorMainInfo='/profile/doctor-main-info';
 
+const String doctorEditName='/profile/doctor-name-edit';
+
+const String doctorEditTitle='/profile/doctor-title-edit';
+
+const String doctorEditBirthdate='/profile/doctor-birthdate-edit';
+
+const String doctorEditImage='/profile/doctor-profile-image';
+
+const String doctorEditDescription='/profile/doctor-description-edit';
+
+const String doctorEducation='/profile/doctor-education-record';
+
+const String doctorExperince='/profile/doctor-experince-record';
+
+const String doctorCertification='/profile/doctor-certificate-record';
 
 
-const String sendMessageEnd='/chat/message';
-const String makeSeenEnd='/chat/mark-seen';
+
+
+
+
+
+
+
+
+
+
+
 
 
 
