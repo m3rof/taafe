@@ -1,17 +1,15 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:taafe/layout/home/home_screen.dart';
-import 'package:taafe/shared/network/remote/end_points.dart';
-import 'package:taafe/shared/resourses/color_manager.dart';
+
 import '../../../models/user_model/user_model.dart';
 import '../../../shared/components/components.dart';
-import '../../../shared/network/remote/dio_helper.dart';
+
 import 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
@@ -19,23 +17,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   static RegisterCubit get(context) => BlocProvider.of(context);
 
-  void checkValidation(
-      {required context,
-      required GlobalKey<FormState> key,
-      required TextEditingController emailController,
-      required TextEditingController passwordController,
-      required TextEditingController confirmController,
-      required TextEditingController userController}) {
-    if (key.currentState!.validate()) {
-      userRegister(
-          email: emailController.text,
-          password: passwordController.text,
-          name: userController.text,
-          date: dateTime.toString(),
-          gender: currentType);
-      emit(CheckValidatorRegisterState());
-    }
-  }
+
 
   void userRegister({
     required String email,
@@ -43,6 +25,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String name,
     required String date,
     required String gender,
+    required String specialty,
   }) async {
     emit(AppRegisterLoadingState());
 
@@ -61,6 +44,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         date: date,
         uId: value.user!.uid,
         gender: gender,
+        specialty: specialty,
       );
     } on FirebaseAuthException catch (error) {
       print(error);
@@ -75,6 +59,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String date,
     required String uId,
     required String gender,
+    required String specialty,
   }) async {
     userData = UserData(
       email: email,
@@ -82,6 +67,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       date: date,
       uId: uId,
       gender: gender,
+      specialty: specialty,
     );
     emit(AppCreateUserLoadingState());
     try {
@@ -110,44 +96,16 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   
 
-  bool visibility1 = true;
-  Widget iconVisibility = const Icon(Icons.visibility_off_outlined);
+  Widget icon = const Icon(Icons.remove_red_eye_outlined);
+  bool showPwd = false;
 
-  void changeVisibility() {
-    visibility1 = !visibility1;
-    emit(RegisterChangeVisibilityState());
+  void changePasswordVisibility() {
+    showPwd = !showPwd;
+    icon = showPwd
+        ? const Icon(Icons.visibility_off_outlined)
+        : const Icon(Icons.visibility_outlined);
+    emit(AppChangePasswordVisibility());
   }
-
-  void changeIconVisibility() {
-    visibility1
-        ? iconVisibility = const Icon(
-            Icons.visibility_off_outlined,
-            color: ColorManager.primaryColor,
-          )
-        : iconVisibility = const Icon(Icons.visibility_outlined,
-            color: ColorManager.primaryColor);
-    emit(RegisterChangeIconVisibilityState());
-  }
-
-  bool visibility2 = true;
-  Widget iconVisibility2 = const Icon(Icons.visibility_off_outlined);
-
-  void changeVisibility2() {
-    visibility2 = !visibility2;
-    emit(RegisterChangeVisibility2State());
-  }
-
-  void changeIconVisibility2() {
-    visibility2
-        ? iconVisibility2 = const Icon(
-            Icons.visibility_off_outlined,
-            color: ColorManager.primaryColor,
-          )
-        : iconVisibility2 = const Icon(Icons.visibility_outlined,
-            color: ColorManager.primaryColor);
-    emit(RegisterChangeIconVisibility2State());
-  }
-
   DateTime dateTime = DateTime.now();
   bool selected = false;
 

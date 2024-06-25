@@ -1,14 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import 'package:taafe/modules/navigation_bar_items/blogs/blogs_cubit/blog_cubit.dart';
 import 'package:taafe/modules/navigation_bar_items/blogs/blogs_cubit/blog_state.dart';
-import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
-import 'package:taafe/modules/posts/posts_cubit/posts_state.dart';
+
 import 'package:taafe/shared/components/components.dart';
-import 'package:taafe/shared/resourses/color_manager.dart';
+
 import 'package:taafe/shared/resourses/styles.dart';
 
 import '../../shared/network/remote/end_points.dart';
@@ -24,7 +23,7 @@ class CommentsScreen extends StatelessWidget {
       body: BlocConsumer<BlogCubit, BlogState>(
         listener: (context, state) {},
         builder: (context, state) {
-          var cubit = BlogCubit.get(context);
+          //var cubit = BlogCubit.get(context);
           return Expanded(
               child: ListView.builder(
                   itemBuilder: (context, index) => itemCommentsCommunity(),

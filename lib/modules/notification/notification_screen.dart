@@ -1,4 +1,4 @@
-import 'package:awesome_icons/awesome_icons.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,13 +42,13 @@ class NotificationScreen extends StatelessWidget {
                       reverse: true,
                       itemBuilder: (context, index) {
                         return NotificationTiles(
-                            title: notification!.elementAt(index).header,
-                            subtitle: notification!.elementAt(index).text,
+                            title: notification.elementAt(index).header,
+                            subtitle: notification.elementAt(index).text,
                             onTap: () {},
-                            seen: notification!.elementAt(index).seen,
+                            seen: notification.elementAt(index).seen,
                             date: '10/10/2002');
                       },
-                      itemCount: notification?.length ?? 0,
+                      itemCount: notification.length ,
                     )
                   : Center(
                       child: Column(

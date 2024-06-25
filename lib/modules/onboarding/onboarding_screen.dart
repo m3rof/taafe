@@ -10,7 +10,7 @@ import 'package:taafe/modules/onboarding/widget/onboarding_skip.dart';
 import 'package:taafe/shared/components/constants.dart';
 import 'package:taafe/shared/resourses/assets_manager.dart';
 import 'package:taafe/shared/resourses/color_manager.dart';
-import 'package:taafe/shared/resourses/styles.dart';
+
 import 'package:taafe/shared/resourses/value_app.dart';
 
 class OnboardingScreen extends StatefulWidget {

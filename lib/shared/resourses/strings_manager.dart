@@ -6,7 +6,7 @@ class StringManager{
   static const String or='OR';
   static const String loginWith='login with';
   static const String newAccount='create new account';
-  static const String registerCreate='CREATE';
+  static const String registerCreate='CREATE ACCOUNT';
   static const String registerAccount='ACCOUNT';
   static const String emailRegister='your e-mail';
   static const String userRegister='your nickname';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:taafe/modules/drawer_items/Diagnosis/diagnosis_screen.dart';
 import 'package:taafe/modules/drawer_items/appointment/appointment_screen.dart';
 import 'package:taafe/modules/drawer_items/my_therapists/my_therapists_screen.dart';
-import 'package:taafe/modules/medical_record/mediacal_record_screen.dart';
+
 import 'package:taafe/shared/components/constants.dart';
 import 'package:taafe/shared/resourses/assets_manager.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';

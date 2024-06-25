@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../shared/resourses/color_manager.dart';
+
 import '../../../shared/resourses/styles.dart';
 import '../../../shared/resourses/value_app.dart';
 

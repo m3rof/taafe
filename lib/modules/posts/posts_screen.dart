@@ -1,10 +1,10 @@
-import 'package:awesome_icons/awesome_icons.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:taafe/modules/posts/add_post_screen.dart';
-import 'package:taafe/modules/posts/patient_posts_screen.dart';
+
 import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_state.dart';
 import 'package:taafe/modules/search/search_screen.dart';

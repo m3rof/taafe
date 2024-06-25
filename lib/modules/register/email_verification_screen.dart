@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:taafe/shared/resourses/styles.dart';
+import 'package:taafe/shared/widgets/app_btn.dart';
 
 import '../../shared/components/constants.dart';
 import '../../shared/resourses/color_manager.dart';
@@ -51,21 +53,22 @@ class EmailVerificationScreen extends StatelessWidget {
               children: [
                 Image.asset(
                   "assets/images/logo.png",
-                  height: 320,
-                  width: 320,
+                  height: 200,
+                  width: 200,
                 ),
-                Text(
-                  "Please Verify Your Email",
-                  style: TextStyle(color: ColorManager.primaryColor),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    "Please Verify Your Email",
+                    style: StylesManager.headPrimary3,
+                  ),
                 ),
                 state is VerifyEmailLoadingState
                     ? loadingProgress()
-                    : ElevatedButton(
-                        onPressed: () {
-                          cubit.verifyEmail(context);
-                        },
-                        child: const Text('Verify Your Email',
-                            style: TextStyle(color: ColorManager.textWhite))),
+                    : AppBtn(
+                        label: "Verify Your Email",
+                        onPressed: () => cubit.verifyEmail(context),
+                      ),
               ],
             ),
           ),

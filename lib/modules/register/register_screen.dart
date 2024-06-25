@@ -1,16 +1,19 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:taafe/modules/register/register_cubit/register_state.dart';
-import 'package:taafe/shared/resourses/assets_manager.dart';
+
 import 'package:taafe/shared/resourses/color_manager.dart';
+import 'package:taafe/shared/resourses/family_manager.dart';
 import 'package:taafe/shared/resourses/strings_manager.dart';
 import 'package:taafe/shared/resourses/styles.dart';
 import 'package:taafe/shared/resourses/value_app.dart';
+import 'package:taafe/shared/widgets/app_btn.dart';
+import 'package:taafe/shared/widgets/input_Field.dart';
 
-import '../../shared/components/components.dart';
 import '../../shared/components/constants.dart';
 import 'email_verification_screen.dart';
 import 'register_cubit/register_cubit.dart';
@@ -28,6 +31,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late TextEditingController email;
   late TextEditingController password;
   late TextEditingController confirmPassword;
+  List<String> specialties = ["Therapist", "Patient"];
+  String selectedValue = "Therapist";
   GlobalKey<FormState> key = GlobalKey();
 
   @override
@@ -36,7 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     email = TextEditingController();
     password = TextEditingController();
     confirmPassword = TextEditingController();
-    // TODO: implement initState
+
     super.initState();
   }
 
@@ -46,7 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     email.dispose();
     password.dispose();
     confirmPassword.dispose();
-    // TODO: implement dispose
+
     super.dispose();
   }
 
@@ -55,36 +60,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
     var cubit = RegisterCubit.get(context);
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {
-         if (state is AppRegisterErrorState) {
-         
-Fluttertoast.showToast(
-        msg: state.error,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        backgroundColor: ColorManager.erroeColor,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
+        if (state is AppRegisterErrorState) {
+          Fluttertoast.showToast(
+              msg: state.error,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              backgroundColor: ColorManager.erroeColor,
+              textColor: Colors.white,
+              fontSize: 16.0);
         }
         if (state is AppCreateUserErrorState) {
-         Fluttertoast.showToast(
-        msg: state.error,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        backgroundColor: ColorManager.erroeColor,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
+          Fluttertoast.showToast(
+              msg: state.error,
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              backgroundColor: ColorManager.erroeColor,
+              textColor: Colors.white,
+              fontSize: 16.0);
         }
         if (state is AppCreateUserSuccessState) {
           Fluttertoast.showToast(
-        msg: "Your Register Done Successfully",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        backgroundColor: ColorManager.primaryColor,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
+              msg: "Your Register Done Successfully",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              backgroundColor: ColorManager.primaryColor,
+              textColor: Colors.white,
+              fontSize: 16.0);
           animatedNavigateTo(
             context: context,
             widget: const EmailVerificationScreen(),
@@ -99,169 +100,199 @@ Fluttertoast.showToast(
             key: key,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   padding: const EdgeInsets.only(top: SizeManager.s20),
                   width: double.infinity,
                   height: SizeManager.s170,
                   decoration: const BoxDecoration(
-                      color: ColorManager.primaryColor,
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(SizeManager.s40))),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      createAccountText(),
-                      const SizedBox(
-                        height: SizeManager.s28,
-                      ),
-                      line(),
-                    ],
+                    color: ColorManager.primaryColor,
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(SizeManager.s50),
+                      bottomLeft: Radius.circular(SizeManager.s50),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      StringManager.registerCreate,
+                      style: StylesManager.registerCreate,
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(SizeManager.s30),
-                  child: textFieldRegister(
-                    textInputType: TextInputType.text,
-                    controller: username,
-                    hint: StringManager.userRegister,
-                    validator: StringManager.userValidatorRegister,
-                  ),
+                InputField(
+                  hint: "Enter Your Name",
+                  title: "Username",
+                  controller: username,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(SizeManager.s30),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: SizeManager.s20,
+                  ),
                   child: InkWell(
                     onTap: () {
                       cubit.showCalender(context: context);
                     },
-                    child: Container(
-                      padding: const EdgeInsets.all(SizeManager.s16),
-                      decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(SizeManager.s30),
-                          ),
-                          border: Border.all(color: ColorManager.primaryColor)),
-                      child: Row(
-                        children: [
-                          Text(
-                              DateFormat('MM/dd/yyyy').format(cubit.dateTime),
-                              style: StylesManager.headPrimary3.copyWith(
-                                  fontSize: SizeManager.s18,
-                                  fontWeight: FontWeight.w400)),
-                          const Spacer(),
-                          const Icon(
-                            Icons.calendar_today_outlined,
-                            color: ColorManager.primaryColor,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(SizeManager.s30),
-                  child: textFieldRegister(
-                    textInputType: TextInputType.emailAddress,
-                    email: true,
-                    controller: email,
-                    hint: StringManager.emailRegister,
-                    validator: StringManager.emailValidatorRegister,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(SizeManager.s30),
-                  child: textFieldRegister(
-                    obsurce: cubit.visibility1,
-                    prefixIcon: IconButton(
-                      onPressed: () {
-                        cubit.changeVisibility();
-                        cubit.changeIconVisibility();
-                      },
-                      icon: cubit.iconVisibility,
-                      color: ColorManager.primaryColor,
-                    ),
-                    textInputType: TextInputType.visiblePassword,
-                    controller: password,
-                    hint: StringManager.passwordRegister,
-                    validator: StringManager.passwordValidatorRegister,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(SizeManager.s30),
-                  child: textFieldRegister(
-                    suffixIcon:
-                        confirmPassword.text.trim() == password.text.trim() &&
-                                password.text != '' &&
-                                confirmPassword != ''
-                            ? const Icon(Icons.done,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "BirthDay",
+                          style: StylesManager.label,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(SizeManager.s12),
+                          decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                              border: Border.all(
                                 color: ColorManager.primaryColor,
-                                size: SizeManager.s28)
-                            : null,
-                    textInputType: TextInputType.visiblePassword,
-                    controller: confirmPassword,
-                    hint: StringManager.confirmRegister,
-                    validator: StringManager.confirmValidatorRegister,
-                    obsurce: cubit.visibility2,
-                    prefixIcon: IconButton(
-                      onPressed: () {
-                        cubit.changeVisibility2();
-                        cubit.changeIconVisibility2();
-                      },
-                      icon: cubit.iconVisibility2,
-                      color: ColorManager.primaryColor,
+                                width: 2,
+                              )),
+                          child: Row(
+                            children: [
+                              Text(
+                                  DateFormat('MM/dd/yyyy')
+                                      .format(cubit.dateTime),
+                                  style: StylesManager.headPrimary3.copyWith(
+                                    fontSize: SizeManager.s18,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: FamilyManager.myriad,
+                                  )),
+                              const Spacer(),
+                              const Icon(
+                                Icons.calendar_month,
+                                color: ColorManager.primaryColor,
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(SizeManager.s30),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: RadioListTile(
-                          title: Text(
-                            'male',
-                            style: StylesManager.or.copyWith(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                          ),
-                          activeColor: ColorManager.primaryColor,
-                          value: RegisterCubit.gender[0],
-                          groupValue: cubit.currentType,
-                          onChanged: (value) => cubit.radioFunction(value),
-                        ),
-                      ),
-                      Expanded(
-                        child: RadioListTile(
-                          activeColor: ColorManager.primaryColor,
-                          title: Text(
-                            'female',
-                            style: StylesManager.or.copyWith(
-                                fontSize: 16, fontWeight: FontWeight.w500),
-                          ),
-                          value: RegisterCubit.gender[1],
-                          groupValue: cubit.currentType,
-                          onChanged: (value) => cubit.radioFunction(value),
-                        ),
-                      ),
-                    ],
+                InputField(
+                  hint: "Enter Your Email",
+                  title: "Email",
+                  controller: email,
+                  textType: TextInputType.emailAddress,
+                ),
+                InputField(
+                  hint: "Enter Your Password",
+                  title: "Password",
+                  controller: password,
+                  isPassword: true,
+                ),
+                InputField(
+                  hint: "Confirm Your Password",
+                  title: "Confirm Password",
+                  controller: confirmPassword,
+                  isPassword: true,
+                ),
+                InputField(
+                  title: "Specialty",
+                  hint: selectedValue,
+                  widget: DropdownButton(
+                    dropdownColor: ColorManager.primaryColor,
+                    borderRadius: BorderRadius.circular(10),
+                    items: specialties
+                        .map((value) => DropdownMenuItem(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontFamily: FamilyManager.myriad,
+                              ),
+                            )))
+                        .toList(),
+                    style: StylesManager.hint,
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedValue = newValue!;
+                      });
+                    },
+                    icon: const Icon(
+                      Icons.keyboard_arrow_down,
+                      color: ColorManager.primaryColor,
+                    ),
+                    iconSize: 32,
+                    elevation: 4,
+                    underline: Container(
+                      height: 0,
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  height: SizeManager.s28,
+                Row(
+                  children: [
+                    Expanded(
+                      child: RadioListTile(
+                        title: Text(
+                          'male',
+                          style: StylesManager.label,
+                        ),
+                        activeColor: ColorManager.primaryColor,
+                        value: RegisterCubit.gender[0],
+                        groupValue: cubit.currentType,
+                        onChanged: (value) => cubit.radioFunction(value),
+                      ),
+                    ),
+                    Expanded(
+                      child: RadioListTile(
+                        activeColor: ColorManager.primaryColor,
+                        title: Text(
+                          'female',
+                          style: StylesManager.label,
+                        ),
+                        value: RegisterCubit.gender[1],
+                        groupValue: cubit.currentType,
+                        onChanged: (value) => cubit.radioFunction(value),
+                      ),
+                    ),
+                  ],
                 ),
-                ElevatedButton(
+                ConditionalBuilder(
+                          condition: state is! AppRegisterLoadingState,
+                          builder: (context) {
+                            return AppBtn(
+                    label: "Register",
                     onPressed: () {
-                      cubit.checkValidation(
-                          context: context,
-                          key: key,
-                          emailController: email,
-                          passwordController: password,
-                          confirmController: confirmPassword,
-                          userController: username);
-                    },
-                    child: const Text('Register',style: TextStyle(color: ColorManager.textWhite))),
-                const SizedBox(
-                  height: SizeManager.s28,
-                ),
+                      if (email.text.isEmpty ||
+                          username.text.isEmpty ||
+                          password.text.isEmpty) {
+                        Fluttertoast.showToast(
+                            msg: "Please Fill All Fields!",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            backgroundColor: ColorManager.erroeColor,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                            
+                            );
+                      } else if (password.text != confirmPassword.text) {
+                        Fluttertoast.showToast(
+                          
+                            msg: "Password Dosen't Match!",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            backgroundColor: ColorManager.erroeColor,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                      } else {
+                        cubit.userRegister(
+                          email: email.text,
+                          password: password.text,
+                          name: username.text,
+                          date: cubit.dateTime.toString(),
+                          gender: cubit.currentType,
+                          specialty: selectedValue,
+                        );
+                      }
+                    });
+                          },
+                          fallback: (context) =>  loadingProgress(),
+                        ),
               ],
             ),
           ),

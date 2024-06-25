@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:awesome_icons/awesome_icons.dart';
@@ -7,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -16,13 +16,14 @@ import 'package:readmore/readmore.dart';
 import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:taafe/layout/home/home_screen.dart';
 import 'package:taafe/modules/about_doctor/about_doctor_screen.dart';
-import 'package:taafe/modules/drawer_items/appointment/appointment_screen.dart';
+
 import 'package:taafe/modules/login/login_cubit/login_cubit.dart';
 import 'package:taafe/modules/navigation_bar_items/blogs/blogs_cubit/blog_cubit.dart';
 import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_cubit.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 import 'package:taafe/modules/search/search_cubit/search_cubit.dart';
 import 'package:taafe/shared/network/remote/end_points.dart';
+
 import '../../layout/home/home_cubit/home_cubit.dart';
 import '../../modules/appointment_doctor/appointment_doctor_screen.dart';
 import '../../modules/drawer_items/medicine_alarm/medicine_alarm_cubit/medicine_alarm_cubit.dart';
@@ -65,70 +66,6 @@ Widget welcome() {
 }
 
 
-Widget textFieldPrefix(
-    {required TextInputType textInputType,
-    required TextEditingController controller,
-    required String label,
-    required String validator,
-    bool obsurce = false,
-    bool password = false,
-    Widget? icons}) {
-  return TextFormField(
-    style: StylesManager.label,
-    cursorColor: ColorManager.primaryColor,
-    controller: controller,
-    validator: (value) => value!.trim().isEmpty ? validator : null,
-    obscureText: obsurce,
-    keyboardType: textInputType,
-    decoration: InputDecoration(
-      prefixIcon: icons,
-      labelText: label,
-    ),
-  );
-}
-
-Widget textFieldRegister(
-    {required TextEditingController controller,
-    required String validator,
-    required String hint,
-    bool obsurce = false,
-    bool confirm = false,
-    required TextInputType textInputType,
-    Widget? suffixIcon,
-    Widget? prefixIcon,
-    bool email = false}) {
-  return TextFormField(
-    validator: (value) {
-      if (value!.trim().isEmpty) {
-        return validator;
-      }
-      final bool emailValid = RegExp(
-              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-          .hasMatch(controller.text);
-      if (email && !emailValid) {
-        return StringManager.emailFormat;
-      }
-      return null;
-    },
-    controller: controller,
-    style: StylesManager.label,
-    obscureText: obsurce,
-    keyboardType: textInputType,
-    cursorColor: ColorManager.primaryColor,
-    decoration: InputDecoration(
-      suffixIcon: suffixIcon,
-      hintText: hint,
-      hintStyle: TextStyle(color: ColorManager.primaryColor.withOpacity(.7)),
-      focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
-          borderSide: BorderSide(color: ColorManager.primaryColor)),
-      enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(SizeManager.s30)),
-          borderSide: BorderSide(color: ColorManager.primaryColor)),
-      prefixIcon: prefixIcon,
-    ),
-  );
-}
 
 Widget textButton(
     {required function, required String text, required TextStyle textStyle}) {
@@ -142,7 +79,7 @@ Widget loginWith(function, String assets) {
   );
 }
 
-Widget loginIcon(LoginCubit loginCubit,context) {
+Widget loginIcon(LoginCubit loginCubit, context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -154,19 +91,18 @@ Widget loginIcon(LoginCubit loginCubit,context) {
       const SizedBox(
         width: SizeManager.s12,
       ),
-      loginWith((){
-        try{
-         final user= loginCubit.signInWithGoogle();
-         if(user !=null ){
-           moveScreen(context: context, screen: HomeScreen());
-         }
-        }on FirebaseException catch(e){
+      loginWith(() {
+        try {
+          final user = loginCubit.signInWithGoogle();
+          if (user != null) {
+            moveScreen(context: context, screen: HomeScreen());
+          }
+        } on FirebaseException catch (e) {
           print('eeeeeee ${e.message}');
-        }catch(e){
+        } catch (e) {
           print('ssssss ${e.toString()}');
         }
-
-        }, AssetsManager.gmail),
+      }, AssetsManager.gmail),
     ],
   );
 }
@@ -185,24 +121,7 @@ Widget userPhoto(function) {
   );
 }
 
-Widget createAccountText() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Text(
-        StringManager.registerCreate,
-        style: StylesManager.registerCreate,
-      ),
-      const SizedBox(
-        width: SizeManager.s6,
-      ),
-      Text(
-        StringManager.registerAccount,
-        style: StylesManager.registerAccount,
-      )
-    ],
-  );
-}
+
 
 Widget line() {
   return Container(
@@ -2562,12 +2481,11 @@ Future showSheet(context, Widget child, onClicked) {
           ));
 }
 
-Widget textFieldEdit({
-  required String hint,
-  required TextEditingController textEditingController,
-  required String validator,
-  required Widget Icon
-}) {
+Widget textFieldEdit(
+    {required String hint,
+    required TextEditingController textEditingController,
+    required String validator,
+    required Widget Icon}) {
   return TextFormField(
     controller: textEditingController,
     validator: (value) => value!.trim().isEmpty ? validator : null,
@@ -2575,9 +2493,9 @@ Widget textFieldEdit({
     decoration: InputDecoration(
       prefixIcon: Icon,
       labelText: hint,
-      labelStyle: const TextStyle(color: Colors.black87,fontSize: 18),
+      labelStyle: const TextStyle(color: Colors.black87, fontSize: 18),
       focusedBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(18)),
+          borderRadius: BorderRadius.all(Radius.circular(18)),
           borderSide: BorderSide(width: SizeManager.s1, color: Colors.grey)),
       enabledBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(18)),
@@ -2866,7 +2784,7 @@ Widget addBorderTop(function, String title) {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(title,
-            style: StylesManager.registerAccount
+            style: StylesManager.registerCreate
                 .copyWith(fontSize: SizeManager.s28)),
         IconButton(
             onPressed: function,
@@ -2894,11 +2812,7 @@ Widget listDoctorPosts(context, BlogCubit cubit) {
                 verticalOffset: 50.0,
                 child: FadeInAnimation(
                     child: itemDoctorPosts(
-                        context: context,
-                      index: index,
-                      cubit: cubit
-                        )
-                )));
+                        context: context, index: index, cubit: cubit))));
       },
     ),
   );
@@ -2926,8 +2840,8 @@ Widget itemDoctorPosts(
                 },
                 child: profileImage(
                     image: NetworkImage(cubit.doctorPosts[index]
-                    ['doctorProfileImage'] !=
-                        null
+                                ['doctorProfileImage'] !=
+                            null
                         ? '$startPhoto${cubit.doctorPosts[index]['doctorProfileImage']}'
                         : 'https://scontent-hbe1-2.xx.fbcdn.net/v/t39.30808-6/298097482_1446954539154955_1988367110792247724_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=geNfUqd8UeYAX9Qwg0r&_nc_ht=scontent-hbe1-2.xx&oh=00_AfDaWkKnVrufe4zf0Z29FOXYqOGRdQ48uK-RvHtWE3yXYw&oe=65D05541'),
                     height: SizeManager.s65,
@@ -3000,7 +2914,9 @@ Widget itemDoctorPosts(
             color: ColorManager.primaryColor,
             borderRadius: BorderRadius.all(Radius.circular(SizeManager.s24)),
           ),
-          child: Image.network('$baseUrl/file/${cubit.doctorPosts[index]['covorImage']}', fit: BoxFit.fill),
+          child: Image.network(
+              '$baseUrl/file/${cubit.doctorPosts[index]['covorImage']}',
+              fit: BoxFit.fill),
         ),
         const SizedBox(
           height: SizeManager.s16,
@@ -3066,8 +2982,7 @@ Widget itemDoctorPosts(
   );
 }
 
-
-Widget likedComment(bool isLiked, int reaction,function) {
+Widget likedComment(bool isLiked, int reaction, function) {
   return LikeButton(
     onTap: (isLiked) {
       // Perform your desired action here
@@ -3079,8 +2994,8 @@ Widget likedComment(bool isLiked, int reaction,function) {
     likeCount: reaction,
     bubblesColor: BubblesColor(
         dotPrimaryColor: Colors.green, dotSecondaryColor: Colors.greenAccent),
-    circleColor: CircleColor(
-        start: ColorManager.daysColor, end: ColorManager.daysColor),
+    circleColor:
+        CircleColor(start: ColorManager.daysColor, end: ColorManager.daysColor),
     likeBuilder: (isLiked) {
       final Color color = isLiked ? Colors.red : Colors.grey;
       return Icon(
@@ -3092,21 +3007,21 @@ Widget likedComment(bool isLiked, int reaction,function) {
       final Color color = isLiked ? Colors.black : Colors.grey;
       return Text(
         text,
-        style: TextStyle(
-            color: color, fontWeight: FontWeight.bold, fontSize: 20),
+        style:
+            TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 20),
       );
     },
   );
 }
 
-Widget likedArticled(bool isLiked, int reaction,function) {
+Widget likedArticled(bool isLiked, int reaction, function) {
   return LikeButton(
     isLiked: isLiked,
     likeCount: reaction,
     bubblesColor: BubblesColor(
         dotPrimaryColor: Colors.green, dotSecondaryColor: Colors.greenAccent),
     circleColor:
-    CircleColor(start: ColorManager.daysColor, end: ColorManager.daysColor),
+        CircleColor(start: ColorManager.daysColor, end: ColorManager.daysColor),
     likeBuilder: (isLiked) {
       final Color color = isLiked ? Colors.red : Colors.grey;
       return Icon(
@@ -3120,7 +3035,7 @@ Widget likedArticled(bool isLiked, int reaction,function) {
       return Text(
         text,
         style:
-        TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 20),
+            TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 20),
       );
     },
     onTap: (isLiked) {
@@ -3129,6 +3044,5 @@ Widget likedArticled(bool isLiked, int reaction,function) {
       function();
       return Future.value(!isLiked); // Toggle like state
     },
-
   );
 }

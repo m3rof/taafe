@@ -12,10 +12,10 @@ import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:taafe/models/blog_models/article_model.dart';
 import 'package:taafe/modules/navigation_bar_items/blogs/widget/add_post_blog_screen.dart';
-import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_state.dart';
+
 import 'package:taafe/shared/network/remote/dio_helper.dart';
 import '../../../../shared/components/components.dart';
-import '../../../../shared/components/constants.dart';
+
 import '../../../../shared/network/remote/end_points.dart';
 import 'blog_state.dart';
 

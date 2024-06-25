@@ -10,6 +10,7 @@ import 'package:taafe/shared/resourses/styles.dart';
 import 'package:taafe/shared/resourses/value_app.dart';
 
 import '../../shared/components/components.dart';
+import '../../shared/widgets/input_Field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -59,27 +60,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: SizeManager.s24,
                   ),
-                  textFieldPrefix(
-                      controller: emailController,
-                      validator:  StringManager.emailValidatorLogin,
-                      icons: const Icon((Icons.account_circle)),
-                      textInputType: TextInputType.emailAddress,
-                      label: StringManager.email),
+                  InputField(hint: "Enter Your Email",title: "Email",controller: emailController,),
                   const SizedBox(
                     height: SizeManager.s20,
                   ),
-                  textFieldPrefix(
-                      controller: passwordController,
-                      validator: StringManager.passwordValidatorLogin,
-                      icons: IconButton(
-                          onPressed: () {
-                            cubit.changeVisibility();
-                            cubit.changeIconVisibility();
-                          },
-                          icon: cubit.iconVisibility),
-                      obsurce: cubit.visibility,
-                      textInputType: TextInputType.visiblePassword,
-                      label: StringManager.password),
+                 InputField(hint: "Enter Your Password",title: "Password",controller: passwordController,),
                   const SizedBox(
                     height: SizeManager.s24,
                   ),

@@ -1,8 +1,6 @@
-import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_cubit.dart';
+
 
 import '../../../shared/network/remote/dio_helper.dart';
 import '../../../shared/network/remote/end_points.dart';

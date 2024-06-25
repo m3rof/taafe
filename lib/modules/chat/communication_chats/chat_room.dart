@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+
 import 'package:taafe/models/chat_models/chat_room_models.dart';
 import 'package:taafe/modules/chat/chat_cubit/chat_cubit.dart';
 import 'package:taafe/modules/chat/communication_chats/chat_screen.dart';
-import 'package:taafe/shared/resourses/assets_manager.dart';
+
 
 import '../widgets/chat_room_widget.dart';
 
@@ -57,7 +57,7 @@ class ChatRoomScreen extends StatelessWidget {
                   docs.data()).toList();
               return ListView.builder(
                  itemBuilder: (context, index) {
-                return ChatRoomsWidget(nameSender:chatRooms!.elementAt(index).doctorName,lastMessage: chatRooms!.elementAt(index).last_d_message,function: (){
+                return ChatRoomsWidget(nameSender:chatRooms!.elementAt(index).doctorName,lastMessage: chatRooms.elementAt(index).last_d_message,function: (){
                   cubit.makeSeen('${snapshot.data!.docs.reversed.elementAt(index).id}', 'patient');
                   Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen(),));
                 },);

@@ -3,8 +3,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:taafe/layout/home/home_cubit/home_cubit.dart';
-import 'package:taafe/layout/home/home_cubit/home_state.dart';
+
 import 'package:taafe/modules/medical_record/medical_record_cubit/medical_record_cubit.dart';
 import 'package:taafe/modules/medical_record/medical_record_cubit/medical_record_state.dart';
 import 'package:taafe/shared/components/components.dart';
@@ -59,12 +58,12 @@ class MedicalRecordScreen extends StatelessWidget {
                               context: context,
                               icon: FontAwesomeIcons.user,
                               title: 'Name (Username):',
-                              value: pateintMainModel!.name),
+                              value: pateintMainModel.name),
                           medicalRecordItem(
                               context: context,
                               icon: Icons.alternate_email_outlined,
                               title: 'Email: ',
-                              value: pateintMainModel!.email),
+                              value: pateintMainModel.email),
                           medicalRecordItem(
                               context: context,
                               icon: Icons.date_range_outlined,

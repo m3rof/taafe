@@ -1,8 +1,8 @@
 
-import 'package:bloc/bloc.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:taafe/models/doctor_models/doctor_main_model.dart';
+
 import 'package:taafe/shared/network/remote/end_points.dart';
 
 import '../../../../shared/network/remote/dio_helper.dart';

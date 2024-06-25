@@ -1,12 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:bloc/bloc.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/intl.dart';
+
 import 'package:page_transition/page_transition.dart';
-import 'package:taafe/modules/posts/patient_posts_screen.dart';
+
 
 import '../../../shared/components/components.dart';
 import '../../../shared/network/remote/dio_helper.dart';

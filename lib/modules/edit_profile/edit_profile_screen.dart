@@ -1,12 +1,11 @@
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+
 import 'package:taafe/layout/home/home_cubit/home_cubit.dart';
 import 'package:taafe/layout/home/home_cubit/home_state.dart';
 import 'package:taafe/modules/edit_profile/edit_widgets/edit_widgets.dart';
-import 'package:taafe/modules/setting_items/my_account/my_account_cubit/my_account_cubit.dart';
-import 'package:taafe/modules/setting_items/my_account/my_account_cubit/my_account_state.dart';
+
 import 'package:taafe/shared/network/remote/end_points.dart';
 import 'package:taafe/shared/resourses/value_app.dart';
 

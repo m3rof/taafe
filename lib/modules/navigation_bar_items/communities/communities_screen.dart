@@ -1,9 +1,9 @@
-import 'package:awesome_icons/awesome_icons.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_cubit.dart';
 import 'package:taafe/modules/navigation_bar_items/communities/communites_cubit/community_state.dart';
-import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
+
 import 'package:taafe/modules/posts/posts_screen.dart';
 import 'package:taafe/shared/components/components.dart';
 import 'package:taafe/shared/components/constants.dart';

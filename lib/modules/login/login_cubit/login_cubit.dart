@@ -1,7 +1,6 @@
-import 'dart:ffi';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,8 +9,7 @@ import 'package:taafe/layout/home/home_screen.dart';
 import 'package:taafe/modules/login/login_cubit/login_state.dart';
 import 'package:taafe/modules/register/register_screen.dart';
 import 'package:taafe/shared/components/components.dart';
-import 'package:taafe/shared/network/remote/dio_helper.dart';
-import 'package:taafe/shared/network/remote/end_points.dart';
+
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());

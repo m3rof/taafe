@@ -4,6 +4,7 @@ class UserData {
   String? date;
   String? uId;
   String? gender;
+  String? specialty;
 
 
   UserData({
@@ -12,6 +13,7 @@ class UserData {
     required this.date,
     required this.uId,
     required this.gender,
+    required this.specialty,
   
   });
   factory UserData.fromJson(json) {
@@ -21,6 +23,7 @@ class UserData {
       date: json?["date"],
       uId: json?["uId"],
       gender: json?["gender"],
+      specialty: json?["specialty"],
       
     );
   }
@@ -32,6 +35,7 @@ class UserData {
       "date": date,
       "uId": uId,
       "gender": gender,
+      "specialty": specialty,
       
     };
   }

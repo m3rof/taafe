@@ -18,7 +18,7 @@ import '../../../models/doctor_models/doctor_main_model.dart';
 import '../../../models/patient_model/patient_info_model.dart';
 import '../../../models/patient_model/patient_main_info_model.dart';
 import '../../../modules/edit_profile/edit_profile_screen.dart';
-import '../../../modules/navigation_bar_items/blogs/blogs_screen.dart';
+
 import '../../../modules/navigation_bar_items/blogs/widget/category_screen.dart';
 import '../../../modules/navigation_bar_items/communities/communities_screen.dart';
 import '../../../modules/navigation_bar_items/q_a/q_a_screen.dart';
