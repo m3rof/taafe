@@ -130,9 +130,10 @@ class HomeCubit extends Cubit<HomeState> {
   PateintMainModel? pateintMainModel;
 
   void getPatientMain() {
-    DioHelper.getData(url: patientMainInfo, query: {'patientID': 1})
+    DioHelper.getData(url: patientMainInfo, query: {'patientID': 3})
         .then((value) {
       pateintMainModel = PateintMainModel.fromJson(value.data);
+      print(value.data);
       emit(GetPatientMainSuccessState());
     }).catchError((Error) {
       print(Error.toString());

@@ -60,7 +60,7 @@ dependencies:
   firebase_core:
   firebase_messaging:
   firebase_database:
-  cloud_firestore:
+  cloud_firestore: ^5.0.1
   google_sign_in:
 #  zego_uikit_prebuilt_call: ^4.12.8
   google_generative_ai: ^0.4.2
