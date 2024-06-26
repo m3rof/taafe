@@ -8,7 +8,7 @@ class PateintMainModel {
     required this.language,
     required this.email,
   });
-  late final int id;
+  late final String id;
   late final String name;
   late final String birthDate;
   late final String profileImage;

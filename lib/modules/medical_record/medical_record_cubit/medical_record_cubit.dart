@@ -1,6 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:intl/intl.dart';
+import 'package:taafe/shared/components/constants.dart';
+
 
 import '../../../models/patient_model/patient_info_model.dart';
 
@@ -19,7 +22,7 @@ class MedicalRecordCubit extends Cubit<MedicalRecordState> {
   PatientInfoModel? patientInfoModel;
 
   void getPatientInfo() {
-    DioHelper.getData(url: patientInfo, query: {'patientID': 1}).then((value) {
+    DioHelper.getData(url: patientInfo, query: {'patientID': idPatient}).then((value) {
       patientInfoModel = PatientInfoModel.fromJson(value.data);
       emit(GetPatientInfoSuccessState());
     }).catchError((Error) {
@@ -31,7 +34,7 @@ class MedicalRecordCubit extends Cubit<MedicalRecordState> {
   List hobby=[];
 
   void getHobby() {
-    DioHelper.getData(url: patientHobby, query: {'patientID': 1}).then((
+    DioHelper.getData(url: patientHobby, query: {'patientID': idPatient}).then((
         value) {
       hobby = value.data;
       print(hobby);
@@ -56,7 +59,7 @@ class MedicalRecordCubit extends Cubit<MedicalRecordState> {
 
   List diagnose = [];
   void getDiagnose() {
-    DioHelper.getData(url: patientDiagnose, query: {'patientID': 1}).then((
+    DioHelper.getData(url: patientDiagnose, query: {'patientID': idPatient}).then((
         value) {
       diagnose = value.data;
       print(diagnose);
@@ -70,7 +73,7 @@ class MedicalRecordCubit extends Cubit<MedicalRecordState> {
   List medicine = [];
 
   void getMedicine() {
-    DioHelper.getData(url: patientMedicine, query: {'patientID': 1}).then((
+    DioHelper.getData(url: patientMedicine, query: {'patientID': idPatient}).then((
         value) {
       medicine = value.data;
       print(medicine);

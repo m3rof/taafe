@@ -129,37 +129,28 @@ class HomeCubit extends Cubit<HomeState> {
 
   PateintMainModel? pateintMainModel;
 
-  void getPatientMain() {
-    DioHelper.getData(url: patientMainInfo, query: {'patientID': 3})
-        .then((value) {
-      pateintMainModel = PateintMainModel.fromJson(value.data);
-      print(value.data);
+  void getPatientMain() async {
+    try{
+      Response response=await DioHelper.getData(url: patientMainInfo, query: {'patientID': idPatient});
+      pateintMainModel = PateintMainModel.fromJson(response.data);
+      print(response.data);
       emit(GetPatientMainSuccessState());
-    }).catchError((Error) {
-      print(Error.toString());
+    }catch (error){
+      print(error.toString());
       emit(GetPatientMainErrorState());
-    });
+    }
   }
 
   PatientInfoModel? patientInfoModel;
 
-  void getPatientInfo() {
-    DioHelper.getData(url: patientInfo, query: {'patientID': 1}).then((value) {
-      patientInfoModel = PatientInfoModel.fromJson(value.data);
+  void getPatientInfo() async{
+    try{
+      Response response=await DioHelper.getData(url: patientInfo, query: {'patientID': 1});
+      patientInfoModel = PatientInfoModel.fromJson(response.data);
       emit(GetPatientInfoSuccessState());
-    }).catchError((Error) {
-      print(Error.toString());
+    }catch(error){
+      print(error.toString());
       emit(GetPatientInfoErrorState());
-    });
-
-    XFile? pickedImage;
-
-    Future<void> pickImage() async {
-      final ImagePicker _picker = ImagePicker();
-      final XFile? pickedFile =
-          await _picker.pickImage(source: ImageSource.camera);
-      pickedImage = pickedFile;
-      emit(HomePickImageState());
     }
   }
 
@@ -255,7 +246,7 @@ class HomeCubit extends Cubit<HomeState> {
   void getDoctorMain() async {
     try {
       Response response =
-          await DioHelper.getData(url: doctorMainInfo, query: {'doctorID': 1});
+          await DioHelper.getData(url: doctorMainInfo, query: {'doctorID': idDoctor});
 
       doctorMainModel = DoctorMainModel.fromJson(response.data);
       emit(GetDoctorMainSuccessState());
@@ -268,7 +259,7 @@ class HomeCubit extends Cubit<HomeState> {
   void editDoctorName(String newName) async {
     try {
       Response response = await DioHelper.postData(
-          url: doctorEditName, data: {'doctorID': 1, 'newName': newName});
+          url: doctorEditName, data: {'doctorID': idDoctor, 'newName': newName});
       print(response.data);
       emit(EditDoctorNameSuccessState());
     } catch (error) {
@@ -280,7 +271,7 @@ class HomeCubit extends Cubit<HomeState> {
   void editDoctorTitle(String newTitle) async {
     try {
       Response response = await DioHelper.postData(
-          url: doctorEditTitle, data: {'doctorID': 1, 'newTitle': newTitle});
+          url: doctorEditTitle, data: {'doctorID': idDoctor, 'newTitle': newTitle});
       print(response.data);
       emit(EditDoctorTitleSuccessState());
     } catch (error) {
@@ -293,7 +284,7 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       Response response = await DioHelper.postData(
           url: doctorEditBirthdate,
-          data: {'doctorID': 1, 'newBirthDate': newBirthDate});
+          data: {'doctorID': idDoctor, 'newBirthDate': newBirthDate});
       print(response.data);
       emit(EditDoctorBirthDateSuccessState());
     } catch (error) {
@@ -305,7 +296,7 @@ class HomeCubit extends Cubit<HomeState> {
   void editDoctorProfileImage(String imageName) async {
     try {
       Response response = await DioHelper.postData(
-          url: doctorEditImage, data: {'doctorID': 1, 'imageName': imageName});
+          url: doctorEditImage, data: {'doctorID': idDoctor, 'imageName': imageName});
       print(response.data);
       emit(EditDoctorProfileImageSuccessState());
     } catch (error) {
@@ -318,7 +309,7 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       Response response = await DioHelper.postData(
           url: doctorEditDescription,
-          data: {'doctorID': 1, 'newDescription': newDescription});
+          data: {'doctorID': idDoctor, 'newDescription': newDescription});
       print(response.data);
       emit(EditDoctorDescriptionSuccessState());
     } catch (error) {
@@ -375,6 +366,8 @@ class HomeCubit extends Cubit<HomeState> {
       emit(UploadProfilePicErrorState(error.toString()));
     }
   }
+
+
 }
 
 class ItemServices {

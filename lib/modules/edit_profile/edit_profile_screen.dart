@@ -41,11 +41,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   void initState() {
+    name=TextEditingController();
+    date=TextEditingController();
+    title=TextEditingController();
+    description=TextEditingController();
+
     name.text = widget.name;
     date.text = widget.date;
     profilePic=widget.profileImage;
     title.text = widget.title;
     description.text = widget.description;
+
     place = TextEditingController();
     startDate = TextEditingController();
     endDate = TextEditingController();
