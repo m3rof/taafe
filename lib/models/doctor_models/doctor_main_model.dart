@@ -14,7 +14,7 @@ class DoctorMainModel {
     required this.pendingSessions,
     required this.email,
   });
-  late final int id;
+  late final String id;
   late final String name;
   late final String title;
   late final String birthDate;

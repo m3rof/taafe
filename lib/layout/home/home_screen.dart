@@ -17,12 +17,12 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var cubit = HomeCubit.get(context);
     return BlocConsumer<HomeCubit, HomeState>(
         listener: (context, state) {},
         builder: (context, state) {
+          var cubit = HomeCubit.get(context);
           return ConditionalBuilder(
-              condition: cubit.doctorMainModel!=null,
+              condition: true,
               builder: (context) => Scaffold(
                     drawer: const DrawerBody(),
                     appBar: AppBar(
@@ -30,8 +30,8 @@ class HomeScreen extends StatelessWidget {
                       actions: [
                         popMenu(
                             cubit.popMenueItems(context),
-                            appBarAction(cubit.doctorMainModel!.name,
-                                '$startPhoto${cubit.doctorMainModel!.profileImage}')),
+                            appBarAction('ahmed',
+                                '')),
                       ],
                     ),
                     body: SafeArea(

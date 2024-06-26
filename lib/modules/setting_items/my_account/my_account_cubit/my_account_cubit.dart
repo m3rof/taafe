@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:taafe/models/doctor_models/doctor_main_model.dart';
+import 'package:taafe/shared/components/constants.dart';
 import 'package:taafe/shared/network/remote/end_points.dart';
 
 import '../../../../shared/network/remote/dio_helper.dart';
@@ -91,12 +92,12 @@ class MyAccountCubit extends Cubit<MyAccountState> {
     required TextEditingController heightController,
     required TextEditingController weightController}) {
     if (key.currentState!.validate()) {
-      editPatientInfo(1,heightController.text,weightController.text);
+      editPatientInfo(idPatient,heightController.text,weightController.text);
       emit(MyAccountCheckValidatortate());
     }
   }
 
-  void editPatientInfo(int patientID,height,weight) {
+  void editPatientInfo(String patientID,height,weight) {
     DioHelper.postData(url: patientInfo, data: {
       'patientID': patientID,
       'height': height,

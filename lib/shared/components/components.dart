@@ -1453,74 +1453,7 @@ Widget medicalRecordItem(
   );
 }
 
-Widget medicalRecordListView(
-    {context,
-    required IconData icon,
-    required String title,
-    required List list,
-    functionBlue,
-    Axis axis = Axis.horizontal,
-    double height = 30,
-    required Widget widget(int index, List list)}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Row(
-        children: [
-          Icon(icon, color: ColorManager.headOrange),
-          const SizedBox(width: SizeManager.s14),
-          Text(
-            title,
-            style: StylesManager.headPrimary3,
-          ),
-          Spacer(),
-          list.length > 1
-              ? blueContainer(
-                  radius: 18,
-                  text: 'read more',
-                  width: 90,
-                  fontSize: 14,
-                  height: 24,
-                  pTop: 2,
-                  top: 10,
-                  function: functionBlue)
-              : Text('')
-        ],
-      ),
-      const SizedBox(height: SizeManager.s16),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: height,
-            width: SizeManager.s300,
-            child: Align(
-              alignment: Alignment.center,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: axis,
-                  itemCount: list.length,
-                  itemBuilder: (context, index) => widget(index, list)),
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(height: SizeManager.s10),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          dividerBlue(
-              width: widthMedia(context: context, x: SizeManager.s_4),
-              color: ColorManager.greenColor),
-          const SizedBox(
-            height: SizeManager.s20,
-          ),
-        ],
-      )
-    ],
-  );
-}
+
 
 Widget itemSetting(context, icon, title, function) {
   return InkWell(
