@@ -83,3 +83,6 @@ class CallInfo {
   static const String appSign = "cabd67d8c09900309c86c8d445143e2c1be46a462de461bad60e27673324d0e4";
 }
 
+String? uId;
+String? token;
+

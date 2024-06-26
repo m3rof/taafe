@@ -1,5 +1,3 @@
-
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -41,16 +39,16 @@ Widget logoLogin(context) {
     child: Container(
       margin: EdgeInsets.symmetric(
           vertical: hightMedia(context: context, h: SizeManager.s_05)),
-      child: Column(
+      child: const Column(
         children: [
           Image(
-            image: const AssetImage(AssetsManager.logo),
-            width: widthMedia(context: context, x: SizeManager.s_7),
-            height: hightMedia(context: context, h: SizeManager.s_2),
+            image: AssetImage(AssetsManager.logo),
+            width: 200,
+            height: 200,
           ),
           Image(
-            image: const AssetImage(AssetsManager.shadow),
-            width: widthMedia(context: context, x: SizeManager.s_51),
+            image: AssetImage(AssetsManager.shadow),
+            width: 200,
           ),
         ],
       ),
@@ -64,8 +62,6 @@ Widget welcome() {
     style: StylesManager.welcome,
   );
 }
-
-
 
 Widget textButton(
     {required function, required String text, required TextStyle textStyle}) {
@@ -120,8 +116,6 @@ Widget userPhoto(function) {
         )),
   );
 }
-
-
 
 Widget line() {
   return Container(

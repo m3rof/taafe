@@ -5,6 +5,8 @@ class UserData {
   String? uId;
   String? gender;
   String? specialty;
+  String? title;
+  String? description;
 
 
   UserData({
@@ -14,6 +16,8 @@ class UserData {
     required this.uId,
     required this.gender,
     required this.specialty,
+     this.title,
+     this.description,
   
   });
   factory UserData.fromJson(json) {
@@ -24,6 +28,8 @@ class UserData {
       uId: json?["uId"],
       gender: json?["gender"],
       specialty: json?["specialty"],
+      title: json?["title"],
+      description: json?["description"],
       
     );
   }
@@ -36,6 +42,8 @@ class UserData {
       "uId": uId,
       "gender": gender,
       "specialty": specialty,
+      "title": title,
+      "description": description,
       
     };
   }

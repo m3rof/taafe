@@ -10,8 +10,12 @@ class AppChangePasswordVisibility extends RegisterState{}
 class RegisterDateTimeState extends RegisterState{}
 class RegisterOnClickedState extends RegisterState{}
 class RegistergenderState extends RegisterState{}
+class ChangeSpacialityState extends RegisterState{}
 class AppRegisterLoadingState extends RegisterState{}
 class AppCreateUserSuccessState extends RegisterState{}
+class AppCreateUserAPILoadingState extends RegisterState{}
+class AppCreateUserAPISuccessState extends RegisterState{}
+class AppCreateUserAPIErrorState extends RegisterState{}
 class AppRegisterErrorState extends RegisterState {
   final String error;
   AppRegisterErrorState(this.error);

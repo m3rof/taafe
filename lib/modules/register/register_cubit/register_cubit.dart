@@ -1,23 +1,23 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:taafe/shared/network/remote/dio_helper.dart';
 
 import '../../../models/user_model/user_model.dart';
 import '../../../shared/components/components.dart';
 
+import '../../../shared/network/remote/end_points.dart';
 import 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterInitialState());
 
   static RegisterCubit get(context) => BlocProvider.of(context);
-
-
 
   void userRegister({
     required String email,
@@ -26,6 +26,8 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String date,
     required String gender,
     required String specialty,
+     String? title,
+     String? description,
   }) async {
     emit(AppRegisterLoadingState());
 
@@ -35,17 +37,22 @@ class RegisterCubit extends Cubit<RegisterState> {
         password: password,
       );
       print(value.user!.email);
-      print(value.user!.uid);
-      emit(AppCreateUserSuccessState());
+      print(await value.user!.getIdToken());
+      
 
       userCreate(
-        email: email,
-        name: name,
-        date: date,
-        uId: value.user!.uid,
-        gender: gender,
-        specialty: specialty,
-      );
+          email: email,
+          name: name,
+          date: date,
+          uId: value.user!.uid,
+          gender: gender,
+          specialty: specialty,
+          token: await value.user!.getIdToken(),
+          title: title,
+          description: description,
+          );
+
+          emit(AppCreateUserSuccessState());
     } on FirebaseAuthException catch (error) {
       print(error);
       emit(AppRegisterErrorState(error.message ?? "Authintication Failed!"));
@@ -60,6 +67,9 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String uId,
     required String gender,
     required String specialty,
+    required String? token,
+    String? title,
+     String? description,
   }) async {
     userData = UserData(
       email: email,
@@ -68,6 +78,8 @@ class RegisterCubit extends Cubit<RegisterState> {
       uId: uId,
       gender: gender,
       specialty: specialty,
+      title: title,
+      description: description,
     );
     emit(AppCreateUserLoadingState());
     try {
@@ -75,6 +87,58 @@ class RegisterCubit extends Cubit<RegisterState> {
           .collection("users")
           .doc(uId)
           .set(userData.toMap());
+
+      if (specialty == "Patient") {
+        try {
+          emit(AppCreateUserAPILoadingState());
+          var value = await DioHelper.postData(url: signupPatient, data: {
+            "token": token,
+            "birthDate": date,
+            "gender": gender,
+            "name":name,
+          },
+          query: {
+            "token": token,
+            "birthDate": date,
+            "gender": gender,
+            "name":name,
+          },
+          );
+          emit(AppCreateUserAPISuccessState());
+          print("Data: ${value.data}");
+        } on DioException catch (error) {
+          print("error API:${error.message}");
+          print("error API:${error.response}");
+          emit(AppCreateUserAPIErrorState());
+        }
+      }else{
+        try {
+          emit(AppCreateUserAPILoadingState());
+          var value = await DioHelper.postData(url: signupDoctor, data: {
+            "token": token,
+            "birthDate": date,
+            "gender": gender,
+            "name":name,
+            "title": title,
+      "description": description,
+          },
+          query: {
+            "token": token,
+            "birthDate": date,
+            "gender": gender,
+            "name":name,
+            "title": title,
+      "description": description,
+          },
+          );
+          emit(AppCreateUserAPISuccessState());
+          print("Data: ${value.data}");
+        } on DioException catch (error) {
+          print("error API:${error.message}");
+          print("error API:${error.response}");
+          emit(AppCreateUserAPIErrorState());
+        }
+      }
 
       emit(AppCreateUserSuccessState());
     } on FirebaseException catch (error) {
@@ -94,8 +158,6 @@ class RegisterCubit extends Cubit<RegisterState> {
     }
   }
 
-  
-
   Widget icon = const Icon(Icons.remove_red_eye_outlined);
   bool showPwd = false;
 
@@ -106,6 +168,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         : const Icon(Icons.visibility_outlined);
     emit(AppChangePasswordVisibility());
   }
+
   DateTime dateTime = DateTime.now();
   bool selected = false;
 
@@ -132,11 +195,18 @@ class RegisterCubit extends Cubit<RegisterState> {
     });
   }
 
-  static final List<String> gender = ['male ', 'female'];
+  static final List<String> gender = ['Male', 'Female'];
   String currentType = gender[0];
 
   void radioFunction(value) {
     currentType = value;
     emit(RegistergenderState());
+  }
+
+  static List<String> specialties = ["Doctor", "Patient"];
+  String selectedValue = specialties[1];
+  void changeSpaciality(value) {
+    selectedValue = value;
+    emit(ChangeSpacialityState());
   }
 }

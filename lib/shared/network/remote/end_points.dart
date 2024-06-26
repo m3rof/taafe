@@ -10,6 +10,7 @@ const String uploadProfilePhoto='/uploadprofilepic';
 const String login='/auth/login';
 
 const String signupPatient='/auth/patient-signup';
+const String signupDoctor='/auth/doctor-signup';
 
 
 const String communityList='/community/community-list';

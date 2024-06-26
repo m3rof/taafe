@@ -8,17 +8,27 @@ class StylesManager {
       fontSize: SizeManager.s24,
       fontFamily: FamilyManager.myriad,
       fontWeight: FontWeight.w700,
-      fontStyle: FontStyle.italic,
-      color: ColorManager.headBlack);
+      color: ColorManager.primaryColor);
   static TextStyle label = const TextStyle(
-      color: ColorManager.primaryColor, fontSize: SizeManager.s16,fontFamily: FamilyManager.myriad,);
-  static TextStyle hint = const TextStyle(color: ColorManager.headBlack,fontFamily: FamilyManager.myriad,);
-  static TextStyle or =
-      const TextStyle(color: Colors.grey, fontSize: SizeManager.s14);
+    color: ColorManager.primaryColor,
+    fontSize: SizeManager.s16,
+    fontFamily: FamilyManager.myriad,
+  );
+  static TextStyle hint = const TextStyle(
+    color: ColorManager.headBlack,
+    fontFamily: FamilyManager.myriad,
+  );
+  static TextStyle or = const TextStyle(
+    color: Colors.grey,
+    fontSize: SizeManager.s14,
+    fontFamily: FamilyManager.myriad,
+  );
   static TextStyle loginCreate = const TextStyle(
       fontWeight: FontWeight.w500,
-      color: Colors.black,
-      fontSize: SizeManager.s20);
+      color: ColorManager.primaryColor,
+      fontSize: SizeManager.s20,
+       fontFamily: FamilyManager.myriad,
+      );
   static TextStyle errorField = const TextStyle(
       color: ColorManager.headOrange, fontSize: SizeManager.s12);
 

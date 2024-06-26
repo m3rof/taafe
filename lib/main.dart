@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,10 +15,12 @@ import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 
 import 'package:taafe/modules/search/search_cubit/search_cubit.dart';
 import 'package:taafe/modules/setting_items/my_account/my_account_cubit/my_account_cubit.dart';
+import 'package:taafe/shared/network/local/cache/cache_helper.dart';
 
 import 'package:taafe/shared/network/remote/dio_helper.dart';
 import 'layout/home/home_cubit/home_cubit.dart';
 
+import 'layout/home/home_screen.dart';
 import 'modules/chat/chat_cubit/chat_cubit.dart';
 
 import 'modules/drawer_items/medicine_alarm/medicine_alarm_cubit/medicine_alarm_cubit.dart';
@@ -27,17 +30,24 @@ import 'modules/register/register_cubit/register_cubit.dart';
 
 import 'shared/bloc_observer/bloc_observer.dart';
 
+import 'shared/components/constants.dart';
 import 'shared/resourses/themes.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-void main() async{
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
+  await CacheHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  token = CacheHelper.getData(key: "token");
+  uId = CacheHelper.getData(key: "uId");
+
   runApp(const MyApp());
 }
 
@@ -48,9 +58,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(context) => LoginCubit()),
-        BlocProvider(create:(context) => RegisterCubit()),
-        BlocProvider(create:(context) => HomeCubit()..getPatientMain()..getDoctorMain()),
+        BlocProvider(create: (context) => LoginCubit()),
+        BlocProvider(create: (context) => RegisterCubit()),
+        BlocProvider(
+            create: (context) => HomeCubit()
+              ..getPatientMain()
+              ..getDoctorMain()),
         BlocProvider(create: (context) => AppointmentCubit()),
         BlocProvider(create: (context) => MyAccountCubit()),
         BlocProvider(create: (context) => MedicineAlarmCubit()),
@@ -59,17 +72,21 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => BlogCubit()..getListCategory()),
         BlocProvider(create: (context) => SearchCubit()),
         BlocProvider(create: (context) => OnBoardingCubit()),
-        BlocProvider(create: (context) => MedicalRecordCubit()..getPatientInfo()..getHobby()..getDiagnose()..getMedicine()),
+        BlocProvider(
+            create: (context) => MedicalRecordCubit()
+              ..getPatientInfo()
+              ..getHobby()
+              ..getDiagnose()
+              ..getMedicine()),
         BlocProvider(create: (context) => DiagnosisCubit()),
         BlocProvider(create: (context) => ChatCubit()),
         BlocProvider(create: (context) => NotificationCubit()),
-
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'taafe',
         theme: ThemeManager.themeApp,
-        home: const LoginScreen(),
+        home:token == null? const LoginScreen() : const HomeScreen(),
       ),
     );
   }
