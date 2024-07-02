@@ -7,14 +7,16 @@ import 'package:intl/intl.dart';
 
 import 'package:taafe/layout/home/home_cubit/home_cubit.dart';
 import 'package:taafe/layout/home/home_cubit/home_state.dart';
-import 'package:taafe/modules/edit_profile/edit_widgets/edit_widgets.dart';
 
 import 'package:taafe/shared/network/remote/end_points.dart';
 import 'package:taafe/shared/resourses/value_app.dart';
 
-import '../../shared/components/components.dart';
-import '../../shared/resourses/color_manager.dart';
-import '../../shared/resourses/styles.dart';
+import '../../../shared/components/components.dart';
+import '../../../shared/resourses/color_manager.dart';
+import '../../../shared/resourses/styles.dart';
+import 'edit_widgets/edit_widgets.dart';
+
+
 
 class EditProfileScreen extends StatefulWidget {
 String name;

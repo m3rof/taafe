@@ -1,10 +1,12 @@
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:flutter/material.dart';
 
-import '../../../shared/components/components.dart';
-import '../../../shared/resourses/color_manager.dart';
-import '../../../shared/resourses/styles.dart';
-import '../../../shared/resourses/value_app.dart';
+import '../../../../shared/components/components.dart';
+import '../../../../shared/resourses/color_manager.dart';
+import '../../../../shared/resourses/styles.dart';
+import '../../../../shared/resourses/value_app.dart';
+
+
 
 Widget dateEdit(TextEditingController date,String label ,function) {
   return dateField(

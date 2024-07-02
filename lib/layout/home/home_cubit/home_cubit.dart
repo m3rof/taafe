@@ -18,13 +18,13 @@ import 'package:taafe/shared/resourses/strings_manager.dart';
 import '../../../models/doctor_models/doctor_main_model.dart';
 import '../../../models/patient_model/patient_info_model.dart';
 import '../../../models/patient_model/patient_main_info_model.dart';
-import '../../../modules/edit_profile/edit_profile_screen.dart';
 
 import '../../../modules/navigation_bar_items/blogs/widget/category_screen.dart';
 import '../../../modules/navigation_bar_items/communities/communities_screen.dart';
 import '../../../modules/navigation_bar_items/q_a/q_a_screen.dart';
 import '../../../modules/navigation_bar_items/test/test_screen.dart';
 import '../../../modules/navigation_bar_items/therapists/therapists_screen.dart';
+import '../../../modules/patient/edit_profile/edit_profile_screen.dart';
 import '../../../modules/patient/medical_record/mediacal_record_screen.dart';
 import '../../../shared/components/components.dart';
 import '../../../shared/network/remote/end_points.dart';
