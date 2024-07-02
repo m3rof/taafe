@@ -1,12 +1,12 @@
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:taafe/modules/setting_items/follwing_user/follwing_user_screen.dart';
-import 'package:taafe/modules/setting_items/my_account/my_account_screen.dart';
 
 import '../../../shared/components/components.dart';
 import '../../../shared/components/constants.dart';
 import '../../../shared/resourses/strings_manager.dart';
 import '../../../shared/resourses/value_app.dart';
+import '../../patient/my_account/my_account_screen.dart';
 
 
 class SettingScreen extends StatelessWidget {

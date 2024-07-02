@@ -102,7 +102,7 @@ class MyAccountCubit extends Cubit<MyAccountState> {
 
   void editPatientInfo(String patientID,height,weight) {
     DioHelper.postData(url: patientInfo, data: {
-      'patientID': patientID,
+      'patientID': uId,
       'height': height,
       'weight': weight,
       'blood': selectedItemBload,

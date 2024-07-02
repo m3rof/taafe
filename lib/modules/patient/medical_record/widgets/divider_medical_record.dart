@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/components/components.dart';
-import '../../../shared/components/constants.dart';
-import '../../../shared/resourses/color_manager.dart';
-import '../../../shared/resourses/value_app.dart';
+import '../../../../shared/components/components.dart';
+import '../../../../shared/components/constants.dart';
+import '../../../../shared/resourses/color_manager.dart';
+import '../../../../shared/resourses/value_app.dart';
+
+
 
 class DividerMedicalRecord extends StatelessWidget {
   const DividerMedicalRecord({

@@ -59,6 +59,13 @@ const String patientInfo='/profile/patient-account-info';
 const String patientHobby='/profile/patient-hobby';
 const String patientDiagnose='/profile/patient-diagnose';
 const String patientMedicine='/profile/patient-medicine';
+const String patientAccount='/profile/patient-account';
+
+const String patientEditName='/profile/patient-name-edit';
+const String patientEditLanguage='/profile/patient-language';
+const String patientEditBirthdate='/profile/patient-birthdate-edit';
+const String patientEditProfileImage='/profile/patient-profile-image';
+
 
 
 const String sendMessageEnd='/chat/message';

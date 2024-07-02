@@ -65,6 +65,7 @@ dependencies:
 #  zego_uikit_prebuilt_call: ^4.12.8
   google_generative_ai: ^0.4.2
   shared_preferences: ^2.2.3
+  flutter_slidable: ^3.1.0
 
 
 

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:taafe/layout/home/home_screen.dart';
 import 'package:taafe/shared/components/constants.dart';
 
-import '../../../shared/resourses/color_manager.dart';
-import '../../../shared/resourses/value_app.dart';
+import '../../../../shared/resourses/color_manager.dart';
+import '../../../../shared/resourses/value_app.dart';
+
+
 
 class OnboardingSkip extends StatelessWidget {
 

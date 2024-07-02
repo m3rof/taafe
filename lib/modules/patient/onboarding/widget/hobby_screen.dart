@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_button/group_button.dart';
-import 'package:taafe/modules/onboarding/onboarding_cubit/onboarding_cubit.dart';
-import 'package:taafe/modules/onboarding/onboarding_cubit/onboarding_state.dart';
-import 'package:taafe/shared/resourses/color_manager.dart';
 
+import '../../../../shared/components/constants.dart';
+import '../../../../shared/resourses/color_manager.dart';
+import '../../../../shared/resourses/styles.dart';
+import '../../../../shared/resourses/value_app.dart';
+import '../onboarding_cubit/onboarding_cubit.dart';
+import '../onboarding_cubit/onboarding_state.dart';
 
-import '../../../shared/components/constants.dart';
-import '../../../shared/resourses/styles.dart';
-import '../../../shared/resourses/value_app.dart';
 
 class HobbyScreen extends StatelessWidget {
 OnBoardingCubit cubit;

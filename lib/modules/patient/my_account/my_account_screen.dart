@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:taafe/modules/setting_items/my_account/my_account_cubit/my_account_cubit.dart';
-import 'package:taafe/modules/setting_items/my_account/my_account_cubit/my_account_state.dart';
 import 'package:taafe/shared/components/components.dart';
 import '../../../shared/resourses/value_app.dart';
+import 'my_account_cubit/my_account_cubit.dart';
+import 'my_account_cubit/my_account_state.dart';
 
 class MyAccountScreen extends StatefulWidget {
   const MyAccountScreen({Key? key}) : super(key: key);

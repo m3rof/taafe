@@ -1,10 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:taafe/shared/components/constants.dart';
 
 
 
-import '../../../shared/network/remote/dio_helper.dart';
-import '../../../shared/network/remote/end_points.dart';
+import '../../../../shared/network/remote/dio_helper.dart';
+import '../../../../shared/network/remote/end_points.dart';
 import 'onboarding_state.dart';
 
 class OnBoardingCubit extends Cubit<OnBoardingState> {
@@ -16,7 +17,7 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
   List hobby = [];
 
   void getHobby() {
-    DioHelper.getData(url: patientHobby, query: {'patientID': 1}).then((value) {
+    DioHelper.getData(url: patientHobby, query: {'patientID': uId}).then((value) {
       hobby = value.data;
       emit(GetHobbySuccessState());
     }).catchError((Error) {
@@ -26,9 +27,9 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
   }
 
 
-  void sendHobby(int patientID, String hobby) {
+  void sendHobby( String hobby) {
     DioHelper.postData(url: patientHobby, data: {
-      'patientID': patientID,
+      'patientID': uId,
       'hobby': hobby,
     }).then((value) {
       print(value.data);
@@ -37,10 +38,10 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
     });
   }
 
-  void deleteHobby(int patientID, hobbyID, String role) {
+  void deleteHobby( hobbyID, String role) {
     DioHelper.deleteData(
       url: patientHobby,
-      data: {'patientID': patientID, 'hobbyID': hobbyID, 'role': role},
+      data: {'patientID': uId, 'hobbyID': hobbyID, 'role': role},
     ).then((value) {
       print('dddddddddddddone');
       print(value.data);
@@ -54,12 +55,12 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
 
   void hobbyList(String value, bool isSelected) {
     if (isSelected) {
-      sendHobby(1,value);
+      sendHobby(value);
 
       emit(OnBoardingAddHobbyState());
     } else if (isSelected == false) {
       hobbyLocal.removeWhere((element) => element == value);
-      deleteHobby(1,getHobbyID(value), 'patient');
+      deleteHobby(getHobbyID(value), 'patient');
     }
   }
 

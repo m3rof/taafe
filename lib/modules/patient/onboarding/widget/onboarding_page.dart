@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/components/constants.dart';
-import '../../../shared/resourses/styles.dart';
-import '../../../shared/resourses/value_app.dart';
+import '../../../../shared/components/constants.dart';
+import '../../../../shared/resourses/styles.dart';
+import '../../../../shared/resourses/value_app.dart';
+
+
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({

@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:taafe/layout/home/home_screen.dart';
-import 'package:taafe/modules/onboarding/onboarding_cubit/onboarding_cubit.dart';
-import 'package:taafe/modules/onboarding/onboarding_cubit/onboarding_state.dart';
-import 'package:taafe/modules/onboarding/widget/hobby_screen.dart';
-import 'package:taafe/modules/onboarding/widget/onboarding_page.dart';
-import 'package:taafe/modules/onboarding/widget/onboarding_skip.dart';
+import 'package:taafe/modules/patient/onboarding/widget/hobby_screen.dart';
+import 'package:taafe/modules/patient/onboarding/widget/onboarding_page.dart';
+import 'package:taafe/modules/patient/onboarding/widget/onboarding_skip.dart';
 import 'package:taafe/shared/components/constants.dart';
 import 'package:taafe/shared/resourses/assets_manager.dart';
 import 'package:taafe/shared/resourses/color_manager.dart';
 
 import 'package:taafe/shared/resourses/value_app.dart';
+
+import 'onboarding_cubit/onboarding_cubit.dart';
+import 'onboarding_cubit/onboarding_state.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -57,7 +58,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     if (value == 3) {
                       isLast = true;
                       cubit.hobbyLocal.forEach((element) {
-                        cubit.sendHobby(1, element);
+                        cubit.sendHobby(element);
                       });
                     } else {
                       isLast = false;

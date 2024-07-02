@@ -2,13 +2,14 @@ import 'dart:io';
 
 import 'package:awesome_icons/awesome_icons.dart';
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:taafe/modules/medical_record/mediacal_record_screen.dart';
+import 'package:taafe/models/user_model/user_model.dart';
 import 'package:taafe/modules/posts/patient_posts_screen.dart';
 import 'package:taafe/shared/components/constants.dart';
 import 'package:taafe/shared/network/remote/dio_helper.dart';
@@ -24,6 +25,7 @@ import '../../../modules/navigation_bar_items/communities/communities_screen.dar
 import '../../../modules/navigation_bar_items/q_a/q_a_screen.dart';
 import '../../../modules/navigation_bar_items/test/test_screen.dart';
 import '../../../modules/navigation_bar_items/therapists/therapists_screen.dart';
+import '../../../modules/patient/medical_record/mediacal_record_screen.dart';
 import '../../../shared/components/components.dart';
 import '../../../shared/network/remote/end_points.dart';
 import '../home_widget/home_body.dart';
@@ -85,11 +87,10 @@ class HomeCubit extends Cubit<HomeState> {
           moveScreen(
               context: context,
               screen: EditProfileScreen(
-                doctorMainModel!.name,
-                doctorMainModel!.birthDate,
-                doctorMainModel!.profileImage,
-                doctorMainModel!.title,
-                doctorMainModel!.description,
+                pateintMainModel!.name,
+                pateintMainModel!.birthDate,
+                pateintMainModel!.profileImage,
+                pateintMainModel!.language,
               ));
         },
         leading: Icon(FontAwesomeIcons.edit),
@@ -116,8 +117,8 @@ class HomeCubit extends Cubit<HomeState> {
       const PopupMenuDivider(),
       PopupMenuItem(
           child: ListTile(
-        onTap: () {},
-        title: Text('About Us'),
+        onTap: deleteAccount,
+        title: Text('delete Account'),
       )),
       PopupMenuItem(
           child: ListTile(
@@ -127,11 +128,34 @@ class HomeCubit extends Cubit<HomeState> {
     ];
   }
 
+
+  final _db=FirebaseFirestore.instance;
+
+  void getUserDetails() async {
+    final snapshot=await _db.collection('users').doc(uId).get();
+    userData= UserData.fromJson(snapshot.data());
+  }
+
+  void deleteAccount()async{
+    try{
+      Response response=await DioHelper.deleteData(
+        url: patientAccount,
+        data: {'email': userData!.email},
+      );
+      print(response.data);
+      emit(DeleteAccountSuccessState());
+    }catch(error){
+      print(error.toString());
+      emit(DeleteAccountErrorState(error.toString()));
+    }
+  }
+
+
   PateintMainModel? pateintMainModel;
 
   void getPatientMain() async {
     try{
-      Response response=await DioHelper.getData(url: patientMainInfo, query: {'patientID': idPatient});
+      Response response=await DioHelper.getData(url: patientMainInfo, query: {'patientID': uId});
       pateintMainModel = PateintMainModel.fromJson(response.data);
       print(response.data);
       emit(GetPatientMainSuccessState());
@@ -145,7 +169,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   void getPatientInfo() async{
     try{
-      Response response=await DioHelper.getData(url: patientInfo, query: {'patientID': 1});
+      Response response=await DioHelper.getData(url: patientInfo, query: {'patientID': uId});
       patientInfoModel = PatientInfoModel.fromJson(response.data);
       emit(GetPatientInfoSuccessState());
     }catch(error){
@@ -182,71 +206,13 @@ class HomeCubit extends Cubit<HomeState> {
     emit(HomeShowDateState());
   }
 
-  List hobby = [];
-
-  // void getHobby() {
-  //   DioHelper.getData(url: patientHobby, query: {'patientID': 1}).then((value) {
-  //     hobby = value.data;
-  //     print(hobby);
-  //     emit(HomeGetHobbySuccessState());
-  //   }).catchError((Error) {
-  //     print(Error.toString());
-  //     emit(HomeGetHobbyErrorState());
-  //   });
-  // }
-  //
-  // void sendHobby(int patientID, String hobby) {
-  //   DioHelper.postData(url: patientHobby, data: {
-  //     'patientID': patientID,
-  //     'hobby': hobby,
-  //   }).then((value) {
-  //     print(value.data);
-  //   }).catchError((Error) {
-  //     print(Error.toString());
-  //   });
-  // }
-  //
-  // void deleteHobby(int patientID, int hobbyID, String role) {
-  //   DioHelper.deleteData(
-  //     url: patientHobby,
-  //     data: {'patientID': patientID, 'hobbyID': hobbyID, 'role': role},
-  //   ).then((value) {
-  //     print(value.data);
-  //   }).catchError((Error) {
-  //     print(Error.toString());
-  //   });
-  // }
-  //
-  // List diagnose=[];
-  // void getDiagnose() {
-  //   DioHelper.getData(url: patientDiagnose, query: {'patientID': 1}).then((value) {
-  //     diagnose = value.data;
-  //     print(diagnose);
-  //     emit(HomeGetDiagnoseSuccessState());
-  //   }).catchError((Error) {
-  //     print(Error.toString());
-  //     emit(HomeGetDiagnoseErrorState());
-  //   });
-  // }
-  //
-  // List medicine=[];
-  // void getMedicine() {
-  //   DioHelper.getData(url: patientMedicine, query: {'patientID': 1}).then((value) {
-  //     medicine = value.data;
-  //     print(medicine);
-  //     emit(HomeGetMedicineSuccessState());
-  //   }).catchError((Error) {
-  //     print(Error.toString());
-  //     emit(HomeGetMedicineErrorState());
-  //   });
-  // }
 
   DoctorMainModel? doctorMainModel;
 
   void getDoctorMain() async {
     try {
       Response response =
-          await DioHelper.getData(url: doctorMainInfo, query: {'doctorID': idDoctor});
+          await DioHelper.getData(url: doctorMainInfo, query: {'doctorID': uId});
 
       doctorMainModel = DoctorMainModel.fromJson(response.data);
       emit(GetDoctorMainSuccessState());
@@ -259,7 +225,7 @@ class HomeCubit extends Cubit<HomeState> {
   void editDoctorName(String newName) async {
     try {
       Response response = await DioHelper.postData(
-          url: doctorEditName, data: {'doctorID': idDoctor, 'newName': newName});
+          url: doctorEditName, data: {'doctorID': uId, 'newName': newName});
       print(response.data);
       emit(EditDoctorNameSuccessState());
     } catch (error) {
@@ -271,7 +237,7 @@ class HomeCubit extends Cubit<HomeState> {
   void editDoctorTitle(String newTitle) async {
     try {
       Response response = await DioHelper.postData(
-          url: doctorEditTitle, data: {'doctorID': idDoctor, 'newTitle': newTitle});
+          url: doctorEditTitle, data: {'doctorID': uId, 'newTitle': newTitle});
       print(response.data);
       emit(EditDoctorTitleSuccessState());
     } catch (error) {
@@ -284,7 +250,7 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       Response response = await DioHelper.postData(
           url: doctorEditBirthdate,
-          data: {'doctorID': idDoctor, 'newBirthDate': newBirthDate});
+          data: {'doctorID': uId, 'newBirthDate': newBirthDate});
       print(response.data);
       emit(EditDoctorBirthDateSuccessState());
     } catch (error) {
@@ -296,7 +262,7 @@ class HomeCubit extends Cubit<HomeState> {
   void editDoctorProfileImage(String imageName) async {
     try {
       Response response = await DioHelper.postData(
-          url: doctorEditImage, data: {'doctorID': idDoctor, 'imageName': imageName});
+          url: doctorEditImage, data: {'doctorID': uId, 'imageName': imageName});
       print(response.data);
       emit(EditDoctorProfileImageSuccessState());
     } catch (error) {
@@ -309,7 +275,7 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       Response response = await DioHelper.postData(
           url: doctorEditDescription,
-          data: {'doctorID': idDoctor, 'newDescription': newDescription});
+          data: {'doctorID': uId, 'newDescription': newDescription});
       print(response.data);
       emit(EditDoctorDescriptionSuccessState());
     } catch (error) {
@@ -317,6 +283,64 @@ class HomeCubit extends Cubit<HomeState> {
       emit(EditDoctorDescriptionErrorState(error.toString()));
     }
   }
+
+
+
+
+
+
+
+  void editPatientName(String newName) async {
+    try {
+      Response response = await DioHelper.postData(
+          url: patientEditName, data: {'patientID': uId, 'newName': newName});
+      print(response.data);
+      emit(EditPatientNameSuccessState());
+    } catch (error) {
+      print(error.toString());
+      emit(EditPatientNameErrorState(error.toString()));
+    }
+  }
+
+
+  void editPatientBirthDate(String newBirthDate) async {
+    try {
+      Response response = await DioHelper.postData(
+          url: patientEditBirthdate,
+          data: {'patientID': uId, 'newBirthDate': newBirthDate});
+      print(response.data);
+      emit(EditPatientBirthDateSuccessState());
+    } catch (error) {
+      print(error.toString());
+      emit(EditPatientBirthDateErrorState(error.toString()));
+    }
+  }
+
+  void editPatientLanguage(String language) async {
+    try {
+      Response response = await DioHelper.postData(
+          url: patientEditLanguage, data: {'patientID': uId, 'language': language});
+      print(response.data);
+      emit(EditPatientLanguageSuccessState());
+    } catch (error) {
+      print(error.toString());
+      emit(EditPatientLanguageErrorState(error.toString()));
+    }
+  }
+
+
+  void editPatientProfileImage() async {
+    try {
+      Response response = await DioHelper.postData(
+          url: patientEditProfileImage, data: {'patientID': uId, 'imageName': profilePicServer});
+      print(response.data);
+      emit(EditPatientProfileImageSuccessState());
+    } catch (error) {
+      print(error.toString());
+      emit(EditPatientProfileImageErrorState(error.toString()));
+    }
+  }
+
 
   File? pickedImageProfile;
 
@@ -335,10 +359,10 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  var ProfilePicServer;
+  var profilePicServer;
 
   void setImageProfile(String imageName) {
-    ProfilePicServer = imageName;
+    profilePicServer = imageName;
     emit(SetProfileImageSuccessState());
   }
 
@@ -359,7 +383,7 @@ class HomeCubit extends Cubit<HomeState> {
         ),
       );
       setImageProfile(response.data);
-      print('pppppp : $ProfilePicServer');
+      print('pppppp : $profilePicServer');
       emit(UploadProfilePicSuccessState());
     } catch (error) {
       print(error.toString());
@@ -368,7 +392,19 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
 
+  void changeLanguage(String language,String code){
+    language=code;
+    emit(ChangeLanguage());
+  }
+
+
 }
+
+
+
+
+
+
 
 class ItemServices {
   String assetsService;

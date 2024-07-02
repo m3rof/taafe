@@ -4,6 +4,12 @@ abstract class HomeState{}
 class HomeInitialState extends HomeState{}
 class ChangePagesState extends HomeState{}
 
+class DeleteAccountSuccessState extends HomeState{}
+class DeleteAccountErrorState extends HomeState{
+  final String error;
+  DeleteAccountErrorState(this.error);
+}
+
 class GetPatientMainSuccessState extends HomeState{}
 class GetPatientMainErrorState extends HomeState{}
 
@@ -102,4 +108,30 @@ class SetProfileImageErrorState extends HomeState{
 
 
 
+
+class EditPatientNameSuccessState extends HomeState{}
+class EditPatientNameErrorState extends HomeState{
+  final String error;
+  EditPatientNameErrorState(this.error);
+}
+
+class EditPatientLanguageSuccessState extends HomeState{}
+class EditPatientLanguageErrorState extends HomeState{
+  final String error;
+  EditPatientLanguageErrorState(this.error);
+}
+
+class EditPatientBirthDateSuccessState extends HomeState{}
+class EditPatientBirthDateErrorState extends HomeState{
+  final String error;
+  EditPatientBirthDateErrorState(this.error);
+}
+
+class EditPatientProfileImageSuccessState extends HomeState{}
+class EditPatientProfileImageErrorState extends HomeState{
+  final String error;
+  EditPatientProfileImageErrorState(this.error);
+}
+
+class ChangeLanguage extends HomeState{}
 

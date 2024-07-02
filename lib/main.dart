@@ -6,15 +6,12 @@ import 'package:taafe/modules/drawer_items/appointment/appointment_cubit/appoint
 import 'package:taafe/modules/drawer_items/diagnosis/diagnosis_cubit/diagnosis_cubit.dart';
 import 'package:taafe/modules/login/login_cubit/login_cubit.dart';
 import 'package:taafe/modules/login/login_screen.dart';
-import 'package:taafe/modules/medical_record/medical_record_cubit/medical_record_cubit.dart';
 import 'package:taafe/modules/navigation_bar_items/blogs/blogs_cubit/blog_cubit.dart';
 
 import 'package:taafe/modules/notification/notification_manager/notification_cubit.dart';
-import 'package:taafe/modules/onboarding/onboarding_cubit/onboarding_cubit.dart';
 import 'package:taafe/modules/posts/posts_cubit/posts_cubit.dart';
 
 import 'package:taafe/modules/search/search_cubit/search_cubit.dart';
-import 'package:taafe/modules/setting_items/my_account/my_account_cubit/my_account_cubit.dart';
 import 'package:taafe/shared/network/local/cache/cache_helper.dart';
 
 import 'package:taafe/shared/network/remote/dio_helper.dart';
@@ -26,6 +23,9 @@ import 'modules/chat/chat_cubit/chat_cubit.dart';
 import 'modules/drawer_items/medicine_alarm/medicine_alarm_cubit/medicine_alarm_cubit.dart';
 import 'modules/navigation_bar_items/communities/communites_cubit/community_cubit.dart';
 
+import 'modules/patient/medical_record/medical_record_cubit/medical_record_cubit.dart';
+import 'modules/patient/my_account/my_account_cubit/my_account_cubit.dart';
+import 'modules/patient/onboarding/onboarding_cubit/onboarding_cubit.dart';
 import 'modules/register/register_cubit/register_cubit.dart';
 
 import 'shared/bloc_observer/bloc_observer.dart';
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => HomeCubit()
               ..getPatientMain()
-              ..getDoctorMain()),
+              ..getDoctorMain()..getUserDetails()),
         BlocProvider(create: (context) => AppointmentCubit()),
         BlocProvider(create: (context) => MyAccountCubit()),
         BlocProvider(create: (context) => MedicineAlarmCubit()),

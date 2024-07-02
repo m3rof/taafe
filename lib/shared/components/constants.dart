@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:taafe/models/user_model/user_model.dart';
 
 
 import '../../modules/show_picture/show_picture_screen.dart';
@@ -86,6 +87,8 @@ class CallInfo {
 
 String? uId;
 String? token;
+
+UserData? userData;
 
 String idPatient='c4QbHTKw77aZvigkVPzusyJVnmA2';
 
